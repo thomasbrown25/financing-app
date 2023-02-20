@@ -35,7 +35,6 @@ function DefaultStatisticsCard({
   accountName,
   percentage,
   dropdown,
-  expense,
   accounts,
   cashAmount
 }) {
@@ -63,14 +62,6 @@ function DefaultStatisticsCard({
                 cashAmount={cashAmount}
                 accounts={accounts}
               />
-              <MDTypography
-                variant="h5"
-                fontWeight="bold"
-                className="pb-4"
-                color="primary"
-              >
-                {expense ? <Currency value={expense} /> : expense}
-              </MDTypography>
               <MDTypography
                 variant="button"
                 fontWeight="bold"
