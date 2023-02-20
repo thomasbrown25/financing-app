@@ -11,7 +11,7 @@ import Invoice from 'components/Invoices/invoice.component';
 
 const Invoices = ({ transactions }) => {
   return (
-    <Card sx={{ height: '100%' }}>
+    <>
       <MDBox
         pt={2}
         px={2}
@@ -39,7 +39,7 @@ const Invoices = ({ transactions }) => {
           ))}
         </MDBox>
       </MDBox>
-    </Card>
+    </>
   );
 };
 

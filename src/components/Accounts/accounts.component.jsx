@@ -28,15 +28,17 @@ import MDTypography from 'components/MDTypography';
 import { useMaterialUIController } from 'context';
 
 import Currency from 'components/Currency/currency.component';
-import CategoriesList from 'components/CategoriesList/categories-list.component';
+import AccountList from 'components/AccountList/account-list.component';
+import Invoices from 'components/Invoices/invoices.component';
 
-function DefaultStatisticsCard({
+function Accounts({
   title,
   accountName,
   percentage,
   dropdown,
   accounts,
-  cashAmount
+  cashAmount,
+  incomeTransactions
 }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
@@ -45,7 +47,7 @@ function DefaultStatisticsCard({
     <Card>
       <MDBox p={2}>
         <Grid container>
-          <Grid item xs={7}>
+          <Grid item xs={12}>
             <MDBox mb={0.5} lineHeight={1}>
               <MDTypography
                 variant="h6"
@@ -57,7 +59,7 @@ function DefaultStatisticsCard({
             </MDBox>
             <MDBox lineHeight={1}>
               {accountName}
-              <CategoriesList
+              <AccountList
                 title="Bank of America"
                 cashAmount={cashAmount}
                 accounts={accounts}
@@ -77,6 +79,7 @@ function DefaultStatisticsCard({
                 </MDTypography>
               </MDTypography>
             </MDBox>
+            <Invoices transactions={incomeTransactions} />
           </Grid>
           <Grid item xs={5}>
             {dropdown && (
@@ -100,8 +103,8 @@ function DefaultStatisticsCard({
   );
 }
 
-// Setting default values for the props of DefaultStatisticsCard
-DefaultStatisticsCard.defaultProps = {
+// Setting default values for the props of Accounts
+Accounts.defaultProps = {
   percentage: {
     color: 'success',
     value: '',
@@ -110,8 +113,8 @@ DefaultStatisticsCard.defaultProps = {
   dropdown: false
 };
 
-// Typechecking props for the DefaultStatisticsCard
-DefaultStatisticsCard.propTypes = {
+// Typechecking props for the Accounts
+Accounts.propTypes = {
   title: PropTypes.string.isRequired,
   count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   percentage: PropTypes.shape({
@@ -138,4 +141,4 @@ DefaultStatisticsCard.propTypes = {
   ])
 };
 
-export default DefaultStatisticsCard;
+export default Accounts;

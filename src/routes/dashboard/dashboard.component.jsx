@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
-import CategoriesList from 'components/CategoriesList/categories-list.component';
 import Invoices from 'components/Invoices/invoices.component';
 import MDTypography from 'components/MDTypography';
 import DashboardNavbar from 'components/Navbar/DashboardNavbar';
@@ -10,7 +9,7 @@ import MainLayout from 'layouts/main-layout';
 import PlaidLinkComponent from 'components/plaid-link/plaid-link.component';
 
 import ItemContainer from 'components/ItemContainer/item-container.component';
-import DefaultStatisticsCard from 'components/DefaultStatisticsCard';
+import Accounts from 'components/Accounts/accounts.component';
 
 // actions
 import { createLinkToken, updateLinkToken } from 'store/user/user.action';
@@ -19,6 +18,9 @@ import {
   getTransactions
 } from 'store/transactions/transactions.action';
 import { getLiabilities } from 'store/liabilities/liabilities.action';
+import Header from 'components/Header/header.component';
+import Calendar from 'components/Calendar/calendar.component';
+import Transactions from 'components/Transactions/transactions.component';
 
 const Dashboard = ({
   user: { currentUser, isLinkValid, loading },
@@ -78,32 +80,26 @@ const Dashboard = ({
         />
       )}
       <Grid container spacing={2} className="jc-center">
+        <Header />
         <ItemContainer>
-          <DefaultStatisticsCard
+          <Accounts
             title={'Accounts'}
             income={'currentMonthIncome'}
             expense={'currentMonthExpense'}
             description={'Totals for current month'}
+            dropdown={true}
             accounts={accounts}
             cashAmount={cashAmount}
+            incomeTransactions={incomeTransactions}
           />
         </ItemContainer>
 
         <ItemContainer>
-          <CategoriesList
-            title="credit"
-            accounts={[
-              {
-                name: 'BOA Credit Card',
-                officialName: 'BOA',
-                balance: { available: '$2,307' }
-              }
-            ]}
-          />
+          <Transactions />
         </ItemContainer>
 
         <ItemContainer>
-          <Invoices transactions={incomeTransactions} />
+          <Calendar />
         </ItemContainer>
       </Grid>
     </MainLayout>

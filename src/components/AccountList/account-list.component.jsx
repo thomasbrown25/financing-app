@@ -13,7 +13,7 @@ import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 import Currency from 'components/Currency/currency.component';
 
-function CategoriesList({ title, accounts, cashAmount, ...rest }) {
+function AccountList({ title, accounts, cashAmount, ...rest }) {
   const renderItems = accounts?.map(
     ({ name, balance: { available }, officialName }, key) => (
       <MDBox
@@ -116,10 +116,10 @@ function CategoriesList({ title, accounts, cashAmount, ...rest }) {
   );
 }
 
-// Typechecking props for the CategoriesList
-CategoriesList.propTypes = {
+// Typechecking props for the AccountList
+AccountList.propTypes = {
   title: PropTypes.string.isRequired,
   accounts: PropTypes.arrayOf(PropTypes.object)
 };
 
-export default CategoriesList;
+export default AccountList;
