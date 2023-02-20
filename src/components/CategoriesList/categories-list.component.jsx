@@ -11,8 +11,9 @@ import Icon from '@mui/material/Icon';
 // Material Dashboard 2 PRO React components
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
+import Currency from 'components/Currency/currency.component';
 
-function CategoriesList({ title, accounts, ...rest }) {
+function CategoriesList({ title, accounts, cashAmount, ...rest }) {
   const renderItems = accounts?.map(
     ({ name, balance: { available }, officialName }, key) => (
       <MDBox
@@ -67,7 +68,7 @@ function CategoriesList({ title, accounts, ...rest }) {
                   color="text"
                   fontWeight="medium"
                 >
-                  {available}
+                  <Currency value={available} />
                 </MDTypography>
               </>
             </MDTypography>
@@ -99,12 +100,11 @@ function CategoriesList({ title, accounts, ...rest }) {
   return (
     <Card {...rest}>
       <MDBox pt={2} px={2}>
-        <MDTypography
-          variant="h6"
-          fontWeight="medium"
-          textTransform="capitalize"
-        >
-          {title}
+        <MDTypography variant="h6" fontWeight="bold" color="success">
+          <MDTypography component="span" variant="h6" fontWeight="bold">
+            {title}:{' '}
+          </MDTypography>
+          <Currency value={cashAmount} />
         </MDTypography>
       </MDBox>
       <MDBox p={2}>
@@ -119,7 +119,7 @@ function CategoriesList({ title, accounts, ...rest }) {
 // Typechecking props for the CategoriesList
 CategoriesList.propTypes = {
   title: PropTypes.string.isRequired,
-  accounts: PropTypes.arrayOf(PropTypes.object).isRequired
+  accounts: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default CategoriesList;

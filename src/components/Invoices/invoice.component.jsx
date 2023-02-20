@@ -61,8 +61,8 @@ Invoice.defaultProps = {
 // Typechecking props for the Invoice
 Invoice.propTypes = {
   date: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
   noGutter: PropTypes.bool
 };
 

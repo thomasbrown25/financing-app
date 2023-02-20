@@ -7,6 +7,10 @@ import Invoices from 'components/Invoices/invoices.component';
 import MDTypography from 'components/MDTypography';
 import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';
+import PlaidLinkComponent from 'components/plaid-link/plaid-link.component';
+
+import ItemContainer from 'components/ItemContainer/item-container.component';
+import DefaultStatisticsCard from 'components/DefaultStatisticsCard';
 
 // actions
 import { createLinkToken, updateLinkToken } from 'store/user/user.action';
@@ -14,7 +18,7 @@ import {
   getRecurringTransactions,
   getTransactions
 } from 'store/transactions/transactions.action';
-import PlaidLinkComponent from 'components/plaid-link/plaid-link.component';
+import { getLiabilities } from 'store/liabilities/liabilities.action';
 
 const Dashboard = ({
   user: { currentUser, isLinkValid, loading },
@@ -23,10 +27,13 @@ const Dashboard = ({
     transactions,
     expenseTransactions,
     incomeTransactions,
-    recurringTransactions
+    recurringTransactions,
+    cashAmount
   },
+  liabilities: { liabilities },
   getTransactions,
   getRecurringTransactions,
+  getLiabilities,
   createLinkToken
 }) => {
   useEffect(() => {
@@ -54,6 +61,13 @@ const Dashboard = ({
       getRecurringTransactions();
     }
   }, [currentUser?.accessToken, getRecurringTransactions, loading]);
+
+  useEffect(() => {
+    if (currentUser?.accessToken) {
+      getLiabilities();
+    }
+  }, [currentUser?.accessToken, getLiabilities, loading]);
+
   return (
     <MainLayout>
       <DashboardNavbar />
@@ -64,13 +78,18 @@ const Dashboard = ({
         />
       )}
       <Grid container spacing={2} className="jc-center">
-        <Grid item xs={12} sm={4} />
-        <Grid item xs={12} sm={4}>
-          <CategoriesList title="cash" accounts={accounts} />
-        </Grid>
-        <Grid item xs={12} sm={4} />
-        <Grid item xs={12} sm={4} />
-        <Grid item xs={12} sm={4}>
+        <ItemContainer>
+          <DefaultStatisticsCard
+            title={'Accounts'}
+            income={'currentMonthIncome'}
+            expense={'currentMonthExpense'}
+            description={'Totals for current month'}
+            accounts={accounts}
+            cashAmount={cashAmount}
+          />
+        </ItemContainer>
+
+        <ItemContainer>
           <CategoriesList
             title="credit"
             accounts={[
@@ -81,58 +100,11 @@ const Dashboard = ({
               }
             ]}
           />
-        </Grid>
-        <Grid item xs={12} sm={4} />
-        <Grid item xs={12} sm={4} />
-        <Grid item xs={12} sm={4}>
-          {/* <CategoriesList
-            title="loans"
-            categories={[
-              {
-                color: 'dark',
-                icon: 'currency_exchange',
-                name: 'Student Loan',
-                description: (
-                  <>
-                    SoFi -{' '}
-                    <MDTypography
-                      variant="caption"
-                      color="text"
-                      fontWeight="medium"
-                    >
-                      $4,802
-                    </MDTypography>
-                  </>
-                ),
-                route: '/'
-              },
-              {
-                color: 'dark',
-                icon: 'currency_exchange',
-                name: 'Personal Loan',
-                description: (
-                  <>
-                    Upgrade -{' '}
-                    <MDTypography
-                      variant="caption"
-                      color="text"
-                      fontWeight="medium"
-                    >
-                      $3,731
-                    </MDTypography>
-                  </>
-                ),
-                route: '/'
-              }
-            ]}
-          /> */}
-        </Grid>
-        <Grid item xs={12} sm={4} />
-        <Grid item xs={12} sm={4} />
-        <Grid item xs={12} sm={4}>
+        </ItemContainer>
+
+        <ItemContainer>
           <Invoices transactions={incomeTransactions} />
-        </Grid>
-        <Grid item xs={12} sm={4} />
+        </ItemContainer>
       </Grid>
     </MainLayout>
   );
@@ -140,20 +112,24 @@ const Dashboard = ({
 Dashboard.propTypes = {
   user: PropTypes.object.isRequired,
   transactions: PropTypes.object.isRequired,
+  liabilities: PropTypes.object.isRequired,
   createLinkToken: PropTypes.func.isRequired,
   updateLinkToken: PropTypes.func.isRequired,
   getRecurringTransactions: PropTypes.func.isRequired,
-  getTransactions: PropTypes.func.isRequired
+  getTransactions: PropTypes.func.isRequired,
+  getLiabilities: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  transactions: state.transactions
+  transactions: state.transactions,
+  liabilities: state.liabilities
 });
 
 export default connect(mapStateToProps, {
   createLinkToken,
   updateLinkToken,
   getRecurringTransactions,
-  getTransactions
+  getTransactions,
+  getLiabilities
 })(Dashboard);

@@ -31,6 +31,7 @@ const Invoices = ({ transactions }) => {
           {transactions?.slice(0, 5).map((transaction, i) => (
             <Invoice
               key={i}
+              id={i}
               title={transaction.description}
               date={transaction.dueDate}
               price={transaction.lastAmount}

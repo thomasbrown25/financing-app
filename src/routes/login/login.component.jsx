@@ -24,6 +24,7 @@ import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 import MDInput from 'components/MDInput';
 import MDButton from 'components/MDButton';
+import MDAlert from 'components/MDAlert';
 
 // Authentication layout components
 import BasicLayout from 'layouts/authentication/BasicLayout';
@@ -39,8 +40,14 @@ const defaultFormData = {
 
 const Login = ({ login, user: { isAuthenticated, error } }) => {
   const [rememberMe, setRememberMe] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const handleLoginError = () => {
+    setLoginError(error.message);
+    alert('There was an issue logging in. Please contact administration.');
+  };
 
   const [formData, setFormData] = useState(defaultFormData);
   const { email, password } = formData;
@@ -48,6 +55,12 @@ const Login = ({ login, user: { isAuthenticated, error } }) => {
 
   useEffect(() => {
     isAuthenticated && navigate('/dashboard');
+  });
+
+  useEffect(() => {
+    if (error?.message) {
+      handleLoginError();
+    }
   });
 
   const onChange = (e) =>
