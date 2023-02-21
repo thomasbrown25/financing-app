@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 import MDTypography from 'components/MDTypography';
 import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';
-import PlaidLinkComponent from 'components/plaid-link/plaid-link.component';
+import PlaidLink from 'components/plaid-link/plaid-link.component';
 
 import ItemContainer from 'components/ItemContainer/item-container.component';
 import Accounts from 'components/Accounts/accounts.component';
@@ -72,8 +72,8 @@ const Dashboard = ({
   return (
     <MainLayout>
       <DashboardNavbar />
-      {!currentUser?.linkToken && (
-        <PlaidLinkComponent
+      {!currentUser?.accessToken && (
+        <PlaidLink
           linkToken={currentUser?.linkToken}
           isLinkValid={isLinkValid}
         />

@@ -12,17 +12,18 @@ import Moment from 'react-moment';
 import moment from 'moment';
 
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MDInput from 'components/MDInput';
 import MDDatePicker from 'components/MDDatePicker';
 import { TextField } from '@mui/material';
+import { useMaterialUIController } from 'context';
+import theme from 'assets/theme';
 
-const modalStyle = {
+const defaultModalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 600,
   bgcolor: 'background.paper',
   borderRadius: '5px',
   boxShadow: 12,
@@ -34,9 +35,24 @@ const defaultFormData = {
   newDate: ''
 };
 
-function Income({ dueDate, title, price, noGutter }) {
-  const [open, setOpen] = useState(false);
+const Income = ({ dueDate, title, price, noGutter }) => {
+  const { palette } = theme;
+  const { primary, background } = palette;
+  const [controller, dispatch] = useMaterialUIController();
+  const { darkMode } = controller;
 
+  const [modalStyle, setModalStyle] = useState(defaultModalStyle);
+
+  useEffect(() => {
+    if (darkMode) {
+      modalStyle.bgcolor = background.dark;
+    } else {
+      modalStyle.bgcolor = background.white;
+    }
+    console.log('checking dark mode');
+  }, [darkMode]);
+
+  const [open, setOpen] = useState(false);
   const handleOpen = () => {
     console.log('edit click');
     setOpen(true);
@@ -122,9 +138,9 @@ function Income({ dueDate, title, price, noGutter }) {
             mb={2}
           >
             <TextField
-              label="Next Payment ex. 4/13"
+              label="Next Payment (month/day)"
               name="nextpayment"
-              defaultValue={dueDate}
+              defaultValue={moment(dueDate).format('MM/DD')}
               onChange={onChange}
             />
           </MDTypography>{' '}
@@ -149,7 +165,7 @@ function Income({ dueDate, title, price, noGutter }) {
       </Modal>
     </>
   );
-}
+};
 
 // Setting default values for the props of Income
 Income.defaultProps = {

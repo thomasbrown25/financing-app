@@ -20,7 +20,7 @@ import borders from 'assets/theme/base/borders';
 // Material Dashboard 2 PRO React helper functions
 import pxToRem from 'assets/theme/functions/pxToRem';
 
-const { primary } = colors;
+const { background } = colors;
 const { borderRadius } = borders;
 
 const sidenav = {
@@ -33,7 +33,7 @@ const sidenav = {
 
     paper: {
       width: pxToRem(250),
-      backgroundColor: primary.main,
+      backgroundColor: background.white,
       height: `calc(100vh - ${pxToRem(32)})`,
       margin: pxToRem(16),
       borderRadius: borderRadius.xl,

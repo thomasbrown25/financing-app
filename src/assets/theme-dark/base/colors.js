@@ -23,7 +23,9 @@ const colors = {
   background: {
     default: '#1a2035',
     sidenav: '#344675',
-    card: '#202940'
+    card: '#202940',
+    dark: '#202940',
+    white: '#ffffff'
   },
 
   text: {

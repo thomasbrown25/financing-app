@@ -22,7 +22,9 @@ Coded by www.creative-tim.com
 const colors = {
   background: {
     default: '#f0f2f5',
-    sidenav: '#202940'
+    sidenav: '#202940',
+    dark: '#202940',
+    white: '#ffffff'
   },
 
   text: {
