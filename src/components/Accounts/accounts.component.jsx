@@ -29,7 +29,7 @@ import { useMaterialUIController } from 'context';
 
 import Currency from 'components/Currency/currency.component';
 import AccountList from 'components/AccountList/account-list.component';
-import Invoices from 'components/Invoices/invoices.component';
+import Incomes from 'components/Income/incomes.component';
 
 function Accounts({
   title,
@@ -79,9 +79,9 @@ function Accounts({
                 </MDTypography>
               </MDTypography>
             </MDBox>
-            <Invoices transactions={incomeTransactions} />
+            <Incomes transactions={incomeTransactions} />
           </Grid>
-          <Grid item xs={5}>
+          {/* <Grid item xs={5}>
             {dropdown && (
               <MDBox width="100%" textAlign="right" lineHeight={1}>
                 <MDTypography
@@ -96,7 +96,7 @@ function Accounts({
                 {dropdown.menu}
               </MDBox>
             )}
-          </Grid>
+          </Grid> */}
         </Grid>
       </MDBox>
     </Card>

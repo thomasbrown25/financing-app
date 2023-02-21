@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
-import Invoices from 'components/Invoices/invoices.component';
 import MDTypography from 'components/MDTypography';
 import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';

@@ -7,9 +7,10 @@ import MDTypography from 'components/MDTypography';
 import MDButton from 'components/MDButton';
 
 // Billing page components
-import Invoice from 'components/Invoices/invoice.component';
+import Income from './income.component';
+import Moment from 'react-moment';
 
-const Invoices = ({ transactions }) => {
+const Incomes = ({ transactions }) => {
   return (
     <>
       <MDBox
@@ -29,11 +30,11 @@ const Invoices = ({ transactions }) => {
       <MDBox p={2}>
         <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
           {transactions?.slice(0, 5).map((transaction, i) => (
-            <Invoice
+            <Income
               key={i}
               id={i}
               title={transaction.description}
-              date={transaction.dueDate}
+              dueDate={transaction.dueDate}
               price={transaction.lastAmount}
             />
           ))}
@@ -43,4 +44,4 @@ const Invoices = ({ transactions }) => {
   );
 };
 
-export default Invoices;
+export default Incomes;
