@@ -103,7 +103,7 @@ const Income = ({ dueDate, title, price, noGutter }) => {
             <MDTypography variant="button" fontWeight="bold">
               &nbsp;PDF
             </MDTypography>{' '}
-            <Icon fontSize="small" onClick={handleOpen}>
+            <Icon fontSize="small" onClick={handleOpen} color="text">
               edit
             </Icon>
           </MDBox>

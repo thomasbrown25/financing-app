@@ -5,8 +5,8 @@ const initialState = {
   recentTransactions: null,
   categories: { labels: null, amounts: null, list: null },
   recurringTransactions: null,
-  accounts: null,
-  cashAmount: null,
+  cashAccounts: { accounts: null, totalAmount: null },
+  creditAccounts: { accounts: null, totalAmount: null },
   expenseTransactions: null,
   incomeTransactions: null,
   currentMonthExpense: 0,
@@ -23,8 +23,16 @@ const transactionsReducer = (state = initialState, action) => {
       return {
         ...state,
         transactions: payload.transactions,
-        accounts: payload.accounts,
-        cashAmount: payload.cashAmount
+        cashAccounts: {
+          ...state.cashAccounts,
+          accounts: payload.cashAccounts,
+          totalAmount: payload.cashAmount
+        },
+        creditAccounts: {
+          ...state.creditAccounts,
+          accounts: payload.creditAccounts,
+          totalAmount: payload.creditAmount
+        }
       };
 
     case TRANSACTIONS_ACTION_TYPES.GET_RECENT_TRANSACTIONS_SUCCESS:

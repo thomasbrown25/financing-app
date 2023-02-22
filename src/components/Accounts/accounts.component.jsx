@@ -30,14 +30,14 @@ import { useMaterialUIController } from 'context';
 import Currency from 'components/Currency/currency.component';
 import AccountList from 'components/AccountList/account-list.component';
 import Incomes from 'components/Income/incomes.component';
+import MDButton from 'components/MDButton';
 
 function Accounts({
   title,
-  accountName,
   percentage,
   dropdown,
-  accounts,
-  cashAmount,
+  cashAccounts,
+  creditAccounts,
   incomeTransactions
 }) {
   const [controller] = useMaterialUIController();
@@ -57,13 +57,29 @@ function Accounts({
                 {title}
               </MDTypography>
             </MDBox>
+
             <MDBox lineHeight={1}>
-              {accountName}
-              <AccountList
-                title="Bank of America"
-                cashAmount={cashAmount}
-                accounts={accounts}
-              />
+              {/* CASH ACCOUNTS */}
+              <AccountList title="Bank of America" accountList={cashAccounts} />
+              <MDTypography
+                variant="button"
+                fontWeight="bold"
+                color={percentage.color}
+              >
+                {percentage.value}&nbsp;
+                <MDTypography
+                  variant="button"
+                  fontWeight="regular"
+                  color={darkMode ? 'text' : 'secondary'}
+                >
+                  {percentage.label}
+                </MDTypography>
+              </MDTypography>
+            </MDBox>
+
+            <MDBox lineHeight={1}>
+              {/* CREDIT ACCOUNTS */}
+              <AccountList title="Credit" accountList={creditAccounts} />
               <MDTypography
                 variant="button"
                 fontWeight="bold"

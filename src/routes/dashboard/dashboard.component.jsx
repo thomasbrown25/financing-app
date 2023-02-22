@@ -7,8 +7,13 @@ import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';
 import PlaidLink from 'components/plaid-link/plaid-link.component';
 
+// components
+import Header from 'components/Header/header.component';
 import ItemContainer from 'components/ItemContainer/item-container.component';
 import Accounts from 'components/Accounts/accounts.component';
+import Calendar from 'components/Calendar/calendar.component';
+import Transactions from 'components/Transactions/transactions.component';
+import UpcomingBills from 'components/UpcomingBills/upcoming-bills.component';
 
 // actions
 import { createLinkToken, updateLinkToken } from 'store/user/user.action';
@@ -17,19 +22,16 @@ import {
   getTransactions
 } from 'store/transactions/transactions.action';
 import { getLiabilities } from 'store/liabilities/liabilities.action';
-import Header from 'components/Header/header.component';
-import Calendar from 'components/Calendar/calendar.component';
-import Transactions from 'components/Transactions/transactions.component';
 
 const Dashboard = ({
   user: { currentUser, isLinkValid, loading },
   transactions: {
-    accounts,
+    cashAccounts,
+    creditAccounts,
     transactions,
     expenseTransactions,
     incomeTransactions,
-    recurringTransactions,
-    cashAmount
+    recurringTransactions
   },
   liabilities: { liabilities },
   getTransactions,
@@ -87,19 +89,23 @@ const Dashboard = ({
             expense={'currentMonthExpense'}
             description={'Totals for current month'}
             dropdown={true}
-            accounts={accounts}
-            cashAmount={cashAmount}
+            cashAccounts={cashAccounts}
+            creditAccounts={creditAccounts}
             incomeTransactions={incomeTransactions}
           />
         </ItemContainer>
 
         <ItemContainer>
-          <Transactions />
+          <UpcomingBills transactions={expenseTransactions} />
         </ItemContainer>
 
         <ItemContainer>
           <Calendar />
         </ItemContainer>
+
+        <Grid item xs={12} lg={12}>
+          <Transactions transactions={transactions} />
+        </Grid>
       </Grid>
     </MainLayout>
   );

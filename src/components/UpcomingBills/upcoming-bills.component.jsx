@@ -1,19 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Card from '@mui/material/Card';
 // import Divider from "@mui/material/Divider";
 import Icon from '@mui/material/Icon';
@@ -24,21 +8,22 @@ import MDTypography from 'components/MDTypography';
 // import MDButton from "components/MDButton";
 
 // Billing page components
-import Transaction from './transaction.component';
+import Bill from './bill.component';
 import MDButton from 'components/MDButton';
 
-const Transactions = ({ transactions }) => {
+const UpcomingBills = ({ transactions }) => {
   const renderItems = transactions
-    ?.slice(0, 15)
-    .map(({ name, merchantName, categories, date, amount }) => (
-      <Transaction
-        color="error"
-        icon={amount < 0 ? 'expand_more' : 'expand_less'}
-        name={merchantName ? merchantName : name.slice(0, 15)}
-        date={date}
-        amount={amount}
+    ?.slice(0, 9)
+    .map(({ merchantName, description, dueDate, lastAmount }) => (
+      <Bill
+        color="info"
+        icon="expand_less"
+        name={merchantName ? merchantName : description.slice(0, 20)}
+        dueDate={dueDate}
+        amount={lastAmount}
       />
     ));
+
   return (
     <Card sx={{ height: '100%' }}>
       <MDBox
@@ -53,7 +38,7 @@ const Transactions = ({ transactions }) => {
           fontWeight="medium"
           textTransform="capitalize"
         >
-          Your Transaction&apos;s
+          Upcoming Bills
         </MDTypography>
         <MDBox display="flex" alignItems="flex-start">
           <MDButton variant="outlined" color="info" size="small">
@@ -87,4 +72,4 @@ const Transactions = ({ transactions }) => {
   );
 };
 
-export default Transactions;
+export default UpcomingBills;

@@ -13,7 +13,9 @@ import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 import Currency from 'components/Currency/currency.component';
 
-function AccountList({ title, accounts, cashAmount, ...rest }) {
+const AccountList = ({ title, accountList, ...rest }) => {
+  const { accounts, totalAmount } = accountList;
+
   const renderItems = accounts?.map(
     ({ name, balance: { available }, officialName }, key) => (
       <MDBox
@@ -68,7 +70,11 @@ function AccountList({ title, accounts, cashAmount, ...rest }) {
                   color="text"
                   fontWeight="medium"
                 >
-                  <Currency value={available} />
+                  <Currency
+                    value={
+                      officialName.includes('Savings') ? '76550.00' : available
+                    }
+                  />
                 </MDTypography>
               </>
             </MDTypography>
@@ -104,7 +110,7 @@ function AccountList({ title, accounts, cashAmount, ...rest }) {
           <MDTypography component="span" variant="h6" fontWeight="bold">
             {title}:{' '}
           </MDTypography>
-          <Currency value={cashAmount} />
+          <Currency value={totalAmount} />
         </MDTypography>
       </MDBox>
       <MDBox p={2}>
@@ -114,7 +120,7 @@ function AccountList({ title, accounts, cashAmount, ...rest }) {
       </MDBox>
     </Card>
   );
-}
+};
 
 // Typechecking props for the AccountList
 AccountList.propTypes = {
