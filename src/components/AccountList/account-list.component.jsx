@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 // react-router-dom components
 import { Link } from 'react-router-dom';
 
@@ -13,11 +14,25 @@ import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 import Currency from 'components/Currency/currency.component';
 
-const AccountList = ({ title, accountList, ...rest }) => {
+import { getAccountTransactions } from 'store/transactions/transactions.action';
+
+const AccountList = ({
+  title,
+  accountList,
+  getAccountTransactions,
+  ...rest
+}) => {
   const { accounts, totalAmount } = accountList;
 
+  const handleAccountSelect = (accountId) => {
+    getAccountTransactions(accountId);
+  };
+
   const renderItems = accounts?.map(
-    ({ name, balance: { available }, officialName }, key) => (
+    (
+      { id, name, balance: { available, current }, officialName, type },
+      key
+    ) => (
       <MDBox
         key={name}
         component="li"
@@ -72,7 +87,9 @@ const AccountList = ({ title, accountList, ...rest }) => {
                 >
                   <Currency
                     value={
-                      officialName.includes('Savings') ? '76550.00' : available
+                      type.toLowerCase().includes('credit')
+                        ? current
+                        : available
                     }
                   />
                 </MDTypography>
@@ -83,9 +100,10 @@ const AccountList = ({ title, accountList, ...rest }) => {
         <MDBox display="flex">
           <MDTypography
             component={Link}
+            onClick={() => handleAccountSelect(id)}
             variant="button"
             color={'dark'}
-            to={'/'}
+            to={`/accounts/account`}
             sx={{
               lineHeight: 0,
               transition: 'all 0.2s cubic-bezier(.34,1.61,.7,1.3)',
@@ -125,7 +143,8 @@ const AccountList = ({ title, accountList, ...rest }) => {
 // Typechecking props for the AccountList
 AccountList.propTypes = {
   title: PropTypes.string.isRequired,
-  accounts: PropTypes.arrayOf(PropTypes.object)
+  accounts: PropTypes.arrayOf(PropTypes.object),
+  getAccountTransactions: PropTypes.func.isRequired
 };
 
-export default AccountList;
+export default connect(null, { getAccountTransactions })(AccountList);

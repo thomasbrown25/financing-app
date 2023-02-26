@@ -29,8 +29,8 @@ const Dashboard = ({
     cashAccounts,
     creditAccounts,
     transactions,
-    expenseTransactions,
-    incomeTransactions,
+    expenses,
+    incomes,
     recurringTransactions
   },
   liabilities: { liabilities },
@@ -91,16 +91,16 @@ const Dashboard = ({
             dropdown={true}
             cashAccounts={cashAccounts}
             creditAccounts={creditAccounts}
-            incomeTransactions={incomeTransactions}
+            incomes={incomes}
           />
         </ItemContainer>
 
         <ItemContainer>
-          <UpcomingBills transactions={expenseTransactions} />
+          <UpcomingBills transactions={expenses} />
         </ItemContainer>
 
         <ItemContainer>
-          <Calendar />
+          <Calendar events={recurringTransactions} />
         </ItemContainer>
 
         <Grid item xs={12} lg={12}>

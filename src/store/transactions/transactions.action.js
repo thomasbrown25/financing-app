@@ -30,7 +30,6 @@ export const getTransactions = () => async (dispatch) => {
  **/
 export const getRecentTransactions = () => async (dispatch) => {
   try {
-    console.log('calling recent transactions');
     const response = await api.get('/transactions/recent');
 
     dispatch({
@@ -85,8 +84,7 @@ export const getRecurringTransactions = () => async (dispatch) => {
   try {
     const response = await api.get('/transactions/recurring');
 
-    console.log(' ********** GET RECURRING ********** ');
-    console.log(response.data);
+    console.log(response.data.data);
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_RECURRING_TRANSACTIONS_SUCCESS,
@@ -96,6 +94,45 @@ export const getRecurringTransactions = () => async (dispatch) => {
     console.log(error, error.message);
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_RECURRING_TRANSACTIONS_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
+/** Calls the financing-api service to get the recurring transactions
+ ** GET: "/transactions/recurring"
+ * @param reqBody: string: accessToken
+ **/
+export const getExpenses = () => async (dispatch) => {
+  try {
+    const response = await api.get('/transactions/expenses');
+
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
+export const getAccountTransactions = (accountId) => async (dispatch) => {
+  try {
+    const response = await api.get(
+      `/transactions/account-transactions/${accountId}`
+    );
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_FAILED,
       payload: error?.response
     });
   }

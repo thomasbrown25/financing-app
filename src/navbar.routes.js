@@ -52,9 +52,9 @@ const navbarRoutes = [
   },
   {
     type: 'collapse',
-    name: 'Recurring',
-    key: 'recurring',
-    route: '/recurring',
+    name: 'Upcoming',
+    key: 'upcoming',
+    route: '/upcoming',
     icon: <Icon fontSize="medium">today</Icon>,
     noCollapse: true
   },

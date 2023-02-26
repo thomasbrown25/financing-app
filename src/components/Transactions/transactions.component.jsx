@@ -8,12 +8,13 @@
 
 Coded by www.creative-tim.com
 
- =========================================================
+=========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
 // @mui material components
+import { useState } from 'react';
 import Card from '@mui/material/Card';
 // import Divider from "@mui/material/Divider";
 import Icon from '@mui/material/Icon';
@@ -27,18 +28,25 @@ import MDTypography from 'components/MDTypography';
 import Transaction from './transaction.component';
 import MDButton from 'components/MDButton';
 
-const Transactions = ({ transactions }) => {
+const Transactions = ({ transactions, viewMore = false, viewAll = true }) => {
+  const [count, setCount] = useState(10);
+
+  const handleViewMore = () => {
+    setCount(count + 10);
+  };
+
   const renderItems = transactions
-    ?.slice(0, 15)
+    ?.slice(0, count)
     .map(({ name, merchantName, categories, date, amount }) => (
       <Transaction
-        color="error"
-        icon={amount < 0 ? 'expand_more' : 'expand_less'}
-        name={merchantName ? merchantName : name.slice(0, 15)}
+        color={amount > 0 ? 'error' : 'info'}
+        icon={amount > 0 ? 'expand_more' : 'expand_less'}
+        name={merchantName ? merchantName : name.slice(0, 30)}
         date={date}
-        amount={amount}
+        amount={amount * -1}
       />
     ));
+
   return (
     <Card sx={{ height: '100%' }}>
       <MDBox
@@ -55,11 +63,13 @@ const Transactions = ({ transactions }) => {
         >
           Your Transaction&apos;s
         </MDTypography>
-        <MDBox display="flex" alignItems="flex-start">
-          <MDButton variant="outlined" color="info" size="small">
-            view all
-          </MDButton>
-        </MDBox>
+        {viewAll && (
+          <MDBox display="flex" alignItems="flex-start">
+            <MDButton variant="outlined" color="info" size="small">
+              view all
+            </MDButton>
+          </MDBox>
+        )}
       </MDBox>
       <MDBox pt={3} pb={2} px={2}>
         <MDBox mb={2}>
@@ -82,6 +92,19 @@ const Transactions = ({ transactions }) => {
         >
           {renderItems}
         </MDBox>
+
+        {viewMore && (
+          <MDBox display="flex" justifyContent="right">
+            <MDButton
+              variant="outlined"
+              color="info"
+              size="small"
+              onClick={handleViewMore}
+            >
+              view more
+            </MDButton>
+          </MDBox>
+        )}
       </MDBox>
     </Card>
   );

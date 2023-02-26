@@ -38,7 +38,7 @@ function Accounts({
   dropdown,
   cashAccounts,
   creditAccounts,
-  incomeTransactions
+  incomes
 }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
@@ -95,7 +95,7 @@ function Accounts({
                 </MDTypography>
               </MDTypography>
             </MDBox>
-            <Incomes transactions={incomeTransactions} />
+            <Incomes transactions={incomes} />
           </Grid>
           {/* <Grid item xs={5}>
             {dropdown && (

@@ -7,8 +7,9 @@ const initialState = {
   recurringTransactions: null,
   cashAccounts: { accounts: null, totalAmount: null },
   creditAccounts: { accounts: null, totalAmount: null },
-  expenseTransactions: null,
-  incomeTransactions: null,
+  selectedTransactions: null,
+  expenses: null,
+  incomes: null,
   currentMonthExpense: 0,
   currentMonthIncome: 0,
   error: null,
@@ -51,8 +52,14 @@ const transactionsReducer = (state = initialState, action) => {
       return {
         ...state,
         recurringTransactions: payload.transactions,
-        expenseTransactions: payload.expense,
-        incomeTransactions: payload.income
+        expenses: payload.expenses,
+        incomes: payload.incomes
+      };
+
+    case TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_SUCCESS:
+      return {
+        ...state,
+        expenses: payload.expenses
       };
 
     case TRANSACTIONS_ACTION_TYPES.GET_CURRENT_SPEND_MONTH_SUCCESS:
@@ -62,9 +69,17 @@ const transactionsReducer = (state = initialState, action) => {
         currentMonthIncome: payload.income
       };
 
+    case TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        selectedTransactions: payload.transactions
+      };
+
     case TRANSACTIONS_ACTION_TYPES.GET_RECENT_TRANSACTIONS_FAILED:
     case TRANSACTIONS_ACTION_TYPES.GET_RECURRING_TRANSACTIONS_FAILED:
+    case TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_FAILED:
     case TRANSACTIONS_ACTION_TYPES.GET_CURRENT_SPEND_MONTH_FAILED:
+    case TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_FAILED:
       return {
         ...state,
         error: payload

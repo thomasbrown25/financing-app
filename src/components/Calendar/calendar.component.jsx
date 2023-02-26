@@ -18,6 +18,9 @@ import CalendarRoot from './calendar-root.component';
 
 // Material Dashboard 2 PRO React context
 import { useMaterialUIController } from 'context';
+import CalendarTooltip from 'components/CalendarTooltip/calendar-tooltip.component';
+import MDButton from 'components/MDButton';
+import Currency from 'components/Currency/currency.component';
 
 function Calendar({ header, ...rest }) {
   const [controller] = useMaterialUIController();
@@ -35,13 +38,32 @@ function Calendar({ header, ...rest }) {
   ];
 
   const events = rest.events
-    ? rest.events.map((el) => ({
-        ...el,
-        className: validClassNames.find((item) => item === el.className)
-          ? `event-${el.className}`
-          : 'event-info'
+    ? rest.events.map((item) => ({
+        title: item.merchantName
+          ? item.merchantName
+          : item.description?.slice(0, 30),
+        date: item.dueDate,
+        className:
+          item.type.toLowerCase() === 'expense' ? `event-info` : 'event-success'
       }))
     : [];
+
+  const renderEvent = (eventInfo) => {
+    console.log(eventInfo);
+    return (
+      <>
+        <CalendarTooltip
+          title={
+            <MDTypography color="inherit">
+              {eventInfo.event.title} {eventInfo.event.dueDate}
+            </MDTypography>
+          }
+        >
+          <div className="fc-event-title">{eventInfo.event.title}</div>
+        </CalendarTooltip>
+      </>
+    );
+  };
 
   return (
     <Card sx={{ height: '100%' }}>
@@ -69,9 +91,14 @@ function Calendar({ header, ...rest }) {
       <CalendarRoot p={2} ownerState={{ darkMode }}>
         <FullCalendar
           {...rest}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          selectable
+          editable
+          plugins={[dayGridPlugin, interactionPlugin]}
           events={events}
           height="100%"
+          views={['dayGridMonth', 'dayGridWeek', 'dayGridDay']}
+          displayEventTime={false}
+          eventContent={renderEvent}
         />
       </CalendarRoot>
     </Card>

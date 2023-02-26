@@ -10,10 +10,18 @@ import MDTypography from 'components/MDTypography';
 // Billing page components
 import Bill from './bill.component';
 import MDButton from 'components/MDButton';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
-const UpcomingBills = ({ transactions }) => {
+const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
+  const [count, setCount] = useState(10);
+
+  const handleViewMore = () => {
+    setCount(count + 10);
+  };
+
   const renderItems = transactions
-    ?.slice(0, 9)
+    ?.slice(0, count)
     .map(({ merchantName, description, dueDate, lastAmount }) => (
       <Bill
         color="info"
@@ -40,11 +48,15 @@ const UpcomingBills = ({ transactions }) => {
         >
           Upcoming Bills
         </MDTypography>
-        <MDBox display="flex" alignItems="flex-start">
-          <MDButton variant="outlined" color="info" size="small">
-            view all
-          </MDButton>
-        </MDBox>
+        {viewAll && (
+          <MDBox display="flex" alignItems="flex-start">
+            <Link to="/upcoming">
+              <MDButton variant="outlined" color="info" size="small">
+                view all
+              </MDButton>
+            </Link>
+          </MDBox>
+        )}
       </MDBox>
       <MDBox pt={3} pb={2} px={2}>
         <MDBox mb={2}>
@@ -54,7 +66,7 @@ const UpcomingBills = ({ transactions }) => {
             fontWeight="bold"
             textTransform="uppercase"
           >
-            newest
+            Date
           </MDTypography>
         </MDBox>
         <MDBox
@@ -67,6 +79,18 @@ const UpcomingBills = ({ transactions }) => {
         >
           {renderItems}
         </MDBox>
+        {viewMore && (
+          <MDBox display="flex" justifyContent="right">
+            <MDButton
+              variant="outlined"
+              color="info"
+              size="small"
+              onClick={handleViewMore}
+            >
+              view more
+            </MDButton>
+          </MDBox>
+        )}
       </MDBox>
     </Card>
   );

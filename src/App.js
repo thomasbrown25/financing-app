@@ -45,6 +45,9 @@ import brandDark from 'assets/images/favicon.png';
 import Login from 'routes/login/login.component';
 import Dashboard from 'routes/dashboard/dashboard.component';
 import navbarRoutes from 'navbar.routes';
+import Account from 'routes/account/account.component';
+import Upcoming from 'routes/upcoming/upcoming.component';
+import MainLayout from 'layouts/main-layout';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -166,7 +169,9 @@ export default function App() {
         <Route path="sign-in" element={<Login />} />
         <Route path="sign-up" element={<Login />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route index path="/dashboard" element={<Dashboard />} />
+          <Route path="/accounts/account" element={<Account />} />
+          <Route path="/upcoming" element={<Upcoming />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
       </Routes>
