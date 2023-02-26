@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -6,23 +5,21 @@ import PropTypes from 'prop-types';
 import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';
 import { Grid } from '@mui/material';
-import ItemContainer from 'components/ItemContainer/item-container.component';
 import Header from 'components/Header/header.component';
 import Transactions from 'components/Transactions/transactions.component';
 
-// actions
-import { getAccountTransactions } from 'store/transactions/transactions.action';
-
-const Account = ({ transactions: { selectedTransactions } }) => {
-  useEffect(() => {
-    getAccountTransactions();
-  }, [getAccountTransactions]);
-
+const Account = ({
+  transactions: { selectedTransactions },
+  accounts: { account }
+}) => {
   return (
     <MainLayout>
       <DashboardNavbar />
       <Grid container spacing={2} className="jc-center">
-        <Header title={`Transactions`} />
+        <Header
+          title={`${account?.name}`}
+          subTitle={`${account?.officialName}`}
+        />
 
         <Grid item xs={12} sm={12} md={12} lg={3} />
 
@@ -31,6 +28,14 @@ const Account = ({ transactions: { selectedTransactions } }) => {
             transactions={selectedTransactions}
             viewAll={false}
             viewMore={true}
+            viewBalance={true}
+            header={`${account?.name} \u2022
+            \u2022 \u2022 ${account?.mask}`}
+            balance={
+              account?.type?.toLowerCase().includes('credit')
+                ? account.balanceCurrent
+                : account.balanceAvailable
+            }
           />
         </Grid>
 
@@ -40,11 +45,13 @@ const Account = ({ transactions: { selectedTransactions } }) => {
   );
 };
 Account.propTypes = {
-  transactions: PropTypes.object.isRequired
+  transactions: PropTypes.object.isRequired,
+  accounts: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  transactions: state.transactions
+  transactions: state.transactions,
+  accounts: state.accounts
 });
 
 export default connect(mapStateToProps, {})(Account);

@@ -1,3 +1,19 @@
+/**
+=========================================================
+* Material Dashboard 2 PRO React - v2.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+
+// prop-types is a library for typechecking of props
 import PropTypes from 'prop-types';
 
 // @mui material components
@@ -10,7 +26,7 @@ import MDButton from 'components/MDButton';
 import Currency from 'components/Currency/currency.component';
 import moment from 'moment';
 
-function Bill({ color, icon, name, dueDate, amount }) {
+function Transaction({ color, icon, name, date, amount }) {
   return (
     <MDBox key={name} component="li" py={1} pr={2} mb={1}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center">
@@ -22,11 +38,10 @@ function Bill({ color, icon, name, dueDate, amount }) {
           </MDBox>
           <MDBox display="flex" flexDirection="column">
             <MDTypography variant="button" fontWeight="medium" gutterBottom>
-              {name} {/*  <Icon fontSize="small">edit</Icon> */}
+              {name}
             </MDTypography>
-
             <MDTypography variant="caption" color="text" fontWeight="regular">
-              {moment(dueDate).format('M/DD')}
+              {moment(date).format('M/DD')}
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -43,8 +58,8 @@ function Bill({ color, icon, name, dueDate, amount }) {
   );
 }
 
-// Typechecking props of the Bill
-Bill.propTypes = {
+// Typechecking props of the Transaction
+Transaction.propTypes = {
   color: PropTypes.oneOf([
     'primary',
     'secondary',
@@ -56,9 +71,7 @@ Bill.propTypes = {
     'dark'
   ]).isRequired,
   icon: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired
 };
 
-export default Bill;
+export default Transaction;

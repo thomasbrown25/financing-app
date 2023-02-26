@@ -49,7 +49,6 @@ function Calendar({ header, ...rest }) {
     : [];
 
   const renderEvent = (eventInfo) => {
-    console.log(eventInfo);
     return (
       <>
         <CalendarTooltip

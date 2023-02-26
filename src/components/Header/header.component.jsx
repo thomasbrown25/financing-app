@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 
-const Header = ({ user: { currentUser }, title }) => {
+const Header = ({ user: { currentUser }, title, subTitle }) => {
   return (
     <Grid item xs={12} xl={12}>
       <MDBox
@@ -20,6 +20,9 @@ const Header = ({ user: { currentUser }, title }) => {
           textTransform="capitalize"
         >
           {title ? title : `Hi, ${currentUser?.firstname}`}
+          <MDTypography variant="h6" fontWeight="medium">
+            {subTitle && subTitle}
+          </MDTypography>
         </MDTypography>
       </MDBox>
     </Grid>

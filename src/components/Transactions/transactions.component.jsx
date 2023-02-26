@@ -25,10 +25,18 @@ import MDTypography from 'components/MDTypography';
 // import MDButton from "components/MDButton";
 
 // Billing page components
-import Transaction from './transaction.component';
+import Transaction from '../Transaction/transaction.component';
 import MDButton from 'components/MDButton';
+import Currency from 'components/Currency/currency.component';
 
-const Transactions = ({ transactions, viewMore = false, viewAll = true }) => {
+const Transactions = ({
+  transactions,
+  viewMore = false,
+  viewAll = true,
+  viewBalance = false,
+  header = `Your Transactions`,
+  balance = 0
+}) => {
   const [count, setCount] = useState(10);
 
   const handleViewMore = () => {
@@ -37,9 +45,10 @@ const Transactions = ({ transactions, viewMore = false, viewAll = true }) => {
 
   const renderItems = transactions
     ?.slice(0, count)
-    .map(({ name, merchantName, categories, date, amount }) => (
+    .map(({ name, merchantName, categories, date, amount }, i) => (
       <Transaction
-        color={amount > 0 ? 'error' : 'info'}
+        key={i}
+        color={amount > 0 ? 'error' : 'success'}
         icon={amount > 0 ? 'expand_more' : 'expand_less'}
         name={merchantName ? merchantName : name.slice(0, 30)}
         date={date}
@@ -61,8 +70,25 @@ const Transactions = ({ transactions, viewMore = false, viewAll = true }) => {
           fontWeight="medium"
           textTransform="capitalize"
         >
-          Your Transaction&apos;s
+          {header}
         </MDTypography>
+        {viewBalance && (
+          <MDTypography
+            variant="h6"
+            fontWeight="medium"
+            textTransform="capitalize"
+            color="info"
+          >
+            <MDTypography
+              variant="h6"
+              fontWeight="medium"
+              textTransform="capitalize"
+            >
+              Total:
+            </MDTypography>{' '}
+            <Currency value={balance} />
+          </MDTypography>
+        )}
         {viewAll && (
           <MDBox display="flex" alignItems="flex-start">
             <MDButton variant="outlined" color="info" size="small">
@@ -72,7 +98,7 @@ const Transactions = ({ transactions, viewMore = false, viewAll = true }) => {
         )}
       </MDBox>
       <MDBox pt={3} pb={2} px={2}>
-        <MDBox mb={2}>
+        {/* <MDBox mb={2}>
           <MDTypography
             variant="caption"
             color="text"
@@ -81,7 +107,7 @@ const Transactions = ({ transactions, viewMore = false, viewAll = true }) => {
           >
             newest
           </MDTypography>
-        </MDBox>
+        </MDBox> */}
         <MDBox
           component="ul"
           display="flex"

@@ -8,7 +8,7 @@ import MDTypography from 'components/MDTypography';
 // import MDButton from "components/MDButton";
 
 // Billing page components
-import Bill from './bill.component';
+import Bill from '../Bill/bill.component';
 import MDButton from 'components/MDButton';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -22,8 +22,9 @@ const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
 
   const renderItems = transactions
     ?.slice(0, count)
-    .map(({ merchantName, description, dueDate, lastAmount }) => (
+    .map(({ merchantName, description, dueDate, lastAmount }, i) => (
       <Bill
+        key={i}
         color="info"
         icon="expand_less"
         name={merchantName ? merchantName : description.slice(0, 20)}

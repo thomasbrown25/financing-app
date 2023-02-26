@@ -3,9 +3,11 @@ import { combineReducers } from 'redux';
 import transactionsReducer from './transactions/transactions.reducer';
 import userReducer from './user/user.reducer';
 import liabilitiesReducer from './liabilities/liabilities.reducer';
+import accountsReducer from './accounts/accounts.reducer';
 
 export const rootReducer = combineReducers({
   user: userReducer,
   transactions: transactionsReducer,
-  liabilities: liabilitiesReducer
+  liabilities: liabilitiesReducer,
+  accounts: accountsReducer
 });
