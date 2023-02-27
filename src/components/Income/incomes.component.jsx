@@ -36,6 +36,7 @@ const Incomes = ({ transactions }) => {
               title={transaction.description}
               dueDate={transaction.dueDate}
               price={transaction.lastAmount}
+              incomeId={transaction.streamId}
             />
           ))}
         </MDBox>

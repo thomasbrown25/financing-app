@@ -15,6 +15,7 @@ Coded by www.creative-tim.com
 
 // prop-types is a library for typechecking of props
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 // @mui material components
 import Card from '@mui/material/Card';
@@ -32,6 +33,9 @@ import AccountList from 'components/AccountList/account-list.component';
 import Incomes from 'components/Income/incomes.component';
 import MDButton from 'components/MDButton';
 import { Icon } from '@mui/material';
+import { refreshAccountsBalance } from 'store/accounts/accounts.action';
+import { refreshRecurringTransactions } from 'store/transactions/transactions.action';
+import { refreshTransactions } from 'store/transactions/transactions.action';
 
 function Accounts({
   title,
@@ -39,13 +43,18 @@ function Accounts({
   dropdown,
   cashAccounts,
   creditAccounts,
-  incomes
+  incomes,
+  refreshAccountsBalance,
+  refreshRecurringTransactions,
+  refreshTransactions
 }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
   const handleSync = () => {
-    console.log('sync click');
+    refreshAccountsBalance();
+    refreshRecurringTransactions();
+    refreshTransactions();
   };
 
   return (
@@ -73,7 +82,9 @@ function Accounts({
                 onClick={handleSync}
                 className="sync"
               >
-                <MDTypography variant="h6">sync</MDTypography>{' '}
+                <MDTypography variant="h6" color="info">
+                  sync
+                </MDTypography>{' '}
                 <Icon color="info">sync</Icon>
               </MDBox>
             </MDBox>
@@ -174,7 +185,14 @@ Accounts.propTypes = {
       menu: PropTypes.node,
       value: PropTypes.string
     })
-  ])
+  ]),
+  refreshAccountsBalance: PropTypes.func.isRequired,
+  refreshRecurringTransactions: PropTypes.func.isRequired,
+  refreshTransactions: PropTypes.func.isRequired
 };
 
-export default Accounts;
+export default connect(null, {
+  refreshAccountsBalance,
+  refreshRecurringTransactions,
+  refreshTransactions
+})(Accounts);

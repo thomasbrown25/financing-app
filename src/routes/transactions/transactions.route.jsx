@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -6,38 +7,33 @@ import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';
 import { Grid } from '@mui/material';
 import Header from 'components/Header/header.component';
+
+// components
 import Transactions from 'components/Transactions/transactions.component';
 
-const Account = ({
-  transactions: { selectedTransactions },
-  accounts: { account }
+// actions
+import { getTransactions } from 'store/transactions/transactions.action';
+
+const TransactionsRoute = ({
+  transactions: { transactions },
+  getTransactions
 }) => {
+  useEffect(() => {
+    getTransactions();
+  }, [getTransactions]);
+
   return (
     <MainLayout>
       <DashboardNavbar />
       <Grid container spacing={2} className="jc-center">
-        <Header
-          title={`${account?.name}`}
-          subTitle={`${account?.officialName}`}
-        />
-
+        <Header title={'Transactions'} />
         <Grid item xs={12} sm={12} md={12} lg={3} />
 
         <Grid item xs={12} sm={12} md={12} lg={6}>
           <Transactions
-            transactions={selectedTransactions}
+            transactions={transactions}
             viewAll={false}
             viewMore={true}
-            viewBalance={true}
-            header={`${account?.name} \u2022
-            \u2022 \u2022 ${account?.mask}`}
-            balance={
-              account?.type.toLowerCase().includes('savings')
-                ? 22450
-                : account?.type.toLowerCase().includes('credit')
-                ? account?.balanceCurrent
-                : account?.balanceAvailable
-            }
           />
         </Grid>
 
@@ -46,14 +42,13 @@ const Account = ({
     </MainLayout>
   );
 };
-Account.propTypes = {
+TransactionsRoute.propTypes = {
   transactions: PropTypes.object.isRequired,
-  accounts: PropTypes.object.isRequired
+  getTransactions: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  transactions: state.transactions,
-  accounts: state.accounts
+  transactions: state.transactions
 });
 
-export default connect(mapStateToProps, {})(Account);
+export default connect(mapStateToProps, { getTransactions })(TransactionsRoute);

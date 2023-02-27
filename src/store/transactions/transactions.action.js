@@ -28,6 +28,27 @@ export const getTransactions = () => async (dispatch) => {
  ** GET: "/transactions"
  * @param reqBody: string: accessToken
  **/
+export const refreshTransactions = () => async (dispatch) => {
+  try {
+    const response = await api.post('/transactions/refresh');
+
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.REFRESH_TRANSACTIONS_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.REFRESH_TRANSACTIONS_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
+/** Calls the financing-api service to get transactions from plaid api
+ ** GET: "/transactions"
+ * @param reqBody: string: accessToken
+ **/
 export const getRecentTransactions = () => async (dispatch) => {
   try {
     const response = await api.get('/transactions/recent');
@@ -103,6 +124,29 @@ export const getRecurringTransactions = () => async (dispatch) => {
  ** GET: "/transactions/recurring"
  * @param reqBody: string: accessToken
  **/
+export const refreshRecurringTransactions = () => async (dispatch) => {
+  try {
+    const response = await api.post('/transactions/recurring/refresh');
+
+    console.log(response.data.data);
+
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.REFRESH_RECURRING_TRANSACTIONS_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.REFRESH_RECURRING_TRANSACTIONS_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
+/** Calls the financing-api service to get the recurring transactions
+ ** GET: "/transactions/recurring"
+ * @param reqBody: string: accessToken
+ **/
 export const getExpenses = () => async (dispatch) => {
   try {
     const response = await api.get('/transactions/expenses');
@@ -133,6 +177,23 @@ export const getAccountTransactions = (accountId) => async (dispatch) => {
     console.log(error, error.message);
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
+export const deleteIncome = (incomeId) => async (dispatch) => {
+  try {
+    console.log('deleting stream ' + incomeId);
+    const response = await api.delete(`/transactions/income/${incomeId}`);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_FAILED,
       payload: error?.response
     });
   }

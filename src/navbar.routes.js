@@ -1,8 +1,3 @@
-import Profile from 'routes/profile/profile.component';
-import Settings from 'routes/settings/settings.component';
-// Pages
-import Login from 'routes/login/login.component';
-
 // Material Dashboard 2 PRO React components
 import MDAvatar from 'components/MDAvatar';
 
@@ -23,20 +18,17 @@ const navbarRoutes = [
       {
         name: 'My Profile',
         key: 'my-profile',
-        route: '/pages/profile/profile-overview',
-        component: <Profile />
+        route: '/profile'
       },
       {
         name: 'Settings',
         key: 'profile-settings',
-        route: '/pages/account/settings',
-        component: <Settings />
+        route: '/settings'
       },
       {
         name: 'Logout',
         key: 'logout',
         route: '/sign-in',
-        component: <Login />,
         action: logout()
       }
     ]
@@ -72,6 +64,14 @@ const navbarRoutes = [
     key: 'budget',
     route: '/budget',
     icon: <Icon fontSize="medium">article</Icon>,
+    noCollapse: true
+  },
+  {
+    type: 'collapse',
+    name: 'Transactions',
+    key: 'transactions',
+    route: '/transactions',
+    icon: <Icon fontSize="medium">web_stories</Icon>,
     noCollapse: true
   },
   { type: 'divider', key: 'divider-1' },

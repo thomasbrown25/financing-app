@@ -28,6 +28,7 @@ import MDTypography from 'components/MDTypography';
 import Transaction from '../Transaction/transaction.component';
 import MDButton from 'components/MDButton';
 import Currency from 'components/Currency/currency.component';
+import { Link } from 'react-router-dom';
 
 const Transactions = ({
   transactions,
@@ -37,10 +38,10 @@ const Transactions = ({
   header = `Your Transactions`,
   balance = 0
 }) => {
-  const [count, setCount] = useState(10);
+  const [count, setCount] = useState(15);
 
   const handleViewMore = () => {
-    setCount(count + 10);
+    setCount(count + 15);
   };
 
   const renderItems = transactions
@@ -91,9 +92,11 @@ const Transactions = ({
         )}
         {viewAll && (
           <MDBox display="flex" alignItems="flex-start">
-            <MDButton variant="outlined" color="info" size="small">
-              view all
-            </MDButton>
+            <Link to={'/transactions'}>
+              <MDButton variant="outlined" color="info" size="small">
+                view all
+              </MDButton>
+            </Link>
           </MDBox>
         )}
       </MDBox>
@@ -120,7 +123,7 @@ const Transactions = ({
         </MDBox>
 
         {viewMore && (
-          <MDBox display="flex" justifyContent="right">
+          <MDBox display="flex" justifyContent="center">
             <MDButton
               variant="outlined"
               color="info"

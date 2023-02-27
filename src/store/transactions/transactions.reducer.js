@@ -75,11 +75,18 @@ const transactionsReducer = (state = initialState, action) => {
         selectedTransactions: payload.transactions
       };
 
+    case TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_SUCCESS:
+      return {
+        ...state,
+        incomes: payload.incomes
+      };
+
     case TRANSACTIONS_ACTION_TYPES.GET_RECENT_TRANSACTIONS_FAILED:
     case TRANSACTIONS_ACTION_TYPES.GET_RECURRING_TRANSACTIONS_FAILED:
     case TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_FAILED:
     case TRANSACTIONS_ACTION_TYPES.GET_CURRENT_SPEND_MONTH_FAILED:
     case TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_FAILED:
+    case TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_FAILED:
       return {
         ...state,
         error: payload

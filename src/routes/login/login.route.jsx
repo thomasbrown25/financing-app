@@ -38,7 +38,7 @@ const defaultFormData = {
   password: ''
 };
 
-const Login = ({ login, user: { isAuthenticated, error } }) => {
+const LoginRoute = ({ login, user: { isAuthenticated, error } }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [loginError, setLoginError] = useState('');
 
@@ -209,7 +209,7 @@ const Login = ({ login, user: { isAuthenticated, error } }) => {
   );
 };
 
-Login.propTypes = {
+LoginRoute.propTypes = {
   login: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired
 };
@@ -218,4 +218,4 @@ const mapStateToProps = (state) => ({
   user: state.user
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login })(LoginRoute);

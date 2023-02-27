@@ -81,7 +81,7 @@ const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
           {renderItems}
         </MDBox>
         {viewMore && (
-          <MDBox display="flex" justifyContent="right">
+          <MDBox display="flex" justifyContent="center">
             <MDButton
               variant="outlined"
               color="info"

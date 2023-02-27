@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';
 import { Grid } from '@mui/material';
-import ItemContainer from 'components/ItemContainer/item-container.component';
 import Header from 'components/Header/header.component';
 
 // components
@@ -15,7 +14,7 @@ import UpcomingBills from 'components/UpcomingBills/upcoming-bills.component';
 // actions
 import { getExpenses } from 'store/transactions/transactions.action';
 
-const Upcoming = ({ transactions: { expenses }, getExpenses }) => {
+const UpcomingRoute = ({ transactions: { expenses }, getExpenses }) => {
   useEffect(() => {
     getExpenses();
   }, [getExpenses]);
@@ -41,7 +40,7 @@ const Upcoming = ({ transactions: { expenses }, getExpenses }) => {
     </MainLayout>
   );
 };
-Upcoming.propTypes = {
+UpcomingRoute.propTypes = {
   transactions: PropTypes.object.isRequired,
   getExpenses: PropTypes.func.isRequired
 };
@@ -50,4 +49,4 @@ const mapStateToProps = (state) => ({
   transactions: state.transactions
 });
 
-export default connect(mapStateToProps, { getExpenses })(Upcoming);
+export default connect(mapStateToProps, { getExpenses })(UpcomingRoute);

@@ -22,8 +22,9 @@ import {
   getTransactions
 } from 'store/transactions/transactions.action';
 import { getLiabilities } from 'store/liabilities/liabilities.action';
+import Footer from 'layouts/authentication/footer';
 
-const Dashboard = ({
+const DashboardRoute = ({
   user: { currentUser, isLinkValid, loading },
   transactions: {
     cashAccounts,
@@ -106,11 +107,12 @@ const Dashboard = ({
         <Grid item xs={12} lg={12}>
           <Transactions transactions={transactions} />
         </Grid>
+        <Footer />
       </Grid>
     </MainLayout>
   );
 };
-Dashboard.propTypes = {
+DashboardRoute.propTypes = {
   user: PropTypes.object.isRequired,
   transactions: PropTypes.object.isRequired,
   liabilities: PropTypes.object.isRequired,
@@ -133,4 +135,4 @@ export default connect(mapStateToProps, {
   getRecurringTransactions,
   getTransactions,
   getLiabilities
-})(Dashboard);
+})(DashboardRoute);

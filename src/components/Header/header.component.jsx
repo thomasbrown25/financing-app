@@ -20,9 +20,11 @@ const Header = ({ user: { currentUser }, title, subTitle }) => {
           textTransform="capitalize"
         >
           {title ? title : `Hi, ${currentUser?.firstname}`}
-          <MDTypography variant="h6" fontWeight="medium">
-            {subTitle && subTitle}
-          </MDTypography>
+          {subTitle && (
+            <MDTypography variant="h6" fontWeight="medium">
+              {subTitle}
+            </MDTypography>
+          )}
         </MDTypography>
       </MDBox>
     </Grid>

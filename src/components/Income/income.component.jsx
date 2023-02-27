@@ -1,5 +1,6 @@
 // prop-types is a library for typechecking of props
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 // @mui material components
 import Icon from '@mui/material/Icon';
@@ -18,6 +19,8 @@ import MDDatePicker from 'components/MDDatePicker';
 import { TextField } from '@mui/material';
 import { useMaterialUIController } from 'context';
 import theme from 'assets/theme';
+import BasicTooltip from 'components/Tooltip/tooltip.component';
+import { deleteIncome } from 'store/transactions/transactions.action';
 
 const defaultModalStyle = {
   position: 'absolute',
@@ -35,7 +38,14 @@ const defaultFormData = {
   newDate: ''
 };
 
-const Income = ({ dueDate, title, price, noGutter }) => {
+const Income = ({
+  dueDate,
+  title,
+  price,
+  noGutter,
+  deleteIncome,
+  incomeId
+}) => {
   const { palette } = theme;
   const { primary, background } = palette;
   const [controller, dispatch] = useMaterialUIController();
@@ -60,6 +70,10 @@ const Income = ({ dueDate, title, price, noGutter }) => {
   const handleClose = () => {
     console.log('edit click');
     setOpen(false);
+  };
+  const handleDelete = (incomeId) => {
+    if (window.confirm(`Are you sure you want to delete income ${title}`))
+      deleteIncome(incomeId);
   };
 
   const [formData, setFormData] = useState(defaultFormData);
@@ -103,9 +117,21 @@ const Income = ({ dueDate, title, price, noGutter }) => {
             <MDTypography variant="button" fontWeight="bold">
               &nbsp;PDF
             </MDTypography>{' '}
-            <Icon fontSize="small" onClick={handleOpen} color="text">
-              edit
-            </Icon>
+            <BasicTooltip text="Edit">
+              <Icon fontSize="small" onClick={handleOpen} color="text">
+                edit
+              </Icon>
+            </BasicTooltip>
+            <BasicTooltip text="Delete">
+              <Icon
+                fontSize="small"
+                dataid={incomeId}
+                onClick={() => handleDelete(incomeId)}
+                color="text"
+              >
+                delete
+              </Icon>
+            </BasicTooltip>
           </MDBox>
         </MDBox>
       </MDBox>
@@ -177,7 +203,8 @@ Income.propTypes = {
   dueDate: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
-  noGutter: PropTypes.bool
+  noGutter: PropTypes.bool,
+  deleteIncome: PropTypes.func.isRequired
 };
 
-export default Income;
+export default connect(null, { deleteIncome })(Income);

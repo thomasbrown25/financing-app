@@ -42,12 +42,13 @@ import brandWhite from 'assets/images/favicon.png';
 import brandDark from 'assets/images/favicon.png';
 
 // Pages
-import Login from 'routes/login/login.component';
-import Dashboard from 'routes/dashboard/dashboard.component';
+import LoginRoute from 'routes/login/login.route';
+import DashboardRoute from 'routes/dashboard/dashboard.route';
 import navbarRoutes from 'navbar.routes';
-import Account from 'routes/account/account.component';
-import Upcoming from 'routes/upcoming/upcoming.component';
+import AccountRoute from 'routes/account/account.route';
+import UpcomingRoute from 'routes/upcoming/upcoming.route';
 import MainLayout from 'layouts/main-layout';
+import TransactionsRoute from 'routes/transactions/transactions.route';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -166,12 +167,13 @@ export default function App() {
       )}
       {layout === 'vr' && <Configurator />}
       <Routes>
-        <Route path="sign-in" element={<Login />} />
-        <Route path="sign-up" element={<Login />} />
+        <Route path="sign-in" element={<LoginRoute />} />
+        <Route path="sign-up" element={<LoginRoute />} />
         <Route element={<PrivateRoutes />}>
-          <Route index path="/dashboard" element={<Dashboard />} />
-          <Route path="/accounts/account" element={<Account />} />
-          <Route path="/upcoming" element={<Upcoming />} />
+          <Route index path="/dashboard" element={<DashboardRoute />} />
+          <Route path="/accounts/account" element={<AccountRoute />} />
+          <Route path="/upcoming" element={<UpcomingRoute />} />
+          <Route path="/transactions" element={<TransactionsRoute />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
       </Routes>
