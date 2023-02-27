@@ -31,6 +31,7 @@ import Currency from 'components/Currency/currency.component';
 import AccountList from 'components/AccountList/account-list.component';
 import Incomes from 'components/Income/incomes.component';
 import MDButton from 'components/MDButton';
+import { Icon } from '@mui/material';
 
 function Accounts({
   title,
@@ -43,12 +44,22 @@ function Accounts({
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
+  const handleSync = () => {
+    console.log('sync click');
+  };
+
   return (
     <Card>
       <MDBox p={2}>
         <Grid container>
           <Grid item xs={12}>
-            <MDBox mb={0.5} lineHeight={1}>
+            <MDBox
+              mb={0.5}
+              lineHeight={1}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+            >
               <MDTypography
                 variant="h6"
                 fontWeight="bold"
@@ -56,6 +67,15 @@ function Accounts({
               >
                 {title}
               </MDTypography>
+              <MDBox
+                display="flex"
+                alignItems="center"
+                onClick={handleSync}
+                className="sync"
+              >
+                <MDTypography variant="h6">sync</MDTypography>{' '}
+                <Icon color="info">sync</Icon>
+              </MDBox>
             </MDBox>
 
             <MDBox lineHeight={1}>

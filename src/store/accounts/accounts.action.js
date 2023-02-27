@@ -48,3 +48,26 @@ export const getAccountBalance = (accountId) => async (dispatch) => {
     });
   }
 };
+
+/** Calls the financing-api service to get liabilities from plaid api
+ ** GET: "/liabilities"
+ * @param reqBody: string: accessToken
+ **/
+export const refreshAccountsBalance = () => async (dispatch) => {
+  try {
+    const response = await api.get(`/account/balance/refresh`);
+
+    console.log(response.data);
+
+    dispatch({
+      type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_FAILED,
+      payload: error?.response
+    });
+  }
+};

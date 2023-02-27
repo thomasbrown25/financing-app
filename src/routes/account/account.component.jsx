@@ -32,9 +32,11 @@ const Account = ({
             header={`${account?.name} \u2022
             \u2022 \u2022 ${account?.mask}`}
             balance={
-              account?.type?.toLowerCase().includes('credit')
-                ? account.balanceCurrent
-                : account.balanceAvailable
+              account?.type.toLowerCase().includes('savings')
+                ? 22450
+                : account?.type.toLowerCase().includes('credit')
+                ? account?.balanceCurrent
+                : account?.balanceAvailable
             }
           />
         </Grid>

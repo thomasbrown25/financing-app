@@ -13,3 +13,10 @@
 .jc-center {
   justify-content: center;
 }
+
+.sync {
+  cursor: pointer;
+}
+
+.sync:hover {
+}
