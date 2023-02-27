@@ -30,6 +30,8 @@ export const getTransactions = () => async (dispatch) => {
  **/
 export const refreshTransactions = () => async (dispatch) => {
   try {
+    dispatch({ type: TRANSACTIONS_ACTION_TYPES.SYNCING });
+
     const response = await api.post('/transactions/refresh');
 
     dispatch({

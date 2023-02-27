@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
-import MDTypography from 'components/MDTypography';
 import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';
 import PlaidLink from 'components/plaid-link/plaid-link.component';
+import { ColorRing } from 'react-loader-spinner';
 
 // components
 import Header from 'components/Header/header.component';
@@ -32,7 +32,8 @@ const DashboardRoute = ({
     transactions,
     expenses,
     incomes,
-    recurringTransactions
+    recurringTransactions,
+    syncing
   },
   liabilities: { liabilities },
   getTransactions,
@@ -81,34 +82,48 @@ const DashboardRoute = ({
           isLinkValid={isLinkValid}
         />
       )}
-      <Grid container spacing={2} className="jc-center">
-        <Header />
-        <ItemContainer>
-          <Accounts
-            title={'Accounts'}
-            income={'currentMonthIncome'}
-            expense={'currentMonthExpense'}
-            description={'Totals for current month'}
-            dropdown={true}
-            cashAccounts={cashAccounts}
-            creditAccounts={creditAccounts}
-            incomes={incomes}
-          />
-        </ItemContainer>
 
-        <ItemContainer>
-          <UpcomingBills transactions={expenses} />
-        </ItemContainer>
+      {syncing ? (
+        <ColorRing
+          visible={true}
+          height="400"
+          width="400"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="center-item"
+          colors={['#1A73E8', '#1662C4', '#1A73E8', '#1662C4', '#1A73E8']}
+          className="center-item"
+        />
+      ) : (
+        <Grid container spacing={2} className="jc-center">
+          <Header />
+          <ItemContainer>
+            <Accounts
+              title={'Accounts'}
+              income={'currentMonthIncome'}
+              expense={'currentMonthExpense'}
+              description={'Totals for current month'}
+              dropdown={true}
+              cashAccounts={cashAccounts}
+              creditAccounts={creditAccounts}
+              incomes={incomes}
+            />
+          </ItemContainer>
 
-        <ItemContainer>
-          <Calendar events={recurringTransactions} />
-        </ItemContainer>
+          <ItemContainer>
+            <UpcomingBills transactions={expenses} />
+          </ItemContainer>
 
-        <Grid item xs={12} lg={12}>
-          <Transactions transactions={transactions} />
+          <ItemContainer>
+            <Calendar events={recurringTransactions} />
+          </ItemContainer>
+
+          <Grid item xs={12} lg={12}>
+            <Transactions transactions={transactions} />
+          </Grid>
+          <Footer />
         </Grid>
-        <Footer />
-      </Grid>
+      )}
     </MainLayout>
   );
 };

@@ -51,6 +51,7 @@
     "react-flatpickr": "3.10.7",
     "react-github-btn": "1.2.1",
     "react-images-viewer": "1.7.1",
+    "react-loader-spinner": "^5.3.4",
     "react-moment": "^1.1.2",
     "react-plaid-link": "^3.3.2",
     "react-quill": "^2.0.0",

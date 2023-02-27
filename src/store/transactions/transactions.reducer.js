@@ -13,7 +13,8 @@ const initialState = {
   currentMonthExpense: 0,
   currentMonthIncome: 0,
   error: null,
-  isLoading: false
+  isLoading: false,
+  syncing: false
 };
 
 const transactionsReducer = (state = initialState, action) => {
@@ -46,6 +47,18 @@ const transactionsReducer = (state = initialState, action) => {
           labels: payload.categoryLabels,
           amounts: payload.categoryAmounts
         }
+      };
+
+    case TRANSACTIONS_ACTION_TYPES.REFRESH_TRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        syncing: false
+      };
+
+    case TRANSACTIONS_ACTION_TYPES.SYNCING:
+      return {
+        ...state,
+        syncing: true
       };
 
     case TRANSACTIONS_ACTION_TYPES.GET_RECURRING_TRANSACTIONS_SUCCESS:
@@ -86,6 +99,7 @@ const transactionsReducer = (state = initialState, action) => {
     case TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_FAILED:
     case TRANSACTIONS_ACTION_TYPES.GET_CURRENT_SPEND_MONTH_FAILED:
     case TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_FAILED:
+    case TRANSACTIONS_ACTION_TYPES.REFRESH_TRANSACTIONS_FAILED:
     case TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_FAILED:
       return {
         ...state,
