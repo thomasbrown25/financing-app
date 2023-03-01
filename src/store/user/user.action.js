@@ -66,6 +66,8 @@ export const loadUser = () => async (dispatch) => {
   try {
     const response = await api.get('/auth/load-user');
 
+    console.log(response.data.data);
+
     dispatch({
       type: USER_ACTION_TYPES.USER_LOADED,
       payload: response.data.data

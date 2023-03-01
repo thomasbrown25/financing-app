@@ -72,7 +72,7 @@ const DashboardRoute = ({
       getRecurringTransactions();
       getAccountsBalance();
     }
-  }, [syncing]);
+  }, [syncing, currentUser?.accessToken]);
 
   return (
     <MainLayout>

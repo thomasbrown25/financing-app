@@ -85,9 +85,6 @@ export default function App() {
       if (!localStorage.token)
         store.dispatch({ type: USER_ACTION_TYPES.SIGN_OUT });
     });
-
-    //checking to see if we're getting env variables from azure
-    console.log(process.env);
   }, []);
 
   // Open sidenav when mouse enter on mini sidenav

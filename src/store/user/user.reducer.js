@@ -18,6 +18,7 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
+        token: payload.jwtToken,
         loading: false,
         currentUser: {
           id: payload.id,
@@ -35,14 +36,14 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         token: payload.jwtToken,
-        currentUser: {
-          ...state.currentUser,
-          id: payload.id,
-          firstname: payload.firstname,
-          lastname: payload.lastname,
-          email: payload.email,
-          accessToken: payload.accessToken
-        },
+        // currentUser: {
+        //   ...state.currentUser,
+        //   id: payload.id,
+        //   firstname: payload.firstname,
+        //   lastname: payload.lastname,
+        //   email: payload.email,
+        //   accessToken: payload.accessToken
+        // },
         isAuthenticated: true,
         loading: false,
         error: null
