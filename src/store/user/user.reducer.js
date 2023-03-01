@@ -18,7 +18,6 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
-        token: payload.jwtToken,
         loading: false,
         currentUser: {
           id: payload.id,

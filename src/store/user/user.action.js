@@ -43,6 +43,9 @@ export const login = (reqBody) => async (dispatch) => {
   try {
     const response = await api.post('/auth/login', reqBody);
 
+    console.log('sign-in-data');
+    console.log(response.data.data.jwtToken);
+
     dispatch({
       type: USER_ACTION_TYPES.SIGN_IN_SUCCESS,
       payload: response.data.data
