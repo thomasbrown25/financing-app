@@ -49,6 +49,7 @@ import AccountRoute from 'routes/account/account.route';
 import UpcomingRoute from 'routes/upcoming/upcoming.route';
 import MainLayout from 'layouts/main-layout';
 import TransactionsRoute from 'routes/transactions/transactions.route';
+import RegisterRoute from 'routes/register/register.route';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -168,7 +169,7 @@ export default function App() {
       {layout === 'vr' && <Configurator />}
       <Routes>
         <Route path="sign-in" element={<LoginRoute />} />
-        <Route path="sign-up" element={<LoginRoute />} />
+        <Route path="sign-up" element={<RegisterRoute />} />
         <Route element={<PrivateRoutes />}>
           <Route index path="/dashboard" element={<DashboardRoute />} />
           <Route path="/accounts/account" element={<AccountRoute />} />

@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
-  const [count, setCount] = useState(10);
+  const [count, setCount] = useState(12);
 
   const handleViewMore = () => {
     setCount(count + 10);

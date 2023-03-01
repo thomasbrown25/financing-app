@@ -19,7 +19,11 @@ const Header = ({ user: { currentUser }, title, subTitle }) => {
           fontWeight="medium"
           textTransform="capitalize"
         >
-          {title ? title : `Hi, ${currentUser?.firstname}`}
+          {title
+            ? title
+            : currentUser?.firstname
+            ? `Hi, ${currentUser?.firstname}`
+            : 'Welcome to the financing'}
           {subTitle && (
             <MDTypography variant="h6" fontWeight="medium">
               {subTitle}

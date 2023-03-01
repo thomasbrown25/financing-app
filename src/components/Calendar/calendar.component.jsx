@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 // @fullcalendar components
 import FullCalendar from '@fullcalendar/react';
@@ -22,6 +23,18 @@ import CalendarTooltip from 'components/CalendarTooltip/calendar-tooltip.compone
 import MDButton from 'components/MDButton';
 import Currency from 'components/Currency/currency.component';
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4
+};
+
 function Calendar({ header, ...rest }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
@@ -36,6 +49,18 @@ function Calendar({ header, ...rest }) {
     'light',
     'dark'
   ];
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [eventClicked, setEventClicked] = useState({ title: '', amount: '' });
+
+  const toggle = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleEventClick = ({ event, el }) => {
+    toggle();
+    setEventClicked({ event });
+  };
 
   const events = rest.events
     ? rest.events.map((item) => ({
@@ -65,42 +90,46 @@ function Calendar({ header, ...rest }) {
   };
 
   return (
-    <Card sx={{ height: '100%' }}>
-      <MDBox pt={header.title || header.date ? 2 : 0} px={2} lineHeight={1}>
-        {header.title ? (
-          <MDTypography
-            variant="h6"
-            fontWeight="medium"
-            textTransform="capitalize"
-          >
-            {header.title}
-          </MDTypography>
-        ) : null}
-        {header.date ? (
-          <MDTypography
-            component="p"
-            variant="button"
-            color="text"
-            fontWeight="regular"
-          >
-            {header.date}
-          </MDTypography>
-        ) : null}
-      </MDBox>
-      <CalendarRoot p={2} ownerState={{ darkMode }}>
-        <FullCalendar
-          {...rest}
-          selectable
-          editable
-          plugins={[dayGridPlugin, interactionPlugin]}
-          events={events}
-          height="100%"
-          views={['dayGridMonth', 'dayGridWeek', 'dayGridDay']}
-          displayEventTime={false}
-          eventContent={renderEvent}
-        />
-      </CalendarRoot>
-    </Card>
+    <>
+      <Card sx={{ height: '100%' }}>
+        <MDBox pt={header.title || header.date ? 2 : 0} px={2} lineHeight={1}>
+          {header.title ? (
+            <MDTypography
+              variant="h6"
+              fontWeight="medium"
+              textTransform="capitalize"
+            >
+              {header.title}
+            </MDTypography>
+          ) : null}
+          {header.date ? (
+            <MDTypography
+              component="p"
+              variant="button"
+              color="text"
+              fontWeight="regular"
+            >
+              {header.date}
+            </MDTypography>
+          ) : null}
+        </MDBox>
+        <CalendarRoot p={2} ownerState={{ darkMode }}>
+          <FullCalendar
+            {...rest}
+            selectable
+            editable
+            plugins={[dayGridPlugin, interactionPlugin]}
+            events={events}
+            height="100%"
+            views={['dayGridMonth', 'dayGridWeek', 'dayGridDay']}
+            displayEventTime={false}
+            eventContent={renderEvent}
+            eventClick={handleEventClick}
+            dayMaxEvents={4}
+          />
+        </CalendarRoot>
+      </Card>
+    </>
   );
 }
 

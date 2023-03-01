@@ -67,9 +67,11 @@ const DashboardRoute = ({
   }, [currentUser?.accessToken, getAccountsBalance, loading]);
 
   useEffect(() => {
-    getTransactions();
-    getRecurringTransactions();
-    getAccountsBalance();
+    if (!syncing) {
+      getTransactions();
+      getRecurringTransactions();
+      getAccountsBalance();
+    }
   }, [syncing]);
 
   return (

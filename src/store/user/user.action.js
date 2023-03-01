@@ -8,6 +8,7 @@ import { USER_ACTION_TYPES } from './user.types';
  **/
 export const register = (reqBody) => async (dispatch) => {
   try {
+    console.log('calling register');
     const response = await api.post('/auth/register', reqBody);
 
     if (
@@ -105,8 +106,6 @@ export const createLinkToken = () => async (dispatch) => {
   try {
     const response = await api.get('/plaid/create-link-token');
 
-    console.log(response.data.data);
-
     dispatch({
       type: USER_ACTION_TYPES.CREATE_LINK_TOKEN_SUCCESS,
       payload: response.data.data
@@ -132,7 +131,6 @@ export const publicTokenExchange = (publicToken) => async (dispatch) => {
       `"${publicToken}"`
     );
 
-    console.log(response.data);
     dispatch({
       type: USER_ACTION_TYPES.PUBLIC_TOKEN_EXCHANGE_SUCCESS,
       payload: response.data.data
@@ -154,7 +152,6 @@ export const updateLinkToken = () => async (dispatch) => {
   try {
     const response = await api.post('/plaid/update-link-token');
 
-    console.log(response.data);
     dispatch({
       type: USER_ACTION_TYPES.UPDATE_LINK_TOKEN,
       payload: response.data

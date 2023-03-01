@@ -107,8 +107,6 @@ export const getRecurringTransactions = () => async (dispatch) => {
   try {
     const response = await api.get('/transactions/recurring');
 
-    console.log(response.data.data);
-
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_RECURRING_TRANSACTIONS_SUCCESS,
       payload: response.data.data
@@ -129,8 +127,6 @@ export const getRecurringTransactions = () => async (dispatch) => {
 export const refreshRecurringTransactions = () => async (dispatch) => {
   try {
     const response = await api.post('/transactions/recurring/refresh');
-
-    console.log(response.data.data);
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.REFRESH_RECURRING_TRANSACTIONS_SUCCESS,
@@ -171,6 +167,7 @@ export const getAccountTransactions = (accountId) => async (dispatch) => {
     const response = await api.get(
       `/transactions/account-transactions/${accountId}`
     );
+
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_SUCCESS,
       payload: response.data.data
@@ -186,8 +183,8 @@ export const getAccountTransactions = (accountId) => async (dispatch) => {
 
 export const deleteIncome = (incomeId) => async (dispatch) => {
   try {
-    console.log('deleting stream ' + incomeId);
     const response = await api.delete(`/transactions/income/${incomeId}`);
+
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_SUCCESS,
       payload: response.data.data
@@ -196,6 +193,28 @@ export const deleteIncome = (incomeId) => async (dispatch) => {
     console.log(error, error.message);
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
+export const setIncomeActive = (incomeId, isActive) => async (dispatch) => {
+  try {
+    const response = await api.post(
+      `/transactions/income/activate/${incomeId}`,
+      {
+        isActive
+      }
+    );
+
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.SET_INCOME_ACTIVE_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.SET_INCOME_ACTIVE_FAILED,
       payload: error?.response
     });
   }

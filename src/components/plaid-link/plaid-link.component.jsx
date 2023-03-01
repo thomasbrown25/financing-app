@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 
 import { publicTokenExchange } from 'store/user/user.action';
 import MDButton from 'components/MDButton';
+import MDTypography from 'components/MDTypography';
 
 const PlaidLink = ({ linkToken, isLinkValid, publicTokenExchange }) => {
   console.log('link token: ' + linkToken);
@@ -25,24 +26,11 @@ const PlaidLink = ({ linkToken, isLinkValid, publicTokenExchange }) => {
 
   return (
     <div className="plaid-link">
-      {isLinkValid ? (
-        <>
-          <h3>Link your desired bank account to get started. </h3>
-          {/* <p>
-            For demo purposes, link your account to my Sandbox testing
-            environment.
-          </p>
-          <p>
-            To do this, choose any banking institution and use username
-            "user_good" and password "pass_good".
-          </p> */}
-        </>
-      ) : (
-        <>
-          <h3>Link token expired.</h3>
-          <p>Sync your account by clicking the button below.</p>
-        </>
-      )}
+      <MDTypography component="h4">
+        To get started, click the Sync account button and add one of your bank
+        accounts.{' '}
+      </MDTypography>
+
       <MDButton
         component="a"
         variant="gradient"

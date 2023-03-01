@@ -11,8 +11,6 @@ export const getAccountsBalance = () => async (dispatch) => {
   try {
     const response = await api.get('/account/balance');
 
-    console.log(response.data);
-
     dispatch({
       type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNTS_BALANCE_SUCCESS,
       payload: response.data.data
@@ -33,8 +31,6 @@ export const getAccountsBalance = () => async (dispatch) => {
 export const getAccountBalance = (accountId) => async (dispatch) => {
   try {
     const response = await api.get(`/account/balance/${accountId}`);
-
-    console.log(response.data);
 
     dispatch({
       type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_SUCCESS,

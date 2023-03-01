@@ -145,8 +145,8 @@ const AccountList = ({
   return (
     <Card {...rest}>
       <MDBox pt={2} px={2}>
-        <MDTypography variant="h6" fontWeight="bold" color="success">
-          <MDTypography component="span" variant="h6" fontWeight="bold">
+        <MDTypography component="span" variant="h6" fontWeight="bold">
+          <MDTypography variant="h6" fontWeight="bold" color="success">
             {title}:{' '}
           </MDTypography>
           <Currency value={totalAmount} />

@@ -77,6 +77,7 @@ const transactionsReducer = (state = initialState, action) => {
       };
 
     case TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_SUCCESS:
+    case TRANSACTIONS_ACTION_TYPES.SET_INCOME_ACTIVE_SUCCESS:
       return {
         ...state,
         incomes: payload.incomes
@@ -89,6 +90,7 @@ const transactionsReducer = (state = initialState, action) => {
     case TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_FAILED:
     case TRANSACTIONS_ACTION_TYPES.REFRESH_TRANSACTIONS_FAILED:
     case TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_FAILED:
+    case TRANSACTIONS_ACTION_TYPES.SET_INCOME_ACTIVE_FAILED:
       return {
         ...state,
         error: payload

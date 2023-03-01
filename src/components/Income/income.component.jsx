@@ -18,7 +18,7 @@ import { TextField } from '@mui/material';
 import { useMaterialUIController } from 'context';
 import theme from 'assets/theme';
 import BasicTooltip from 'components/Tooltip/tooltip.component';
-import { deleteIncome } from 'store/transactions/transactions.action';
+import { setIncomeActive } from 'store/transactions/transactions.action';
 
 const defaultModalStyle = {
   position: 'absolute',
@@ -41,7 +41,7 @@ const Income = ({
   title,
   price,
   noGutter,
-  deleteIncome,
+  setIncomeActive,
   incomeId
 }) => {
   const { palette } = theme;
@@ -57,7 +57,6 @@ const Income = ({
     } else {
       modalStyle.bgcolor = background.white;
     }
-    console.log('checking dark mode');
   }, [darkMode]);
 
   const [open, setOpen] = useState(false);
@@ -69,9 +68,9 @@ const Income = ({
     console.log('edit click');
     setOpen(false);
   };
-  const handleDelete = (incomeId) => {
+  const handleDeactivate = (incomeId) => {
     if (window.confirm(`Are you sure you want to delete income ${title}`))
-      deleteIncome(incomeId);
+      setIncomeActive(incomeId, false);
   };
 
   const [formData, setFormData] = useState(defaultFormData);
@@ -124,7 +123,7 @@ const Income = ({
               <Icon
                 fontSize="small"
                 dataid={incomeId}
-                onClick={() => handleDelete(incomeId)}
+                onClick={() => handleDeactivate(incomeId)}
                 color="text"
               >
                 delete
@@ -202,7 +201,7 @@ Income.propTypes = {
   id: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   noGutter: PropTypes.bool,
-  deleteIncome: PropTypes.func.isRequired
+  setIncomeActive: PropTypes.func.isRequired
 };
 
-export default connect(null, { deleteIncome })(Income);
+export default connect(null, { setIncomeActive })(Income);
