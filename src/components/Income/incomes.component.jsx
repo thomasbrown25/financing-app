@@ -33,7 +33,11 @@ const Incomes = ({ transactions }) => {
             <Income
               key={i}
               id={i}
-              title={transaction.description}
+              title={
+                transaction.merchantName
+                  ? transaction.merchantName
+                  : transaction.description
+              }
               dueDate={transaction.dueDate}
               price={transaction.lastAmount}
               incomeId={transaction.streamId}

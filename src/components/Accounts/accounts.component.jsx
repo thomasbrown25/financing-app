@@ -36,8 +36,15 @@ import { Icon } from '@mui/material';
 import { refreshAccountsBalance } from 'store/accounts/accounts.action';
 import { refreshRecurringTransactions } from 'store/transactions/transactions.action';
 import { refreshTransactions } from 'store/transactions/transactions.action';
+import { refreshAll } from 'store/refresh/refresh.action';
 
-function Accounts({
+// const handleSync = () => (async) => {
+//   await refreshAccountsBalance();
+//   await refreshRecurringTransactions();
+//   await refreshTransactions();
+// };
+
+const Accounts = ({
   title,
   percentage,
   dropdown,
@@ -46,15 +53,14 @@ function Accounts({
   incomes,
   refreshAccountsBalance,
   refreshRecurringTransactions,
-  refreshTransactions
-}) {
+  refreshTransactions,
+  refreshAll
+}) => {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
   const handleSync = () => {
-    refreshAccountsBalance();
-    refreshRecurringTransactions();
-    refreshTransactions();
+    refreshAll();
   };
 
   return (
@@ -148,7 +154,7 @@ function Accounts({
       </MDBox>
     </Card>
   );
-}
+};
 
 // Setting default values for the props of Accounts
 Accounts.defaultProps = {
@@ -188,11 +194,13 @@ Accounts.propTypes = {
   ]),
   refreshAccountsBalance: PropTypes.func.isRequired,
   refreshRecurringTransactions: PropTypes.func.isRequired,
-  refreshTransactions: PropTypes.func.isRequired
+  refreshTransactions: PropTypes.func.isRequired,
+  refreshAll: PropTypes.func.isRequired
 };
 
 export default connect(null, {
   refreshAccountsBalance,
   refreshRecurringTransactions,
-  refreshTransactions
+  refreshTransactions,
+  refreshAll
 })(Accounts);

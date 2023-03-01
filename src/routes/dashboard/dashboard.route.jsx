@@ -14,6 +14,7 @@ import Accounts from 'components/Accounts/accounts.component';
 import Calendar from 'components/Calendar/calendar.component';
 import Transactions from 'components/Transactions/transactions.component';
 import UpcomingBills from 'components/UpcomingBills/upcoming-bills.component';
+import Footer from 'layouts/authentication/footer';
 
 // actions
 import { createLinkToken, updateLinkToken } from 'store/user/user.action';
@@ -21,24 +22,16 @@ import {
   getRecurringTransactions,
   getTransactions
 } from 'store/transactions/transactions.action';
-import { getLiabilities } from 'store/liabilities/liabilities.action';
-import Footer from 'layouts/authentication/footer';
+import { getAccountsBalance } from 'store/accounts/accounts.action';
 
 const DashboardRoute = ({
   user: { currentUser, isLinkValid, loading },
-  transactions: {
-    cashAccounts,
-    creditAccounts,
-    transactions,
-    expenses,
-    incomes,
-    recurringTransactions,
-    syncing
-  },
-  liabilities: { liabilities },
+  accounts: { cashAccounts, creditAccounts },
+  transactions: { transactions, expenses, incomes, recurringTransactions },
+  refresh: { syncing },
   getTransactions,
   getRecurringTransactions,
-  getLiabilities,
+  getAccountsBalance,
   createLinkToken
 }) => {
   useEffect(() => {
@@ -69,9 +62,15 @@ const DashboardRoute = ({
 
   useEffect(() => {
     if (currentUser?.accessToken) {
-      getLiabilities();
+      getAccountsBalance();
     }
-  }, [currentUser?.accessToken, getLiabilities, loading]);
+  }, [currentUser?.accessToken, getAccountsBalance, loading]);
+
+  useEffect(() => {
+    getTransactions();
+    getRecurringTransactions();
+    getAccountsBalance();
+  }, [syncing]);
 
   return (
     <MainLayout>
@@ -129,19 +128,21 @@ const DashboardRoute = ({
 };
 DashboardRoute.propTypes = {
   user: PropTypes.object.isRequired,
+  accounts: PropTypes.object.isRequired,
   transactions: PropTypes.object.isRequired,
-  liabilities: PropTypes.object.isRequired,
+  refresh: PropTypes.object.isRequired,
   createLinkToken: PropTypes.func.isRequired,
   updateLinkToken: PropTypes.func.isRequired,
   getRecurringTransactions: PropTypes.func.isRequired,
   getTransactions: PropTypes.func.isRequired,
-  getLiabilities: PropTypes.func.isRequired
+  getAccountsBalance: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
   transactions: state.transactions,
-  liabilities: state.liabilities
+  accounts: state.accounts,
+  refresh: state.refresh
 });
 
 export default connect(mapStateToProps, {
@@ -149,5 +150,5 @@ export default connect(mapStateToProps, {
   updateLinkToken,
   getRecurringTransactions,
   getTransactions,
-  getLiabilities
+  getAccountsBalance
 })(DashboardRoute);

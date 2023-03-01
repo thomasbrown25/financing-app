@@ -3,6 +3,8 @@ import { ACCOUNTS_ACTION_TYPES } from './accounts.types';
 const initialState = {
   accounts: null,
   account: null,
+  cashAccounts: { accounts: null, totalAmount: null },
+  creditAccounts: { accounts: null, totalAmount: null },
   error: null,
   isLoading: false
 };
@@ -14,7 +16,17 @@ const accountsReducer = (state = initialState, action) => {
     case ACCOUNTS_ACTION_TYPES.GET_ACCOUNTS_BALANCE_SUCCESS:
       return {
         ...state,
-        accounts: payload.accounts
+        accounts: payload.accounts,
+        cashAccounts: {
+          ...state.cashAccounts,
+          accounts: payload.cashAccounts,
+          totalAmount: payload.cashAmount
+        },
+        creditAccounts: {
+          ...state.creditAccounts,
+          accounts: payload.creditAccounts,
+          totalAmount: payload.creditAmount
+        }
       };
 
     case ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_SUCCESS:
