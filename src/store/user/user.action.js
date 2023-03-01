@@ -23,9 +23,8 @@ export const register = (reqBody) => async (dispatch) => {
 
     dispatch({
       type: USER_ACTION_TYPES.REGISTER_SUCCESS,
-      payload: response.data
+      payload: response.data.data
     });
-
     dispatch(loadUser());
   } catch (error) {
     console.log(error, error.message);
