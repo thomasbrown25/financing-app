@@ -97,6 +97,28 @@ export const logout = () => async (dispatch) => {
   }
 };
 
+export const deleteAccount = () => async (dispatch) => {
+  try {
+    const response = await api.delete('/auth/user');
+
+    dispatch({
+      type: USER_ACTION_TYPES.DELETE_ACCOUNT_SUCCESS,
+      payload: response.data.data
+    });
+
+    localStorage.removeItem('token');
+    dispatch({
+      type: USER_ACTION_TYPES.SIGN_OUT
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: USER_ACTION_TYPES.DELETE_ACCOUNT_FAILED,
+      payload: error
+    });
+  }
+};
+
 /**
  * PLAID ACTIONS ******
  * */

@@ -10,6 +10,7 @@ const initialState = {
   incomes: null,
   currentMonthExpense: 0,
   currentMonthIncome: 0,
+  todaySpend: 0,
   error: null,
   isLoading: false,
   syncing: false
@@ -73,7 +74,8 @@ const transactionsReducer = (state = initialState, action) => {
     case TRANSACTIONS_ACTION_TYPES.GET_ACCOUNT_TRANSACTIONS_SUCCESS:
       return {
         ...state,
-        selectedTransactions: payload.transactions
+        selectedTransactions: payload.transactions,
+        todaySpend: payload.todaySpendAmount
       };
 
     case TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_SUCCESS:

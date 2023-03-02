@@ -11,8 +11,8 @@ import { logout } from 'store/user/user.action';
 const navbarRoutes = [
   {
     type: 'collapse',
-    name: 'Thomas Brown',
-    key: 'thomas-brown',
+    name: 'Account',
+    key: 'user-name',
     icon: <MDAvatar src={''} alt="Thomas Brown" size="sm" />,
     collapse: [
       {

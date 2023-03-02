@@ -87,8 +87,8 @@ const DashboardRoute = ({
       {syncing ? (
         <ColorRing
           visible={true}
-          height="400"
-          width="400"
+          height="150"
+          width="150"
           ariaLabel="blocks-loading"
           wrapperStyle={{}}
           wrapperClass="center-item"

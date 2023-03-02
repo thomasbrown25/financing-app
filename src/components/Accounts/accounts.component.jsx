@@ -89,7 +89,7 @@ const Accounts = ({
                 className="sync"
               >
                 <MDTypography variant="h6" color="info">
-                  sync
+                  refresh
                 </MDTypography>{' '}
                 <Icon color="info">sync</Icon>
               </MDBox>

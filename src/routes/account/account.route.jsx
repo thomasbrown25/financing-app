@@ -7,9 +7,11 @@ import MainLayout from 'layouts/main-layout';
 import { Grid } from '@mui/material';
 import Header from 'components/Header/header.component';
 import Transactions from 'components/Transactions/transactions.component';
+import MDTypography from 'components/MDTypography';
+import Currency from 'components/Currency/currency.component';
 
 const AccountRoute = ({
-  transactions: { selectedTransactions },
+  transactions: { selectedTransactions, todaySpend },
   accounts: { account }
 }) => {
   return (
@@ -21,7 +23,7 @@ const AccountRoute = ({
           subTitle={`${account?.officialName}`}
         />
 
-        <Grid item xs={12} sm={12} md={12} lg={3} />
+        <Grid item xs={12} sm={12} md={12} lg={3}></Grid>
 
         <Grid item xs={12} sm={12} md={12} lg={6}>
           <Transactions
@@ -41,7 +43,22 @@ const AccountRoute = ({
           />
         </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={3} />
+        <Grid item xs={12} sm={12} md={12} lg={3}>
+          <MDTypography
+            variant="h6"
+            fontWeight="medium"
+            textTransform="capitalize"
+            color="info"
+          >
+            <MDTypography
+              variant="h6"
+              fontWeight="medium"
+              textTransform="capitalize"
+            >
+              Spent Today: <Currency value={todaySpend} />
+            </MDTypography>{' '}
+          </MDTypography>
+        </Grid>
       </Grid>
     </MainLayout>
   );
