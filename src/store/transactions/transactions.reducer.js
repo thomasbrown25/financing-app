@@ -8,6 +8,8 @@ const initialState = {
   selectedTransactions: null,
   expenses: null,
   incomes: null,
+  totalIncome: 0,
+  tithes: 0,
   currentMonthExpense: 0,
   currentMonthIncome: 0,
   todaySpend: 0,
@@ -55,7 +57,9 @@ const transactionsReducer = (state = initialState, action) => {
         ...state,
         recurringTransactions: payload.transactions,
         expenses: payload.expenses,
-        incomes: payload.incomes
+        incomes: payload.incomes,
+        totalIncome: payload.totalIncome,
+        tithes: payload.tithes
       };
 
     case TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_SUCCESS:

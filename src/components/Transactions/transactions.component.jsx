@@ -35,8 +35,9 @@ const Transactions = ({
   viewMore = false,
   viewAll = true,
   viewBalance = false,
-  header = `Your Transactions`,
-  balance = 0
+  header = `Transactions`,
+  balance = 0,
+  uppercase = false
 }) => {
   const [count, setCount] = useState(15);
 
@@ -69,7 +70,7 @@ const Transactions = ({
         <MDTypography
           variant="h6"
           fontWeight="medium"
-          textTransform="capitalize"
+          textTransform={uppercase ? 'uppercase' : 'capitalize'}
         >
           {header}
         </MDTypography>

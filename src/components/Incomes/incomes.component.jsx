@@ -7,10 +7,11 @@ import MDTypography from 'components/MDTypography';
 import MDButton from 'components/MDButton';
 
 // Billing page components
-import Income from './income.component';
+import Income from 'components/Income/income.component';
 import Moment from 'react-moment';
+import Currency from 'components/Currency/currency.component';
 
-const Incomes = ({ transactions }) => {
+const Incomes = ({ transactions, tithes, totalIncome }) => {
   return (
     <>
       <MDBox
@@ -20,7 +21,11 @@ const Incomes = ({ transactions }) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        <MDTypography variant="h6" fontWeight="medium">
+        <MDTypography
+          variant="h6"
+          fontWeight="medium"
+          textTransform="uppercase"
+        >
           Income
         </MDTypography>
         <MDButton variant="outlined" color="info" size="small">
@@ -43,6 +48,23 @@ const Incomes = ({ transactions }) => {
               incomeId={transaction.streamId}
             />
           ))}
+        </MDBox>
+
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          Total Income:
+        </MDTypography>
+        <MDBox display="flex" alignItems="center" pb={2}>
+          <MDTypography variant="button" fontWeight="regular" color="text">
+            <Currency value={totalIncome} />
+          </MDTypography>
+        </MDBox>
+        <MDTypography display="block" variant="button" fontWeight="medium">
+          Tithes:
+        </MDTypography>
+        <MDBox display="flex" alignItems="center">
+          <MDTypography variant="button" fontWeight="regular" color="text">
+            <Currency value={tithes} />
+          </MDTypography>
         </MDBox>
       </MDBox>
     </>

@@ -34,7 +34,14 @@ const AccountList = ({
 
   const renderItems = accounts?.map(
     (
-      { accountId, name, balanceAvailable, balanceCurrent, officialName, type },
+      {
+        accountId,
+        name,
+        balanceAvailable,
+        balanceCurrent,
+        officialName,
+        subtype
+      },
       key
     ) => (
       <MDBox
@@ -107,9 +114,9 @@ const AccountList = ({
                   >
                     <Currency
                       value={
-                        type.toLowerCase().includes('savings')
+                        subtype.toLowerCase().includes('savings')
                           ? 22450
-                          : type.toLowerCase().includes('credit')
+                          : subtype.toLowerCase().includes('credit')
                           ? balanceCurrent
                           : balanceAvailable
                       }
@@ -146,10 +153,10 @@ const AccountList = ({
     <Card {...rest}>
       <MDBox pt={2} px={2}>
         <MDTypography component="span" variant="h6" fontWeight="bold">
+          {title}:{' '}
           <MDTypography variant="h6" fontWeight="bold" color="success">
-            {title}:{' '}
+            <Currency value={totalAmount} />
           </MDTypography>
-          <Currency value={totalAmount} />
         </MDTypography>
       </MDBox>
       <MDBox p={2}>

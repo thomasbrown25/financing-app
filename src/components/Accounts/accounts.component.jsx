@@ -30,7 +30,7 @@ import { useMaterialUIController } from 'context';
 
 import Currency from 'components/Currency/currency.component';
 import AccountList from 'components/AccountList/account-list.component';
-import Incomes from 'components/Income/incomes.component';
+import Incomes from 'components/Incomes/incomes.component';
 import MDButton from 'components/MDButton';
 import { Icon } from '@mui/material';
 import { refreshAccountsBalance } from 'store/accounts/accounts.action';
@@ -47,13 +47,8 @@ import { refreshAll } from 'store/refresh/refresh.action';
 const Accounts = ({
   title,
   percentage,
-  dropdown,
-  cashAccounts,
-  creditAccounts,
-  incomes,
-  refreshAccountsBalance,
-  refreshRecurringTransactions,
-  refreshTransactions,
+  accounts: { cashAccounts, creditAccounts },
+  transactions: { incomes, tithes, totalIncome },
   refreshAll
 }) => {
   const [controller] = useMaterialUIController();
@@ -78,7 +73,7 @@ const Accounts = ({
               <MDTypography
                 variant="h6"
                 fontWeight="bold"
-                textTransform="capitalize"
+                textTransform="uppercase"
               >
                 {title}
               </MDTypography>
@@ -132,7 +127,11 @@ const Accounts = ({
                 </MDTypography>
               </MDTypography>
             </MDBox>
-            <Incomes transactions={incomes} />
+            <Incomes
+              transactions={incomes}
+              tithes={tithes}
+              totalIncome={totalIncome}
+            />
           </Grid>
           {/* <Grid item xs={5}>
             {dropdown && (
@@ -168,6 +167,8 @@ Accounts.defaultProps = {
 
 // Typechecking props for the Accounts
 Accounts.propTypes = {
+  transactions: PropTypes.object.isRequired,
+  accounts: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   percentage: PropTypes.shape({
@@ -184,23 +185,14 @@ Accounts.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     label: PropTypes.string
   }),
-  dropdown: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.shape({
-      action: PropTypes.func,
-      menu: PropTypes.node,
-      value: PropTypes.string
-    })
-  ]),
-  refreshAccountsBalance: PropTypes.func.isRequired,
-  refreshRecurringTransactions: PropTypes.func.isRequired,
-  refreshTransactions: PropTypes.func.isRequired,
   refreshAll: PropTypes.func.isRequired
 };
 
-export default connect(null, {
-  refreshAccountsBalance,
-  refreshRecurringTransactions,
-  refreshTransactions,
+const mapStateToProps = (state) => ({
+  transactions: state.transactions,
+  accounts: state.accounts
+});
+
+export default connect(mapStateToProps, {
   refreshAll
 })(Accounts);

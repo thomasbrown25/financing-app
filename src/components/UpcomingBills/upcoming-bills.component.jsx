@@ -45,7 +45,7 @@ const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
         <MDTypography
           variant="h6"
           fontWeight="medium"
-          textTransform="capitalize"
+          textTransform="uppercase"
         >
           Upcoming Bills
         </MDTypography>

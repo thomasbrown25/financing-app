@@ -65,7 +65,6 @@ export default function App() {
     darkMode
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -114,10 +113,10 @@ export default function App() {
   }, [direction]);
 
   // Setting page scroll to 0 when changing the route
-  useEffect(() => {
-    document.documentElement.scrollTop = 0;
-    document.scrollingElement.scrollTop = 0;
-  }, [pathname]);
+  // useEffect(() => {
+  //   document.documentElement.scrollTop = 0;
+  //   document.scrollingElement.scrollTop = 0;
+  // }, [pathname]);
 
   const configsButton = (
     <MDBox

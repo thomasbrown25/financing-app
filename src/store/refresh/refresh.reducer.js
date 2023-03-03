@@ -27,6 +27,7 @@ const refreshReducer = (state = initialState, action) => {
     case REFRESH_ACTION_TYPES.REFRESH_FAILED:
       return {
         ...state,
+        syncing: false,
         error: payload
       };
 

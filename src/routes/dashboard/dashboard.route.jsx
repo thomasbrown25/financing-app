@@ -27,7 +27,13 @@ import { getAccountsBalance } from 'store/accounts/accounts.action';
 const DashboardRoute = ({
   user: { currentUser, isLinkValid, loading },
   accounts: { cashAccounts, creditAccounts },
-  transactions: { transactions, expenses, incomes, recurringTransactions },
+  transactions: {
+    transactions,
+    expenses,
+    incomes,
+    recurringTransactions,
+    tithes
+  },
   refresh: { syncing },
   getTransactions,
   getRecurringTransactions,
@@ -101,13 +107,10 @@ const DashboardRoute = ({
           <ItemContainer>
             <Accounts
               title={'Accounts'}
-              income={'currentMonthIncome'}
-              expense={'currentMonthExpense'}
-              description={'Totals for current month'}
-              dropdown={true}
               cashAccounts={cashAccounts}
               creditAccounts={creditAccounts}
               incomes={incomes}
+              tithes={tithes}
             />
           </ItemContainer>
 
@@ -115,16 +118,19 @@ const DashboardRoute = ({
             <UpcomingBills transactions={expenses} />
           </ItemContainer>
 
-          <ItemContainer>
-            <Calendar events={recurringTransactions} />
-          </ItemContainer>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
+            <Calendar
+              events={recurringTransactions}
+              header={{ title: 'Upcoming' }}
+            />
+          </Grid>
 
           <Grid item xs={12} lg={12}>
-            <Transactions transactions={transactions} />
+            <Transactions transactions={transactions} uppercase={true} />
           </Grid>
-          <Footer />
         </Grid>
       )}
+      <Footer />
     </MainLayout>
   );
 };
