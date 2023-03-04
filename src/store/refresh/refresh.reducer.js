@@ -2,7 +2,7 @@ import { REFRESH_ACTION_TYPES } from './refresh.types';
 
 const initialState = {
   refresh: null,
-  error: null,
+  refreshError: null,
   syncing: false,
   loading: false
 };
@@ -15,7 +15,8 @@ const refreshReducer = (state = initialState, action) => {
       return {
         ...state,
         refresh: 'Success',
-        syncing: false
+        syncing: false,
+        refreshError: null
       };
 
     case REFRESH_ACTION_TYPES.REFRESH_SYNCING:
@@ -28,7 +29,7 @@ const refreshReducer = (state = initialState, action) => {
       return {
         ...state,
         syncing: false,
-        error: payload
+        refreshError: payload
       };
 
     default:

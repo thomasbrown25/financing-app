@@ -109,6 +109,7 @@ const Income = ({
             lineHeight={1}
             ml={3}
             sx={{ cursor: 'pointer' }}
+            color="text"
           >
             <Icon fontSize="small">picture_as_pdf</Icon>
             <MDTypography variant="button" fontWeight="bold">

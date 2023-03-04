@@ -14,6 +14,7 @@ const accountsReducer = (state = initialState, action) => {
 
   switch (type) {
     case ACCOUNTS_ACTION_TYPES.GET_ACCOUNTS_BALANCE_SUCCESS:
+    case ACCOUNTS_ACTION_TYPES.DELETE_ACCOUNT_SUCCESS:
       return {
         ...state,
         accounts: payload.accounts,
@@ -37,6 +38,7 @@ const accountsReducer = (state = initialState, action) => {
 
     case ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_FAILED:
     case ACCOUNTS_ACTION_TYPES.GET_ACCOUNTS_BALANCE_FAILED:
+    case ACCOUNTS_ACTION_TYPES.DELETE_ACCOUNT_FAILED:
       return {
         ...state,
         error: payload

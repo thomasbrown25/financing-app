@@ -1,4 +1,4 @@
-import { api } from '../../utils/api.utils';
+import { api, isPlaidError } from '../../utils/api.utils';
 import { REFRESH_ACTION_TYPES } from './refresh.types';
 
 export const refreshAll = () => async (dispatch) => {
@@ -12,10 +12,12 @@ export const refreshAll = () => async (dispatch) => {
       payload: 'Success'
     });
   } catch (error) {
-    console.log(error, error.message);
+    console.log(error.response.data);
+
+    //console.log(error, error.message);
     dispatch({
       type: REFRESH_ACTION_TYPES.REFRESH_FAILED,
-      payload: error?.response
+      payload: isPlaidError(error) ? isPlaidError(error) : error?.response
     });
   }
 };

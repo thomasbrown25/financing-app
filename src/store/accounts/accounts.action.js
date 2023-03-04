@@ -53,8 +53,6 @@ export const refreshAccountsBalance = () => async (dispatch) => {
   try {
     const response = await api.get(`/account/balance/refresh`);
 
-    console.log(response.data);
-
     dispatch({
       type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_SUCCESS,
       payload: response.data.data
@@ -63,6 +61,23 @@ export const refreshAccountsBalance = () => async (dispatch) => {
     console.log(error, error.message);
     dispatch({
       type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
+export const deleteAccount = (accountId) => async (dispatch) => {
+  try {
+    const response = await api.delete(`/account/${accountId}`);
+
+    dispatch({
+      type: ACCOUNTS_ACTION_TYPES.DELETE_ACCOUNT_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: ACCOUNTS_ACTION_TYPES.DELETE_ACCOUNT_FAILED,
       payload: error?.response
     });
   }

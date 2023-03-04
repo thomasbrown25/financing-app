@@ -52,3 +52,9 @@ export const setAuthToken = (token) => {
     localStorage.removeItem('token');
   }
 };
+
+export const isPlaidError = (error) => {
+  if (error.response && error.response.data && error.response.data.plaidError) {
+    return error.response.data.plaidError;
+  }
+};

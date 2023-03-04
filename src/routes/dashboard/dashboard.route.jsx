@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
@@ -23,6 +23,8 @@ import {
   getTransactions
 } from 'store/transactions/transactions.action';
 import { getAccountsBalance } from 'store/accounts/accounts.action';
+import { ItemLoginRequired } from 'utils/plaid-errors';
+import MDTypography from 'components/MDTypography';
 
 const DashboardRoute = ({
   user: { currentUser, isLinkValid, loading },
@@ -34,7 +36,7 @@ const DashboardRoute = ({
     recurringTransactions,
     tithes
   },
-  refresh: { syncing },
+  refresh: { syncing, refreshError },
   getTransactions,
   getRecurringTransactions,
   getAccountsBalance,
@@ -54,6 +56,8 @@ const DashboardRoute = ({
     loading
   ]);
 
+  const [isPlaidError, setIsPlaidError] = useState(false);
+
   useEffect(() => {
     if (currentUser?.accessToken) {
       getTransactions();
@@ -71,6 +75,12 @@ const DashboardRoute = ({
       getAccountsBalance();
     }
   }, [currentUser?.accessToken, getAccountsBalance, loading]);
+
+  useEffect(() => {
+    if (refreshError?.error_code === 3) {
+      setIsPlaidError(true);
+    }
+  }, [refreshError]);
 
   useEffect(() => {
     if (!syncing) {
@@ -103,7 +113,7 @@ const DashboardRoute = ({
         />
       ) : (
         <Grid container spacing={2} className="jc-center">
-          <Header />
+          <Header error={refreshError} />
           <ItemContainer>
             <Accounts
               title={'Accounts'}

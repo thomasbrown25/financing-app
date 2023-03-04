@@ -3,8 +3,15 @@ import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
+import { ItemLoginRequired } from 'utils/plaid-errors';
+import PlaidLink from 'components/plaid-link/plaid-link.component';
 
-const Header = ({ user: { currentUser }, title, subTitle }) => {
+const Header = ({
+  user: { currentUser },
+  refresh: { refreshError },
+  title,
+  subTitle
+}) => {
   return (
     <Grid item xs={12} xl={12}>
       <MDBox
@@ -29,15 +36,25 @@ const Header = ({ user: { currentUser }, title, subTitle }) => {
               {subTitle}
             </MDTypography>
           )}
+          {refreshError && (
+            <>
+              <PlaidLink
+                header={ItemLoginRequired.message}
+                linkToken={currentUser?.linkToken}
+              />
+            </>
+          )}
         </MDTypography>
       </MDBox>
     </Grid>
   );
 };
 Header.propTypes = {
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  refresh: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  refresh: state.refresh
 });
 export default connect(mapStateToProps, {})(Header);

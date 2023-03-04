@@ -16,12 +16,15 @@ import Currency from 'components/Currency/currency.component';
 
 import { getAccountTransactions } from 'store/transactions/transactions.action';
 import { getAccountBalance } from 'store/accounts/accounts.action';
+import BasicTooltip from 'components/Tooltip/tooltip.component';
+import { deleteAccount } from 'store/accounts/accounts.action';
 
 const AccountList = ({
   title,
   accountList,
   getAccountTransactions,
   getAccountBalance,
+  deleteAccount,
   ...rest
 }) => {
   const { accounts, totalAmount } = accountList;
@@ -30,6 +33,11 @@ const AccountList = ({
     getAccountTransactions(accountId);
     getAccountBalance(accountId);
     console.log(accountId);
+  };
+
+  const handleAccountDelete = (accountId) => {
+    if (window.confirm(`Are you sure you want to delete income ${title}`))
+      deleteAccount(accountId, false);
   };
 
   const renderItems = accounts?.map(
@@ -128,11 +136,8 @@ const AccountList = ({
           </MDBox>
         </MDTypography>
         <MDTypography
-          component={Link}
-          onClick={() => handleAccountSelect(accountId)}
           variant="button"
           color={'dark'}
-          to={`/accounts/account`}
           sx={{
             lineHeight: 0,
             transition: 'all 0.2s cubic-bezier(.34,1.61,.7,1.3)',
@@ -143,7 +148,16 @@ const AccountList = ({
             }
           }}
         >
-          <Icon sx={{ fontWeight: 'bold' }}>chevron_right</Icon>
+          <BasicTooltip text="Delete">
+            <Icon
+              fontSize="small"
+              dataid={accountId}
+              onClick={() => handleAccountDelete(accountId)}
+              color="text"
+            >
+              delete
+            </Icon>
+          </BasicTooltip>
         </MDTypography>
       </MDBox>
     )
@@ -173,9 +187,12 @@ AccountList.propTypes = {
   title: PropTypes.string.isRequired,
   accounts: PropTypes.arrayOf(PropTypes.object),
   getAccountTransactions: PropTypes.func.isRequired,
-  getAccountBalance: PropTypes.func.isRequired
+  getAccountBalance: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired
 };
 
-export default connect(null, { getAccountTransactions, getAccountBalance })(
-  AccountList
-);
+export default connect(null, {
+  getAccountTransactions,
+  getAccountBalance,
+  deleteAccount
+})(AccountList);

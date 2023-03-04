@@ -8,7 +8,7 @@ import { publicTokenExchange } from 'store/user/user.action';
 import MDButton from 'components/MDButton';
 import MDTypography from 'components/MDTypography';
 
-const PlaidLink = ({ linkToken, isLinkValid, publicTokenExchange }) => {
+const PlaidLink = ({ linkToken, isLinkValid, publicTokenExchange, header }) => {
   console.log('link token: ' + linkToken);
   const { open, ready } = usePlaidLink({
     token: linkToken,
@@ -26,18 +26,20 @@ const PlaidLink = ({ linkToken, isLinkValid, publicTokenExchange }) => {
 
   return (
     <div className="plaid-link">
-      <MDTypography component="h4">
-        To get started, click the Sync account button and add one of your bank
-        accounts.{' '}
+      <MDTypography variant="h6" fontWeight="medium" pt={2} pb={2}>
+        {header
+          ? header
+          : 'To get started, click the Sync account button and add one of your bank accounts.'}
       </MDTypography>
 
       <MDButton
+        variant="outlined"
+        color="info"
+        size="small"
         component="a"
-        variant="gradient"
         onClick={() => open()}
-        color="dark"
       >
-        Sync Account
+        Re-Sync Account
       </MDButton>
     </div>
   );
