@@ -9,8 +9,9 @@ import MDTypography from 'components/MDTypography';
 import MDButton from 'components/MDButton';
 import Currency from 'components/Currency/currency.component';
 import moment from 'moment';
+import DropdownSelect from 'components/DropdownSelect/dropdown-select.component';
 
-function Bill({ color, icon, name, dueDate, amount }) {
+function Bill({ color, icon, name, dueDate, amount, category }) {
   return (
     <MDBox key={name} component="li" py={1} pr={2} mb={1}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center">
@@ -30,11 +31,13 @@ function Bill({ color, icon, name, dueDate, amount }) {
             </MDTypography>
           </MDBox>
         </MDBox>
+        <DropdownSelect color={color} defaultItem={category} />
         <MDTypography
           variant="button"
           color={color}
           fontWeight="medium"
           textGradient
+          className="ml-auto"
         >
           <Currency value={amount} />
         </MDTypography>

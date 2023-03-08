@@ -32,3 +32,11 @@
 .fc-daygrid-more-link {
   color: white;
 }
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}

@@ -22,7 +22,7 @@ const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
 
   const renderItems = transactions
     ?.slice(0, count)
-    .map(({ merchantName, description, dueDate, lastAmount }, i) => (
+    .map(({ merchantName, description, dueDate, lastAmount, category }, i) => (
       <Bill
         key={i}
         color="info"
@@ -30,6 +30,7 @@ const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
         name={merchantName ? merchantName : description.slice(0, 20)}
         dueDate={dueDate}
         amount={lastAmount}
+        category={category}
       />
     ));
 
