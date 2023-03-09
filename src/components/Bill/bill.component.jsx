@@ -11,7 +11,7 @@ import Currency from 'components/Currency/currency.component';
 import moment from 'moment';
 import DropdownSelect from 'components/DropdownSelect/dropdown-select.component';
 
-function Bill({ color, icon, name, dueDate, amount, category }) {
+function Bill({ color, icon, name, dueDate, amount, category, categories }) {
   return (
     <MDBox key={name} component="li" py={1} pr={2} mb={1}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center">
@@ -31,7 +31,11 @@ function Bill({ color, icon, name, dueDate, amount, category }) {
             </MDTypography>
           </MDBox>
         </MDBox>
-        <DropdownSelect color={color} defaultItem={category} />
+        <DropdownSelect
+          color={color}
+          defaultItem={category}
+          itemList={categories}
+        />
         <MDTypography
           variant="button"
           color={color}

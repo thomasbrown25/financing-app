@@ -92,7 +92,7 @@ function DashboardNavbar({ absolute, light, isMini, logout }) {
      The event listener that's calling the handleTransparentNavbar function when 
      scrolling the window.
     */
-    window.addEventListener('scroll', handleTransparentNavbar);
+    //window.addEventListener('scroll', handleTransparentNavbar);
 
     // Call the handleTransparentNavbar function to set the state with the initial value.
     handleTransparentNavbar();

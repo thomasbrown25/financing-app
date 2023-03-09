@@ -123,7 +123,7 @@ const AccountList = ({
                     <Currency
                       value={
                         subtype.toLowerCase().includes('savings')
-                          ? 22450
+                          ? 22450.0
                           : subtype.toLowerCase().includes('credit')
                           ? balanceCurrent
                           : balanceAvailable

@@ -13,7 +13,12 @@ import MDButton from 'components/MDButton';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
+const UpcomingBills = ({
+  transactions,
+  categories,
+  viewAll = true,
+  viewMore = false
+}) => {
   const [count, setCount] = useState(12);
 
   const handleViewMore = () => {
@@ -31,6 +36,7 @@ const UpcomingBills = ({ transactions, viewAll = true, viewMore = false }) => {
         dueDate={dueDate}
         amount={lastAmount}
         category={category}
+        categories={categories}
       />
     ));
 

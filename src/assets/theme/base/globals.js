@@ -20,7 +20,7 @@ const { info, dark } = colors;
 
 const globals = {
   html: {
-    scrollBehavior: 'smooth'
+    // scrollBehavior: 'smooth'
   },
   '*, *::before, *::after': {
     margin: 0,

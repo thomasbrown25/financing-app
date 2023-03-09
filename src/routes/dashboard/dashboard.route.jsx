@@ -25,6 +25,7 @@ import {
 import { getAccountsBalance } from 'store/accounts/accounts.action';
 import { ItemLoginRequired } from 'utils/plaid-errors';
 import MDTypography from 'components/MDTypography';
+import { getCategories } from 'store/categories/categories.action';
 
 const DashboardRoute = ({
   user: { currentUser, isLinkValid, loading },
@@ -36,11 +37,13 @@ const DashboardRoute = ({
     recurringTransactions,
     tithes
   },
+  categories: { categories },
   refresh: { syncing, refreshError },
   getTransactions,
   getRecurringTransactions,
   getAccountsBalance,
-  createLinkToken
+  createLinkToken,
+  getCategories
 }) => {
   useEffect(() => {
     if (
@@ -66,6 +69,12 @@ const DashboardRoute = ({
 
   useEffect(() => {
     if (currentUser?.accessToken) {
+      getCategories();
+    }
+  }, [currentUser?.accessToken, getCategories, loading]);
+
+  useEffect(() => {
+    if (currentUser?.accessToken) {
       getRecurringTransactions();
     }
   }, [currentUser?.accessToken, getRecurringTransactions, loading]);
@@ -87,6 +96,7 @@ const DashboardRoute = ({
       getTransactions();
       getRecurringTransactions();
       getAccountsBalance();
+      getCategories();
     }
   }, [syncing, currentUser?.accessToken]);
 
@@ -125,7 +135,7 @@ const DashboardRoute = ({
           </ItemContainer>
 
           <ItemContainer>
-            <UpcomingBills transactions={expenses} />
+            <UpcomingBills transactions={expenses} categories={categories} />
           </ItemContainer>
 
           <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -153,13 +163,15 @@ DashboardRoute.propTypes = {
   updateLinkToken: PropTypes.func.isRequired,
   getRecurringTransactions: PropTypes.func.isRequired,
   getTransactions: PropTypes.func.isRequired,
-  getAccountsBalance: PropTypes.func.isRequired
+  getAccountsBalance: PropTypes.func.isRequired,
+  getCategories: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
   transactions: state.transactions,
   accounts: state.accounts,
+  categories: state.categories,
   refresh: state.refresh
 });
 
@@ -168,5 +180,6 @@ export default connect(mapStateToProps, {
   updateLinkToken,
   getRecurringTransactions,
   getTransactions,
-  getAccountsBalance
+  getAccountsBalance,
+  getCategories
 })(DashboardRoute);

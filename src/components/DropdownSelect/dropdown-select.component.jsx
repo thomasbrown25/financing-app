@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const DropdownSelect = ({ color, defaultItem }) => {
+const DropdownSelect = ({ color, defaultItem, itemList }) => {
   const [items, setItems] = useState([]);
 
   const handleChange = (event) => {
@@ -18,8 +18,8 @@ const DropdownSelect = ({ color, defaultItem }) => {
   //   }
   // }, [defaultItem]);
 
-  const renderItems = items?.map((item, i) => (
-    <MenuItem value={item}>{item}</MenuItem>
+  const renderItems = itemList?.map((item, i) => (
+    <MenuItem value={item.name}>{item.name}</MenuItem>
   ));
 
   return (
