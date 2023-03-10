@@ -98,7 +98,7 @@ function Calendar({ header, ...rest }) {
           ) : null}
           {header.date ? (
             <MDTypography
-              component="p"
+              component="h4"
               variant="button"
               color="text"
               fontWeight="regular"

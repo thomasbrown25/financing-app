@@ -101,6 +101,12 @@ const typography = {
     ...baseHeadingProperties
   },
 
+  h7: {
+    fontSize: pxToRem(12),
+    lineHeight: 1.625,
+    ...baseHeadingProperties
+  },
+
   subtitle1: {
     fontFamily: baseProperties.fontFamily,
     fontSize: baseProperties.fontSizeXL,

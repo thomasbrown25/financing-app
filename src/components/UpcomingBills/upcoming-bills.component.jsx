@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import Card from '@mui/material/Card';
 // import Divider from "@mui/material/Divider";
 import Icon from '@mui/material/Icon';
@@ -11,11 +15,12 @@ import MDTypography from 'components/MDTypography';
 import Bill from '../Bill/bill.component';
 import MDButton from 'components/MDButton';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { getCategories } from 'store/categories/categories.action';
 
 const UpcomingBills = ({
-  transactions,
-  categories,
+  transactions: { expenses },
+  user: { currentUser, loading },
+  categories: { categories },
   viewAll = true,
   viewMore = false
 }) => {
@@ -25,17 +30,14 @@ const UpcomingBills = ({
     setCount(count + 10);
   };
 
-  const renderItems = transactions
+  const renderItems = expenses
     ?.slice(0, count)
-    .map(({ merchantName, description, dueDate, lastAmount, category }, i) => (
+    .map((transaction, i) => (
       <Bill
         key={i}
         color="info"
         icon="expand_less"
-        name={merchantName ? merchantName : description.slice(0, 20)}
-        dueDate={dueDate}
-        amount={lastAmount}
-        category={category}
+        transaction={transaction}
         categories={categories}
       />
     ));
@@ -56,6 +58,9 @@ const UpcomingBills = ({
         >
           Upcoming Bills
         </MDTypography>
+        {/* <MDTypography variant="h7" fontWeight="light">
+          (click to edit)
+        </MDTypography> */}
         {viewAll && (
           <MDBox display="flex" alignItems="flex-start">
             <Link to="/upcoming">
@@ -104,4 +109,16 @@ const UpcomingBills = ({
   );
 };
 
-export default UpcomingBills;
+UpcomingBills.propTypes = {
+  user: PropTypes.object.isRequired,
+  transactions: PropTypes.object.isRequired,
+  categories: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+  transactions: state.transactions,
+  categories: state.categories
+});
+
+export default connect(mapStateToProps, {})(UpcomingBills);

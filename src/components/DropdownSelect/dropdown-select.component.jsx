@@ -19,7 +19,9 @@ const DropdownSelect = ({ color, defaultItem, itemList }) => {
   // }, [defaultItem]);
 
   const renderItems = itemList?.map((item, i) => (
-    <MenuItem value={item.name}>{item.name}</MenuItem>
+    <MenuItem key={i} value={item.name}>
+      {item.name}
+    </MenuItem>
   ));
 
   return (

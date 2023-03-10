@@ -62,6 +62,12 @@ const transactionsReducer = (state = initialState, action) => {
         tithes: payload.tithes
       };
 
+    case TRANSACTIONS_ACTION_TYPES.UPDATE_RECURRING_TRANSACTIONS_SUCCESS:
+      return {
+        ...state,
+        expenses: payload.expenses
+      };
+
     case TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_SUCCESS:
       return {
         ...state,
@@ -97,6 +103,7 @@ const transactionsReducer = (state = initialState, action) => {
     case TRANSACTIONS_ACTION_TYPES.REFRESH_TRANSACTIONS_FAILED:
     case TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_FAILED:
     case TRANSACTIONS_ACTION_TYPES.SET_INCOME_ACTIVE_FAILED:
+    case TRANSACTIONS_ACTION_TYPES.UPDATE_RECURRING_TRANSACTIONS_FAILED:
       return {
         ...state,
         error: payload

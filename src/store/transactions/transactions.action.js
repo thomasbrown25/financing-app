@@ -120,6 +120,31 @@ export const getRecurringTransactions = () => async (dispatch) => {
   }
 };
 
+/**
+ ** POST: "/transactions/recurring"
+ * @param reqBody: string: accessToken
+ **/
+export const updateRecurringTransactions =
+  (newTransaction) => async (dispatch) => {
+    try {
+      const response = await api.post(
+        `/transactions/recurring/${newTransaction.id}`,
+        newTransaction
+      );
+
+      dispatch({
+        type: TRANSACTIONS_ACTION_TYPES.UPDATE_RECURRING_TRANSACTIONS_SUCCESS,
+        payload: response.data.data
+      });
+    } catch (error) {
+      console.log(error, error.message);
+      dispatch({
+        type: TRANSACTIONS_ACTION_TYPES.UPDATE_RECURRING_TRANSACTIONS_FAILED,
+        payload: error?.response
+      });
+    }
+  };
+
 /** Calls the financing-api service to get the recurring transactions
  ** GET: "/transactions/recurring"
  * @param reqBody: string: accessToken

@@ -18,6 +18,7 @@ import Footer from 'layouts/authentication/footer';
 
 // actions
 import { createLinkToken, updateLinkToken } from 'store/user/user.action';
+import { getCategories } from 'store/categories/categories.action';
 import {
   getRecurringTransactions,
   getTransactions
@@ -25,7 +26,6 @@ import {
 import { getAccountsBalance } from 'store/accounts/accounts.action';
 import { ItemLoginRequired } from 'utils/plaid-errors';
 import MDTypography from 'components/MDTypography';
-import { getCategories } from 'store/categories/categories.action';
 
 const DashboardRoute = ({
   user: { currentUser, isLinkValid, loading },
@@ -37,7 +37,6 @@ const DashboardRoute = ({
     recurringTransactions,
     tithes
   },
-  categories: { categories },
   refresh: { syncing, refreshError },
   getTransactions,
   getRecurringTransactions,
@@ -66,12 +65,6 @@ const DashboardRoute = ({
       getTransactions();
     }
   }, [currentUser?.accessToken, getTransactions, loading]);
-
-  useEffect(() => {
-    if (currentUser?.accessToken) {
-      getCategories();
-    }
-  }, [currentUser?.accessToken, getCategories, loading]);
 
   useEffect(() => {
     if (currentUser?.accessToken) {
@@ -135,7 +128,7 @@ const DashboardRoute = ({
           </ItemContainer>
 
           <ItemContainer>
-            <UpcomingBills transactions={expenses} categories={categories} />
+            <UpcomingBills />
           </ItemContainer>
 
           <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -171,7 +164,6 @@ const mapStateToProps = (state) => ({
   user: state.user,
   transactions: state.transactions,
   accounts: state.accounts,
-  categories: state.categories,
   refresh: state.refresh
 });
 
