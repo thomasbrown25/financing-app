@@ -41,9 +41,9 @@ const DropdownSelect = ({ color, defaultItem, itemList }) => {
         onChange={handleChange}
         color={color}
       >
-        <MenuItem value={defaultItem}>
+        {/* <MenuItem value={defaultItem}>
           <em>{defaultItem}</em>
-        </MenuItem>
+        </MenuItem> */}
         {renderItems}
       </Select>
     </FormControl>
