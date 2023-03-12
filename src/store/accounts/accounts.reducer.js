@@ -5,6 +5,7 @@ const initialState = {
   account: null,
   cashAccounts: { accounts: null, totalAmount: null },
   creditAccounts: { accounts: null, totalAmount: null },
+  loanAccounts: { accounts: null, totalAmount: null },
   error: null,
   isLoading: false
 };
@@ -27,6 +28,11 @@ const accountsReducer = (state = initialState, action) => {
           ...state.creditAccounts,
           accounts: payload.creditAccounts,
           totalAmount: payload.creditAmount
+        },
+        loanAccounts: {
+          ...state.loanAccounts,
+          accounts: payload.loanAccounts,
+          totalAmount: payload.loanAmount
         }
       };
 

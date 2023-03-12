@@ -51,6 +51,7 @@ import MainLayout from 'layouts/main-layout';
 import TransactionsRoute from 'routes/transactions/transactions.route';
 import RegisterRoute from 'routes/register/register.route';
 import SettingsRoute from 'routes/settings/settings.route';
+import ManageAccountsRoute from 'routes/manage-accounts/manage-accounts.route';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -173,6 +174,7 @@ export default function App() {
           <Route path="/upcoming" element={<UpcomingRoute />} />
           <Route path="/transactions" element={<TransactionsRoute />} />
           <Route path="/settings" element={<SettingsRoute />} />
+          <Route path="/manage-accounts" element={<ManageAccountsRoute />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
       </Routes>

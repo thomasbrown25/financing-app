@@ -16,6 +16,11 @@ const navbarRoutes = [
     icon: <MDAvatar src={''} alt="Thomas Brown" size="sm" />,
     collapse: [
       {
+        name: 'Manage Accounts',
+        key: 'manage-accounts',
+        route: '/manage-accounts'
+      },
+      {
         name: 'My Profile',
         key: 'my-profile',
         route: '/profile'

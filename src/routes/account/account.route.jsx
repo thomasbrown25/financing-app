@@ -31,8 +31,12 @@ const AccountRoute = ({
             viewAll={false}
             viewMore={true}
             viewBalance={true}
-            header={`${account?.name} \u2022
-            \u2022 \u2022 ${account?.mask}`}
+            header={
+              account?.mask
+                ? `${account?.name} \u2022
+            \u2022 \u2022 ${account?.mask}`
+                : `${account?.officialName}`
+            }
             balance={
               account?.type.toLowerCase().includes('savings')
                 ? 22450.0

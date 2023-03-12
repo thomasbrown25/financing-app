@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { usePlaidLink } from 'react-plaid-link';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,13 +9,24 @@ import { publicTokenExchange } from 'store/user/user.action';
 import MDButton from 'components/MDButton';
 import MDTypography from 'components/MDTypography';
 
-const PlaidLink = ({ linkToken, isLinkValid, publicTokenExchange, header }) => {
-  console.log('link token: ' + linkToken);
+import { createLinkToken } from 'store/user/user.action';
+
+const PlaidLink = ({
+  user: { currentUser, isLinkValid, loading },
+  publicTokenExchange,
+  header,
+  buttonText = 'Re-sync Account'
+}) => {
+  useEffect(() => {
+    if (!currentUser?.linkToken && !loading) {
+      createLinkToken();
+    }
+  }, [createLinkToken, loading]);
+
   const { open, ready } = usePlaidLink({
-    token: linkToken,
+    token: currentUser?.linkToken,
     onSuccess: (public_token, metadata) => {
       // send public_token to server
-      console.log(metadata);
       console.log('updating token');
       publicTokenExchange(metadata.public_token);
     },
@@ -39,14 +51,23 @@ const PlaidLink = ({ linkToken, isLinkValid, publicTokenExchange, header }) => {
         component="a"
         onClick={() => open()}
       >
-        Re-Sync Account
+        {buttonText}
       </MDButton>
     </div>
   );
 };
 
 PlaidLink.propTypes = {
+  user: PropTypes.object.isRequired,
+  createLinkToken: PropTypes.func.isRequired,
   publicTokenExchange: PropTypes.func.isRequired
 };
 
-export default connect(null, { publicTokenExchange })(PlaidLink);
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
+export default connect(mapStateToProps, {
+  createLinkToken,
+  publicTokenExchange
+})(PlaidLink);

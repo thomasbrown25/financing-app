@@ -47,7 +47,7 @@ import { refreshAll } from 'store/refresh/refresh.action';
 const Accounts = ({
   title,
   percentage,
-  accounts: { cashAccounts, creditAccounts },
+  accounts: { cashAccounts, creditAccounts, loanAccounts },
   transactions: { incomes, tithes, totalIncome },
   refreshAll
 }) => {
@@ -92,7 +92,7 @@ const Accounts = ({
 
             <MDBox lineHeight={1}>
               {/* CASH ACCOUNTS */}
-              <AccountList title="Bank of America" accountList={cashAccounts} />
+              <AccountList title="Cash Accounts" accountList={cashAccounts} />
               <MDTypography
                 variant="button"
                 fontWeight="bold"
@@ -111,7 +111,10 @@ const Accounts = ({
 
             <MDBox lineHeight={1}>
               {/* CREDIT ACCOUNTS */}
-              <AccountList title="Credit" accountList={creditAccounts} />
+              <AccountList
+                title="Credit Accounts"
+                accountList={creditAccounts}
+              />
               <MDTypography
                 variant="button"
                 fontWeight="bold"
@@ -127,6 +130,26 @@ const Accounts = ({
                 </MDTypography>
               </MDTypography>
             </MDBox>
+
+            <MDBox lineHeight={1}>
+              {/* LOAN ACCOUNTS */}
+              <AccountList title="Loan Accounts" accountList={loanAccounts} />
+              <MDTypography
+                variant="button"
+                fontWeight="bold"
+                color={percentage.color}
+              >
+                {percentage.value}&nbsp;
+                <MDTypography
+                  variant="button"
+                  fontWeight="regular"
+                  color={darkMode ? 'text' : 'secondary'}
+                >
+                  {percentage.label}
+                </MDTypography>
+              </MDTypography>
+            </MDBox>
+
             <Incomes
               transactions={incomes}
               tithes={tithes}

@@ -48,6 +48,7 @@ const AccountList = ({
         balanceAvailable,
         balanceCurrent,
         officialName,
+        type,
         subtype
       },
       key
@@ -124,7 +125,8 @@ const AccountList = ({
                       value={
                         subtype.toLowerCase().includes('savings')
                           ? 22450.0
-                          : subtype.toLowerCase().includes('credit')
+                          : subtype.toLowerCase().includes('credit') ||
+                            type.toLowerCase().includes('loan')
                           ? balanceCurrent
                           : balanceAvailable
                       }
@@ -167,7 +169,7 @@ const AccountList = ({
     <Card {...rest}>
       <MDBox pt={2} px={2}>
         <MDTypography component="span" variant="h6" fontWeight="bold">
-          {title}:{' '}
+          {title}{' '}
           <MDTypography variant="h6" fontWeight="bold" color="success">
             <Currency value={totalAmount} />
           </MDTypography>

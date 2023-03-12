@@ -96,12 +96,7 @@ const DashboardRoute = ({
   return (
     <MainLayout>
       <DashboardNavbar />
-      {!currentUser?.accessToken && (
-        <PlaidLink
-          linkToken={currentUser?.linkToken}
-          isLinkValid={isLinkValid}
-        />
-      )}
+      {!currentUser?.accessToken && <PlaidLink />}
 
       {syncing ? (
         <ColorRing
@@ -117,7 +112,7 @@ const DashboardRoute = ({
       ) : (
         <Grid container spacing={2} className="jc-center">
           <Header error={refreshError} />
-          <ItemContainer>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             <Accounts
               title={'Accounts'}
               cashAccounts={cashAccounts}
@@ -125,11 +120,11 @@ const DashboardRoute = ({
               incomes={incomes}
               tithes={tithes}
             />
-          </ItemContainer>
+          </Grid>
 
-          <ItemContainer>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             <UpcomingBills />
-          </ItemContainer>
+          </Grid>
 
           <Grid item xs={12} sm={12} md={12} lg={12}>
             <Calendar
