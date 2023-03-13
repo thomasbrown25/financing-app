@@ -28,9 +28,9 @@ import MDButton from 'components/MDButton';
 const style = {
   position: 'absolute',
   top: '50%',
-  left: '50%',
+  left: '60%',
   transform: 'translate(-50%, -50%)',
-  width: '25%',
+  width: '70%',
   bgcolor: colors.background.dark,
   border: '2px solid #000',
   boxShadow: 24,
@@ -59,7 +59,7 @@ const BillModal = ({
   const handleEditing = () => {
     setIsEditing(true);
   };
-  const handleCancelEditing = () => {
+  const handleCancel = () => {
     setIsEditing(false);
   };
   const handleChangeName = (e) => {
@@ -118,7 +118,12 @@ const BillModal = ({
 
   return (
     <div>
-      <Modal open={open} onClose={handleClose} closeAfterTransition>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        className="bill-modal"
+      >
         <Fade in={open}>
           <Box sx={style}>
             {/* NAME */}
@@ -195,20 +200,24 @@ const BillModal = ({
                     onChange={handleChangeName}
                     size="small"
                   />
-                  <Icon
-                    className="cursor ml-1"
+                  <MDButton
+                    variant="outlined"
                     color="success"
+                    size="small"
                     onClick={handleUpdate}
+                    className="ml-1"
                   >
-                    done
-                  </Icon>
-                  <Icon
-                    className="cursor"
+                    Save
+                  </MDButton>
+                  <MDButton
+                    variant="outlined"
                     color="error"
-                    onClick={handleCancelEditing}
+                    size="small"
+                    onClick={handleCancel}
+                    className="ml-1"
                   >
-                    close
-                  </Icon>
+                    Cancel
+                  </MDButton>
                 </MDBox>
 
                 <MDBox display="flex" alignItems="center" mb={2}>
