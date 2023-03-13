@@ -11,6 +11,7 @@ const categoriesReducer = (state = initialState, action) => {
 
   switch (type) {
     case CATEGORIES_ACTION_TYPES.GET_CATEGORIES_SUCCESS:
+    case CATEGORIES_ACTION_TYPES.ADD_CATEGORIES_SUCCESS:
     case CATEGORIES_ACTION_TYPES.REFRESH_CATEGORIES_SUCCESS:
       return {
         ...state,
@@ -20,6 +21,7 @@ const categoriesReducer = (state = initialState, action) => {
 
     case CATEGORIES_ACTION_TYPES.GET_CATEGORIES_FAILED:
     case CATEGORIES_ACTION_TYPES.REFRESH_CATEGORIES_FAILED:
+    case CATEGORIES_ACTION_TYPES.ADD_CATEGORIES_FAILED:
       return {
         ...state,
         error: payload

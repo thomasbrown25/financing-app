@@ -15,7 +15,7 @@ import PlaidLink from 'components/plaid-link/plaid-link.component';
 
 const ManageAccountsRoute = ({
   transactions: { selectedTransactions, todaySpend },
-  accounts: { cashAccounts, creditAccounts }
+  accounts: { cashAccounts, creditAccounts, loanAccounts }
 }) => {
   return (
     <MainLayout>
@@ -33,6 +33,10 @@ const ManageAccountsRoute = ({
 
         <ItemContainer xs={12} sm={12} md={12} lg={6}>
           <AccountList title="Credit Accounts" accountList={creditAccounts} />
+        </ItemContainer>
+
+        <ItemContainer xs={12} sm={12} md={12} lg={6}>
+          <AccountList title="Loan Accounts" accountList={loanAccounts} />
         </ItemContainer>
       </Grid>
     </MainLayout>

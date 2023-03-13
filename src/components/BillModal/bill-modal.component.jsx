@@ -19,7 +19,10 @@ import { Icon } from '@mui/material';
 import moment from 'moment';
 import DropdownSelect from 'components/DropdownSelect/dropdown-select.component';
 import Currency from 'components/Currency/currency.component';
-import { updateRecurringTransactions } from 'store/transactions/transactions.action';
+import {
+  updateRecurringTransactions,
+  disableRecurringTransaction
+} from 'store/transactions/transactions.action';
 import MDButton from 'components/MDButton';
 
 const style = {
@@ -36,12 +39,12 @@ const style = {
 
 const BillModal = ({
   open,
-  handleOpen,
   handleClose,
   transaction,
   categories,
   color,
-  updateRecurringTransactions
+  updateRecurringTransactions,
+  disableRecurringTransaction
 }) => {
   const [controller, dispatch] = useMaterialUIController();
   const { darkMode } = controller;
@@ -51,35 +54,34 @@ const BillModal = ({
 
   const [transactionName, setTransactionName] = useState();
   const [transactionDueDate, setTransactionDueDate] = useState();
+  const [transactionCategory, setTransactionCategory] = useState();
 
-  const handleEditName = () => {
+  const handleEditing = () => {
     setIsEditing(true);
   };
-  const handleEditDate = () => {
-    setIsEditingDate(true);
-  };
-  const handleCancelName = () => {
+  const handleCancelEditing = () => {
     setIsEditing(false);
   };
-  const handleCancelDate = () => {
-    setIsEditingDate(false);
-  };
-
   const handleChangeName = (e) => {
     setTransactionName(e.target.value);
   };
-
   const handleChangeDate = (e) => {
     setTransactionDueDate(e.target.value);
   };
+  const handleChangeCategory = (e) => {
+    setTransactionCategory(e.target.value);
+  };
 
   const handleDisable = () => {
-    // disable transaction
+    setIsEditing(false);
+    handleClose();
+    disableRecurringTransaction(transaction?.id);
   };
 
   const handleUpdate = () => {
     setIsEditing(false);
     setIsEditingDate(false);
+    console.log(transaction);
     updateRecurringTransactions({
       id: transaction?.id,
       userId: transaction?.userId,
@@ -87,7 +89,9 @@ const BillModal = ({
       description: transaction?.description,
       dueDate: transactionDueDate ? transactionDueDate : transaction?.dueDate,
       lastAmount: transaction?.lastAmount,
-      category: transaction?.category,
+      category: transactionCategory
+        ? transactionCategory
+        : transaction?.category,
       frequency: transaction?.frequency,
       isActive: transaction?.isActive,
       status: transaction?.status,
@@ -127,14 +131,13 @@ const BillModal = ({
                       fontWeight="medium"
                       mr={2}
                       gutterBottom
-                      onClick={handleEditName}
                     >
                       {name}{' '}
                     </MDTypography>
                     <Icon
                       className="cursor"
                       color="gray"
-                      onClick={handleEditName}
+                      onClick={handleEditing}
                     >
                       edit
                     </Icon>
@@ -145,11 +148,14 @@ const BillModal = ({
                     alignItems="center"
                     justifyContent="center"
                   >
-                    <Link to="/upcoming">
-                      <MDButton variant="outlined" color="error" size="small">
-                        Disable
-                      </MDButton>
-                    </Link>
+                    <MDButton
+                      variant="outlined"
+                      color="error"
+                      size="small"
+                      onClick={handleDisable}
+                    >
+                      Disable
+                    </MDButton>
                   </MDBox>
                 </MDBox>
 
@@ -159,7 +165,6 @@ const BillModal = ({
                     fontWeight="medium"
                     mr={2}
                     gutterBottom
-                    onClick={handleEditName}
                   >
                     {transaction?.category}{' '}
                   </MDTypography>
@@ -171,7 +176,6 @@ const BillModal = ({
                     fontWeight="medium"
                     mr={2}
                     gutterBottom
-                    onClick={handleEditName}
                   >
                     <Currency value={transaction?.lastAmount} /> due on{' '}
                     {moment(transaction?.dueDate).format('MMM Do')}{' '}
@@ -201,7 +205,7 @@ const BillModal = ({
                   <Icon
                     className="cursor"
                     color="error"
-                    onClick={handleCancelName}
+                    onClick={handleCancelEditing}
                   >
                     close
                   </Icon>
@@ -213,8 +217,13 @@ const BillModal = ({
                   </MDTypography>
                   <DropdownSelect
                     style={inputStyle}
-                    defaultItem={transaction?.category}
+                    category={
+                      transactionCategory
+                        ? transactionCategory
+                        : transaction?.category
+                    }
                     itemList={categories}
+                    handleChangeCategory={handleChangeCategory}
                   />
                 </MDBox>
 
@@ -248,6 +257,10 @@ const BillModal = ({
 };
 
 BillModal.propTypes = {
-  updateRecurringTransactions: PropTypes.func.isRequired
+  updateRecurringTransactions: PropTypes.func.isRequired,
+  disableRecurringTransaction: PropTypes.func.isRequired
 };
-export default connect(null, { updateRecurringTransactions })(BillModal);
+export default connect(null, {
+  updateRecurringTransactions,
+  disableRecurringTransaction
+})(BillModal);

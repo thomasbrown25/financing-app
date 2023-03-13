@@ -4,19 +4,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const DropdownSelect = ({ color, defaultItem, itemList, style }) => {
-  const [items, setItems] = useState([]);
-
-  const handleChange = (event) => {
-    console.log(defaultItem);
-    setItems(event.target.value);
-  };
-
-  // useEffect(() => {
-  //   if (!items?.includes(defaultItem)) {
-  //     setItems({ ...items, defaultItem });
-  //   }
-  // }, [defaultItem]);
+const DropdownSelect = ({
+  color,
+  itemList,
+  style,
+  handleChangeCategory,
+  category,
+  disable
+}) => {
+  const [item, setItem] = useState();
 
   const renderItems = itemList?.map((item, i) => (
     <MenuItem key={i} value={item.name}>
@@ -41,13 +37,15 @@ const DropdownSelect = ({ color, defaultItem, itemList, style }) => {
       <Select
         labelId="demo-select-small"
         id="demo-select-small"
-        value={defaultItem}
-        onChange={handleChange}
+        value={category}
+        onChange={handleChangeCategory}
         color={color}
       >
-        {/* <MenuItem value={defaultItem}>
-          <em>{defaultItem}</em>
-        </MenuItem> */}
+        {disable && (
+          <MenuItem value={category}>
+            <em>{category}</em>
+          </MenuItem>
+        )}
         {renderItems}
       </Select>
     </FormControl>

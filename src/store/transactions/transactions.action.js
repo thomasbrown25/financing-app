@@ -145,6 +145,26 @@ export const updateRecurringTransactions =
     }
   };
 
+export const disableRecurringTransaction =
+  (transactionId) => async (dispatch) => {
+    try {
+      const response = await api.post(
+        `/transactions/recurring/disable/${transactionId}`
+      );
+
+      dispatch({
+        type: TRANSACTIONS_ACTION_TYPES.DISABLE_RECURRING_TRANSACTIONS_SUCCESS,
+        payload: response.data.data
+      });
+    } catch (error) {
+      console.log(error, error.message);
+      dispatch({
+        type: TRANSACTIONS_ACTION_TYPES.DISABLE_RECURRING_TRANSACTIONS_FAILED,
+        payload: error?.response
+      });
+    }
+  };
+
 /** Calls the financing-api service to get the recurring transactions
  ** GET: "/transactions/recurring"
  * @param reqBody: string: accessToken

@@ -44,3 +44,24 @@ export const refreshCategories = () => async (dispatch) => {
     });
   }
 };
+
+/**
+ ** POST: "/category"
+ * @param category: string
+ **/
+export const addCategory = (category) => async (dispatch) => {
+  try {
+    const response = await api.post(`/category`, { name: category });
+
+    dispatch({
+      type: CATEGORIES_ACTION_TYPES.ADD_CATEGORIES_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: CATEGORIES_ACTION_TYPES.ADD_CATEGORIES_FAILED,
+      payload: error?.response
+    });
+  }
+};

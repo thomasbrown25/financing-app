@@ -60,8 +60,8 @@ const Bill = ({
         </MDBox>
         <DropdownSelect
           color={color}
-          defaultItem={transaction?.category}
-          itemList={categories}
+          category={transaction?.category}
+          disable={true}
         />
         <MDTypography
           variant="button"
@@ -75,7 +75,6 @@ const Bill = ({
       </MDBox>
       <BillModal
         open={openModal}
-        handleOpen={handleModalOpen}
         handleClose={handleModalClose}
         transaction={transaction}
         categories={categories}

@@ -16,11 +16,6 @@ const navbarRoutes = [
     icon: <MDAvatar src={''} alt="Thomas Brown" size="sm" />,
     collapse: [
       {
-        name: 'Manage Accounts',
-        key: 'manage-accounts',
-        route: '/manage-accounts'
-      },
-      {
         name: 'My Profile',
         key: 'my-profile',
         route: '/profile'
@@ -77,6 +72,24 @@ const navbarRoutes = [
     key: 'transactions',
     route: '/transactions',
     icon: <Icon fontSize="medium">web_stories</Icon>,
+    noCollapse: true
+  },
+
+  {
+    type: 'collapse',
+    name: 'Manage Accounts',
+    key: 'manage-accounts',
+    route: '/manage-accounts',
+    icon: <Icon fontSize="medium">playlist_add</Icon>,
+    noCollapse: true
+  },
+
+  {
+    type: 'collapse',
+    name: 'Manage Categories',
+    key: 'manage-categories',
+    route: '/manage-categories',
+    icon: <Icon fontSize="medium">playlist_add</Icon>,
     noCollapse: true
   },
   { type: 'divider', key: 'divider-1' },
