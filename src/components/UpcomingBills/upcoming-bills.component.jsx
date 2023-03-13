@@ -72,16 +72,6 @@ const UpcomingBills = ({
         )}
       </MDBox>
       <MDBox pt={3} pb={2} px={2}>
-        <MDBox mb={2}>
-          <MDTypography
-            variant="caption"
-            color="text"
-            fontWeight="bold"
-            textTransform="uppercase"
-          >
-            Date
-          </MDTypography>
-        </MDBox>
         <MDBox
           component="ul"
           display="flex"

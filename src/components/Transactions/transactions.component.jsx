@@ -36,6 +36,7 @@ const Transactions = ({
   viewAll = true,
   viewBalance = false,
   header = `Transactions`,
+  subHeader,
   balance = 0,
   uppercase = false
 }) => {
@@ -74,6 +75,13 @@ const Transactions = ({
         >
           {header}
         </MDTypography>
+
+        {subHeader && (
+          <MDTypography variant="h6" fontWeight="medium">
+            {subHeader}
+          </MDTypography>
+        )}
+
         {viewBalance && (
           <MDTypography
             variant="h6"

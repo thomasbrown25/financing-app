@@ -35,7 +35,7 @@ const AccountRoute = ({
               account?.mask
                 ? `${account?.name} \u2022
             \u2022 \u2022 ${account?.mask}`
-                : `${account?.officialName}`
+                : `${account?.name}`
             }
             balance={
               account?.type.toLowerCase().includes('savings')
@@ -44,6 +44,7 @@ const AccountRoute = ({
                 ? account?.balanceCurrent
                 : account?.balanceAvailable
             }
+            subHeader={account?.officialName}
           />
         </Grid>
 

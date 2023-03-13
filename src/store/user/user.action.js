@@ -179,7 +179,7 @@ export const updateLinkToken = () => async (dispatch) => {
     const response = await api.post('/plaid/update-link-token');
 
     dispatch({
-      type: USER_ACTION_TYPES.UPDATE_LINK_TOKEN,
+      type: USER_ACTION_TYPES.UPDATE_LINK_TOKEN_SUCCESS,
       payload: response.data
     });
   } catch (error) {

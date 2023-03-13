@@ -125,7 +125,7 @@ function userReducer(state = initialState, action) {
         error: payload
       };
 
-    case USER_ACTION_TYPES.UPDATE_LINK_TOKEN:
+    case USER_ACTION_TYPES.UPDATE_LINK_TOKEN_SUCCESS:
       return {
         ...state,
         isLinkValid: true,

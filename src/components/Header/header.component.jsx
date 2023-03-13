@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Grid } from '@mui/material';
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
-import { ItemLoginRequired } from 'utils/plaid-errors';
 import PlaidLink from 'components/plaid-link/plaid-link.component';
 
 const Header = ({
@@ -39,7 +38,7 @@ const Header = ({
           {refreshError && (
             <>
               <PlaidLink
-                header={ItemLoginRequired.message}
+                refreshError={refreshError}
                 linkToken={currentUser?.linkToken}
               />
             </>

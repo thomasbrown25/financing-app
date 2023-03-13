@@ -111,7 +111,7 @@ const DashboardRoute = ({
         />
       ) : (
         <Grid container spacing={2} className="jc-center">
-          <Header error={refreshError} />
+          <Header />
           <Grid item xs={12} sm={12} md={12} lg={6}>
             <Accounts
               title={'Accounts'}
