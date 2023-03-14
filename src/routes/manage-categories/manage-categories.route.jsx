@@ -124,36 +124,45 @@ const ManageCategoriesRoute = ({
         <Header title={`Manage Categories`} />
 
         <ItemContainer xs={12} sm={12} md={12} lg={6}>
-          <MDTypography variant="h6" fontWeight="medium" pt={2} pb={2}>
-            Add or delete categories
-          </MDTypography>
-          <MDBox display="flex" alignItems="center">
-            <MDInput
-              type="text"
-              label="Add Category"
-              value={newCategory}
-              onChange={handleChange}
-              mr={2}
-            />
-            <Icon
-              size="large"
-              color="success"
-              className="cursor ml-1"
-              onClick={handleAddCategory}
-            >
-              add
-            </Icon>
-          </MDBox>
-          <MDBox
-            component="ul"
-            display="flex"
-            flexDirection="column"
-            p={0}
-            pt={2}
-            m={0}
-          >
-            {renderItems}
-          </MDBox>
+          <Card sx={{ height: '100%' }}>
+            <MDBox alignItems="center" pt={3} px={2}>
+              <MDTypography
+                variant="h6"
+                fontWeight="medium"
+                pb={4}
+                textTransform="capitalize"
+              >
+                Add or delete categories
+              </MDTypography>
+              <MDBox display="flex" alignItems="center">
+                <MDInput
+                  type="text"
+                  label="Add Category"
+                  value={newCategory}
+                  onChange={handleChange}
+                  mr={2}
+                />
+                <Icon
+                  size="large"
+                  color="success"
+                  className="cursor ml-1"
+                  onClick={handleAddCategory}
+                >
+                  add
+                </Icon>
+              </MDBox>
+              <MDBox
+                component="ul"
+                display="flex"
+                flexDirection="column"
+                p={0}
+                pt={2}
+                m={0}
+              >
+                {renderItems}
+              </MDBox>
+            </MDBox>
+          </Card>
         </ItemContainer>
       </Grid>
     </MainLayout>

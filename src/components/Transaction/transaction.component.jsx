@@ -26,7 +26,7 @@ import MDButton from 'components/MDButton';
 import Currency from 'components/Currency/currency.component';
 import moment from 'moment';
 
-function Transaction({ color, icon, name, date, amount }) {
+function Transaction({ color, icon, name, date, amount, category }) {
   return (
     <MDBox key={name} component="li" py={1} pr={2} mb={1}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center">
@@ -39,6 +39,14 @@ function Transaction({ color, icon, name, date, amount }) {
           <MDBox display="flex" flexDirection="column">
             <MDTypography variant="button" fontWeight="medium" gutterBottom>
               {name}
+            </MDTypography>
+            <MDTypography
+              variant="caption"
+              color="text"
+              fontWeight="regular"
+              mb={1}
+            >
+              {category}
             </MDTypography>
             <MDTypography variant="caption" color="text" fontWeight="regular">
               {moment(date).format('M/DD')}

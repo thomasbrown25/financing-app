@@ -48,12 +48,13 @@ const Transactions = ({
 
   const renderItems = transactions
     ?.slice(0, count)
-    .map(({ name, merchantName, categories, date, amount }, i) => (
+    .map(({ name, merchantName, category, date, amount }, i) => (
       <Transaction
         key={i}
         color={amount > 0 ? 'error' : 'success'}
         icon={amount > 0 ? 'expand_more' : 'expand_less'}
         name={merchantName ? merchantName : name.slice(0, 30)}
+        category={category}
         date={date}
         amount={amount * -1}
       />

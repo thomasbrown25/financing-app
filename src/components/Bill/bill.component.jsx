@@ -53,16 +53,25 @@ const Bill = ({
               {name}{' '}
             </MDTypography>
 
+            <MDTypography
+              variant="caption"
+              color="text"
+              fontWeight="regular"
+              mb={1}
+            >
+              {transaction?.category}
+            </MDTypography>
+
             <MDTypography variant="caption" color="text" fontWeight="regular">
               {moment(transaction?.dueDate).format('M/DD')}
             </MDTypography>
           </MDBox>
         </MDBox>
-        <DropdownSelect
+        {/* <DropdownSelect
           color={color}
           category={transaction?.category}
           disable={true}
-        />
+        /> */}
         <MDTypography
           variant="button"
           color={color}

@@ -30,7 +30,7 @@ const style = {
   top: '50%',
   left: '60%',
   transform: 'translate(-50%, -50%)',
-  width: '70%',
+  width: '80%',
   bgcolor: colors.background.dark,
   border: '2px solid #000',
   boxShadow: 24,
