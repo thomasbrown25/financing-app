@@ -24,6 +24,7 @@ import typography from 'assets/theme-dark/base/typography';
 import boxShadows from 'assets/theme-dark/base/boxShadows';
 import borders from 'assets/theme-dark/base/borders';
 import globals from 'assets/theme-dark/base/globals';
+import transitions from 'assets/theme-dark/base/transitions';
 
 // Material Dashboard 2 PRO React helper functions
 import boxShadow from 'assets/theme-dark/functions/boxShadow';
@@ -103,6 +104,7 @@ export default createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         ...globals,
+        ...transitions,
         ...flatpickr,
         ...container
       }

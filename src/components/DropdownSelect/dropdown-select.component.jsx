@@ -10,7 +10,10 @@ const DropdownSelect = ({
   style,
   handleChangeCategory,
   category,
-  disable
+  disable,
+  selectStyle,
+  label,
+  empty
 }) => {
   const [item, setItem] = useState();
 
@@ -34,16 +37,24 @@ const DropdownSelect = ({
       }
       sx={{ m: 1, minWidth: 80 }}
     >
+      <InputLabel id="dropdown-label">{label}</InputLabel>
       <Select
-        labelId="demo-select-small"
-        id="demo-select-small"
-        value={category}
+        labelId="dropdown-label"
+        id="dropdown-label"
+        value={category ? category : null}
         onChange={handleChangeCategory}
         color={color}
+        style={selectStyle}
+        label={label}
       >
         {disable && (
           <MenuItem value={category}>
             <em>{category}</em>
+          </MenuItem>
+        )}
+        {empty && (
+          <MenuItem value="None">
+            <em>None</em>
           </MenuItem>
         )}
         {renderItems}

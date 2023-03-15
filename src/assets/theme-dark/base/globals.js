@@ -33,6 +33,9 @@ const globals = {
     color: `${dark.main} !important`,
     transition: 'color 150ms ease-in !important'
   },
+  '.transition': {
+    transition: 'all 5s ease-in !important'
+  },
   'a.link:hover, .link:hover, a.link:focus, .link:focus': {
     color: `${info.main} !important`
   }
