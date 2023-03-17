@@ -200,39 +200,20 @@ const BillModal = ({
                     onChange={handleChangeName}
                     size="small"
                   />
-                  <MDButton
-                    variant="outlined"
-                    color="success"
-                    size="small"
-                    onClick={handleUpdate}
-                    className="ml-1"
-                  >
-                    Save
-                  </MDButton>
-                  <MDButton
-                    variant="outlined"
-                    color="error"
-                    size="small"
-                    onClick={handleCancel}
-                    className="ml-1"
-                  >
-                    Cancel
-                  </MDButton>
                 </MDBox>
 
                 <MDBox display="flex" alignItems="center" mb={2}>
-                  <MDTypography variant="h6" mr={1}>
-                    Category:
-                  </MDTypography>
+                  <MDTypography variant="h6">Category:</MDTypography>
                   <DropdownSelect
                     style={inputStyle}
-                    category={
+                    selectStyle={{ height: '37px', minWidth: '155px' }}
+                    item={
                       transactionCategory
                         ? transactionCategory
                         : transaction?.category
                     }
                     itemList={categories}
-                    handleChangeCategory={handleChangeCategory}
+                    handleChange={handleChangeCategory}
                   />
                 </MDBox>
 
@@ -251,6 +232,25 @@ const BillModal = ({
                         : moment(transaction?.dueDate).format('YYYY-MM-DD')
                     }
                   />
+                </MDBox>
+                <MDBox mb={2} ml={0} display="flex" justifyContent="flex-start">
+                  <MDButton
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={handleCancel}
+                  >
+                    Cancel
+                  </MDButton>
+                  <MDButton
+                    variant="outlined"
+                    color="success"
+                    size="small"
+                    onClick={handleUpdate}
+                    className="ml-1"
+                  >
+                    Save
+                  </MDButton>
                 </MDBox>
               </>
             )}

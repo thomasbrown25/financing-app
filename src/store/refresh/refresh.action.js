@@ -5,7 +5,7 @@ export const refreshAll = () => async (dispatch) => {
   try {
     dispatch({ type: REFRESH_ACTION_TYPES.REFRESH_SYNCING });
 
-    const response = await api.post('/refresh/all');
+    const response = await api.post('/api/refresh/all');
 
     dispatch({
       type: REFRESH_ACTION_TYPES.REFRESH_SUCCESS,

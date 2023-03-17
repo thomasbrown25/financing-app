@@ -9,7 +9,7 @@ import { ACCOUNTS_ACTION_TYPES } from './accounts.types';
  **/
 export const getAccountsBalance = () => async (dispatch) => {
   try {
-    const response = await api.get('/account/balance');
+    const response = await api.get('/api/account/balance');
 
     dispatch({
       type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNTS_BALANCE_SUCCESS,
@@ -30,7 +30,7 @@ export const getAccountsBalance = () => async (dispatch) => {
  **/
 export const getAccountBalance = (accountId) => async (dispatch) => {
   try {
-    const response = await api.get(`/account/balance/${accountId}`);
+    const response = await api.get(`/api/account/balance/${accountId}`);
 
     dispatch({
       type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_SUCCESS,
@@ -51,7 +51,7 @@ export const getAccountBalance = (accountId) => async (dispatch) => {
  **/
 export const refreshAccountsBalance = () => async (dispatch) => {
   try {
-    const response = await api.get(`/account/balance/refresh`);
+    const response = await api.get(`/api/account/balance/refresh`);
 
     dispatch({
       type: ACCOUNTS_ACTION_TYPES.GET_ACCOUNT_BALANCE_SUCCESS,
@@ -68,7 +68,7 @@ export const refreshAccountsBalance = () => async (dispatch) => {
 
 export const deleteAccount = (accountId) => async (dispatch) => {
   try {
-    const response = await api.delete(`/account/${accountId}`);
+    const response = await api.delete(`/api/account/${accountId}`);
 
     dispatch({
       type: ACCOUNTS_ACTION_TYPES.DELETE_ACCOUNT_SUCCESS,

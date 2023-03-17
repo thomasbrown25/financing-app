@@ -15,7 +15,7 @@ import MDTypography from 'components/MDTypography';
 import Bill from '../Bill/bill.component';
 import MDButton from 'components/MDButton';
 import { Link } from 'react-router-dom';
-import { getCategories } from 'store/categories/categories.action';
+import { getFrequencies } from 'store/frequencies/frequencies.action';
 
 const UpcomingBills = ({
   transactions: { expenses },

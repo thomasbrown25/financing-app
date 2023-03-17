@@ -5,6 +5,7 @@ import userReducer from './user/user.reducer';
 import liabilitiesReducer from './liabilities/liabilities.reducer';
 import accountsReducer from './accounts/accounts.reducer';
 import categoriesReducer from './categories/categories.reducer';
+import frequenciesReducer from './frequencies/frequencies.reducer';
 import refreshReducer from './refresh/refresh.reducer';
 
 export const rootReducer = combineReducers({
@@ -13,5 +14,6 @@ export const rootReducer = combineReducers({
   liabilities: liabilitiesReducer,
   accounts: accountsReducer,
   categories: categoriesReducer,
+  frequencies: frequenciesReducer,
   refresh: refreshReducer
 });

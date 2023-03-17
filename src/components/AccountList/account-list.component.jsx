@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 // react-router-dom components
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // prop-types is a library for typechecking of props
 import PropTypes from 'prop-types';
@@ -18,6 +18,7 @@ import { getAccountTransactions } from 'store/transactions/transactions.action';
 import { getAccountBalance } from 'store/accounts/accounts.action';
 import BasicTooltip from 'components/Tooltip/tooltip.component';
 import { deleteAccount } from 'store/accounts/accounts.action';
+import { useState } from 'react';
 
 const AccountList = ({
   title,
@@ -27,17 +28,28 @@ const AccountList = ({
   deleteAccount,
   ...rest
 }) => {
+  const navigate = useNavigate();
   const { accounts, totalAmount } = accountList;
+  const [fakeSavings, setFakeSavings] = useState(true);
 
-  const handleAccountSelect = (accountId) => {
-    getAccountTransactions(accountId);
-    getAccountBalance(accountId);
-    console.log(accountId);
+  const handleAccountSelect = (accountId, subtype) => {
+    console.log(fakeSavings);
+    if (subtype.toLowerCase().includes('savings') && fakeSavings) {
+      setFakeSavings(false);
+    } else {
+      getAccountTransactions(accountId);
+      getAccountBalance(accountId);
+      navigate('/accounts/account');
+    }
   };
 
   const handleAccountDelete = (accountId) => {
     if (window.confirm(`Are you sure you want to delete income ${title}`))
       deleteAccount(accountId, false);
+  };
+
+  const handleFakeSavings = () => {
+    setFakeSavings(!fakeSavings);
   };
 
   const renderItems = accounts?.map(
@@ -65,11 +77,9 @@ const AccountList = ({
         mb={accounts.length - 1 === key ? 0 : 1}
       >
         <MDTypography
-          component={Link}
-          onClick={() => handleAccountSelect(accountId)}
+          onClick={() => handleAccountSelect(accountId, subtype)}
           variant="button"
           color={'dark'}
-          to={`/accounts/account`}
           sx={{
             lineHeight: 0,
             transition: 'all 0.2s cubic-bezier(.34,1.61,.7,1.3)',
@@ -111,7 +121,7 @@ const AccountList = ({
                 fontWeight="medium"
                 gutterBottom
               >
-                {name}
+                {name}{' '}
               </MDTypography>
               <MDTypography variant="caption" color="text">
                 <>
@@ -123,8 +133,8 @@ const AccountList = ({
                   >
                     <Currency
                       value={
-                        subtype.toLowerCase().includes('savings')
-                          ? 22450.0
+                        subtype.toLowerCase().includes('savings') && fakeSavings
+                          ? 450725.0
                           : subtype.toLowerCase().includes('credit') ||
                             type.toLowerCase().includes('loan')
                           ? balanceCurrent

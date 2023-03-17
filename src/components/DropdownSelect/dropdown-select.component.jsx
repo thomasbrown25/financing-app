@@ -8,15 +8,14 @@ const DropdownSelect = ({
   color,
   itemList,
   style,
-  handleChangeCategory,
-  category,
+  handleChange,
+  item,
+  name,
   disable,
   selectStyle,
   label,
   empty
 }) => {
-  const [item, setItem] = useState();
-
   const renderItems = itemList?.map((item, i) => (
     <MenuItem key={i} value={item.name}>
       {item.name}
@@ -41,15 +40,16 @@ const DropdownSelect = ({
       <Select
         labelId="dropdown-label"
         id="dropdown-label"
-        value={category ? category : null}
-        onChange={handleChangeCategory}
+        name={name}
+        value={item ? item : 'None'}
+        onChange={handleChange}
         color={color}
         style={selectStyle}
         label={label}
       >
         {disable && (
-          <MenuItem value={category}>
-            <em>{category}</em>
+          <MenuItem value={item}>
+            <em>{item}</em>
           </MenuItem>
         )}
         {empty && (

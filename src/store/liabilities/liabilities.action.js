@@ -9,7 +9,7 @@ import { LIABILITIES_ACTION_TYPES } from './liabilities.types';
  **/
 export const getLiabilities = () => async (dispatch) => {
   try {
-    const response = await api.get('/liabilities');
+    const response = await api.get('/api/liabilities');
 
     dispatch({
       type: LIABILITIES_ACTION_TYPES.GET_LIABILITIES_SUCCESS,

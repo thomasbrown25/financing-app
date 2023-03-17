@@ -9,7 +9,7 @@ import { USER_ACTION_TYPES } from './user.types';
 export const register = (reqBody) => async (dispatch) => {
   try {
     console.log('calling register');
-    const response = await api.post('/auth/register', reqBody);
+    const response = await api.post('/api/auth/register', reqBody);
 
     if (
       response.data.message.includes('A user with that email already exists')
@@ -36,12 +36,12 @@ export const register = (reqBody) => async (dispatch) => {
 };
 
 /** Calls the API service to login a user and returns a user object
- ** POST: "/auth/login"
+ ** POST: "/api/auth/login"
  * @param reqBody: { email, password }
  **/
 export const login = (reqBody) => async (dispatch) => {
   try {
-    const response = await api.post('/auth/login', reqBody);
+    const response = await api.post('/api/auth/login', reqBody);
 
     console.log('sign-in-data');
     console.log(response.data.data.jwtToken);
@@ -62,12 +62,12 @@ export const login = (reqBody) => async (dispatch) => {
 };
 
 /** Calls the API service to get user data and load user
- ** GET: "/auth/load-user"
+ ** GET: "/api/auth/load-user"
  * @param reqBody: {  }
  **/
 export const loadUser = () => async (dispatch) => {
   try {
-    const response = await api.get('/auth/load-user');
+    const response = await api.get('/api/auth/load-user');
 
     console.log(response.data.data);
 
@@ -99,7 +99,7 @@ export const logout = () => async (dispatch) => {
 
 export const deleteAccount = () => async (dispatch) => {
   try {
-    const response = await api.delete('/auth/user');
+    const response = await api.delete('/api/auth/user');
 
     dispatch({
       type: USER_ACTION_TYPES.DELETE_ACCOUNT_SUCCESS,
@@ -130,7 +130,7 @@ export const deleteAccount = () => async (dispatch) => {
  **/
 export const createLinkToken = () => async (dispatch) => {
   try {
-    const response = await api.get('/plaid/create-link-token');
+    const response = await api.get('/api/plaid/create-link-token');
 
     dispatch({
       type: USER_ACTION_TYPES.CREATE_LINK_TOKEN_SUCCESS,
@@ -147,13 +147,13 @@ export const createLinkToken = () => async (dispatch) => {
 
 /** Calls financing-api which calls Plaid api "/public_token/exchange" and exhanges
  *  the publicToken for the accessToken
- ** POST: "/plaid/public-token-exchange"
+ ** POST: "/api/plaid/public-token-exchange"
  * @param publicToken: string: publicToken
  **/
 export const publicTokenExchange = (publicToken) => async (dispatch) => {
   try {
     const response = await api.post(
-      '/plaid/public-token-exchange',
+      '/api/plaid/public-token-exchange',
       `"${publicToken}"`
     );
 
@@ -170,13 +170,13 @@ export const publicTokenExchange = (publicToken) => async (dispatch) => {
   }
 };
 
-/** Calls financing-api which calls Plaid api "/plaid/update-link-token"
- ** POST: "/plaid/update-link-token"
+/** Calls financing-api which calls Plaid api "/api/plaid/update-link-token"
+ ** POST: "/api/plaid/update-link-token"
  * @param null: null
  **/
 export const updateLinkToken = () => async (dispatch) => {
   try {
-    const response = await api.post('/plaid/update-link-token');
+    const response = await api.post('/api/plaid/update-link-token');
 
     dispatch({
       type: USER_ACTION_TYPES.UPDATE_LINK_TOKEN_SUCCESS,

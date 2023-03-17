@@ -9,7 +9,7 @@ import { TRANSACTIONS_ACTION_TYPES } from './transactions.types';
  **/
 export const getTransactions = () => async (dispatch) => {
   try {
-    const response = await api.get('/transactions');
+    const response = await api.get('/api/transactions');
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_TRANSACTIONS_SUCCESS,
@@ -25,14 +25,14 @@ export const getTransactions = () => async (dispatch) => {
 };
 
 /** Calls the financing-api service to get transactions from plaid api
- ** GET: "/transactions"
+ ** GET: "/api/transactions"
  * @param reqBody: string: accessToken
  **/
 export const refreshTransactions = () => async (dispatch) => {
   try {
     dispatch({ type: TRANSACTIONS_ACTION_TYPES.SYNCING });
 
-    const response = await api.post('/transactions/refresh');
+    const response = await api.post('/api/transactions/refresh');
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.REFRESH_TRANSACTIONS_SUCCESS,
@@ -48,12 +48,12 @@ export const refreshTransactions = () => async (dispatch) => {
 };
 
 /** Calls the financing-api service to get transactions from plaid api
- ** GET: "/transactions"
+ ** GET: "/api/transactions"
  * @param reqBody: string: accessToken
  **/
 export const getRecentTransactions = () => async (dispatch) => {
   try {
-    const response = await api.get('/transactions/recent');
+    const response = await api.get('/api/transactions/recent');
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_RECENT_TRANSACTIONS_SUCCESS,
@@ -69,12 +69,12 @@ export const getRecentTransactions = () => async (dispatch) => {
 };
 
 /** Calls the financing-api service to get the current spend for the month
- ** GET: "/transactions/current-spend-month"
+ ** GET: "/api/transactions/current-spend-month"
  * @param reqBody: string: accessToken
  **/
 export const getCurrentSpendForMonth = () => async (dispatch) => {
   try {
-    const response = await api.get('/transactions/current-spend-month');
+    const response = await api.get('/api/transactions/current-spend-month');
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_CURRENT_SPEND_MONTH_SUCCESS,
@@ -100,12 +100,12 @@ export const getCurrentSpendForMonth = () => async (dispatch) => {
 };
 
 /** Calls the financing-api service to get the recurring transactions
- ** GET: "/transactions/recurring"
+ ** GET: "/api/transactions/recurring"
  * @param reqBody: string: accessToken
  **/
 export const getRecurringTransactions = () => async (dispatch) => {
   try {
-    const response = await api.get('/transactions/recurring');
+    const response = await api.get('/api/transactions/recurring');
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_RECURRING_TRANSACTIONS_SUCCESS,
@@ -121,14 +121,14 @@ export const getRecurringTransactions = () => async (dispatch) => {
 };
 
 /**
- ** POST: "/transactions/recurring"
+ ** POST: "/api/transactions/recurring"
  * @param reqBody: string: accessToken
  **/
 export const updateRecurringTransactions =
   (newTransaction) => async (dispatch) => {
     try {
       const response = await api.post(
-        `/transactions/recurring/${newTransaction.id}`,
+        `/api/transactions/recurring/${newTransaction.id}`,
         newTransaction
       );
 
@@ -145,11 +145,28 @@ export const updateRecurringTransactions =
     }
   };
 
+export const addRecurringTransaction = (transaction) => async (dispatch) => {
+  try {
+    const response = await api.post(`/api/transactions/recurring`, transaction);
+
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.ADD_RECURRING_TRANSACTIONS_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.ADD_RECURRING_TRANSACTIONS_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
 export const disableRecurringTransaction =
   (transactionId) => async (dispatch) => {
     try {
       const response = await api.post(
-        `/transactions/recurring/disable/${transactionId}`
+        `/api/transactions/recurring/disable/${transactionId}`
       );
 
       dispatch({
@@ -166,12 +183,12 @@ export const disableRecurringTransaction =
   };
 
 /** Calls the financing-api service to get the recurring transactions
- ** GET: "/transactions/recurring"
+ ** GET: "/api/transactions/recurring"
  * @param reqBody: string: accessToken
  **/
 export const refreshRecurringTransactions = () => async (dispatch) => {
   try {
-    const response = await api.post('/transactions/recurring/refresh');
+    const response = await api.post('/api/transactions/recurring/refresh');
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.REFRESH_RECURRING_TRANSACTIONS_SUCCESS,
@@ -187,12 +204,12 @@ export const refreshRecurringTransactions = () => async (dispatch) => {
 };
 
 /** Calls the financing-api service to get the recurring transactions
- ** GET: "/transactions/recurring"
+ ** GET: "/api/transactions/recurring"
  * @param reqBody: string: accessToken
  **/
 export const getExpenses = () => async (dispatch) => {
   try {
-    const response = await api.get('/transactions/expenses');
+    const response = await api.get('/api/transactions/expenses');
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_SUCCESS,
@@ -210,7 +227,7 @@ export const getExpenses = () => async (dispatch) => {
 export const getAccountTransactions = (accountId) => async (dispatch) => {
   try {
     const response = await api.get(
-      `/transactions/account-transactions/${accountId}`
+      `/api/transactions/account-transactions/${accountId}`
     );
 
     dispatch({
@@ -228,7 +245,7 @@ export const getAccountTransactions = (accountId) => async (dispatch) => {
 
 export const deleteIncome = (incomeId) => async (dispatch) => {
   try {
-    const response = await api.delete(`/transactions/income/${incomeId}`);
+    const response = await api.delete(`/api/transactions/income/${incomeId}`);
 
     dispatch({
       type: TRANSACTIONS_ACTION_TYPES.DELETE_INCOME_SUCCESS,
@@ -246,7 +263,7 @@ export const deleteIncome = (incomeId) => async (dispatch) => {
 export const setIncomeActive = (incomeId, isActive) => async (dispatch) => {
   try {
     const response = await api.post(
-      `/transactions/income/activate/${incomeId}`,
+      `/api/transactions/income/activate/${incomeId}`,
       {
         isActive
       }

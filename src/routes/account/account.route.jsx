@@ -38,9 +38,7 @@ const AccountRoute = ({
                 : `${account?.name}`
             }
             balance={
-              account?.type.toLowerCase().includes('savings')
-                ? 22450.0
-                : account?.type.toLowerCase().includes('credit')
+              account?.type.toLowerCase().includes('credit')
                 ? account?.balanceCurrent
                 : account?.balanceAvailable
             }

@@ -11,17 +11,41 @@ import DropdownTransition from 'components/DropdownTransition/dropdown-transitio
 import MDInput from 'components/MDInput';
 import DropdownSelect from 'components/DropdownSelect/dropdown-select.component';
 import MDDatePicker from 'components/MDDatePicker';
+import DatePicker from 'components/DatePicker/date-picker.component';
+import moment from 'moment';
+import MDButton from 'components/MDButton';
 
-const AddNewBill = ({ categories }) => {
+// actions
+
+const defaultBill = {
+  name: '',
+  category: '',
+  frequency: '',
+  dueDate: null,
+  amount: ''
+};
+
+const AddNewBill = ({ categories, frequencies, addRecurringTransaction }) => {
   const [visible, setVisible] = useState(false);
-  const [category, setCategory] = useState();
+  const [newBill, setNewBill] = useState(defaultBill);
+  const { name, category, frequency, dueDate, amount } = newBill;
 
   const handleDropdown = () => {
     setVisible(!visible);
   };
 
-  const handleChangeCategory = (e) => {
-    setCategory(e.target.value);
+  const handleChange = (e) => {
+    setNewBill({ ...newBill, [e.target.name]: e.target.value });
+  };
+
+  const handleAdd = () => {
+    addRecurringTransaction(newBill);
+    setNewBill(defaultBill);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+    setNewBill(defaultBill);
   };
 
   return (
@@ -41,7 +65,7 @@ const AddNewBill = ({ categories }) => {
                 fontWeight="bold"
                 textTransform="capitalize"
               >
-                Add new bill
+                Add bill
               </MDTypography>
 
               <MDTypography>
@@ -49,27 +73,89 @@ const AddNewBill = ({ categories }) => {
               </MDTypography>
             </MDBox>
 
-            <DropdownTransition visible={visible}>
+            {/* <DropdownTransition visible={visible}> */}
+            {visible && (
               <MDBox component="form" role="form" mt={2}>
-                <MDBox display="flex" mb={2}>
-                  <MDInput type="text" label="Name" fullWidth />
+                <MDBox mb={2}>
+                  <MDInput
+                    type="text"
+                    label="Name"
+                    name="name"
+                    value={name}
+                    onChange={handleChange}
+                    fullWidth
+                  />
                 </MDBox>
-                <MDBox display="flex" mb={2}>
+                <MDBox mb={2}>
                   <DropdownSelect
+                    name="category"
                     label={'Category'}
-                    style={{ margin: 0 }}
-                    selectStyle={{ height: '44px', minWidth: '182.88px' }}
-                    category={category ? category : null}
+                    style={{ margin: 0, minWidth: '100%' }}
+                    selectStyle={{ height: '44px', minWidth: '100%' }}
+                    item={category ? category : null}
                     itemList={categories}
-                    handleChangeCategory={handleChangeCategory}
+                    handleChange={handleChange}
                     empty={true}
                   />
                 </MDBox>
-                <MDBox display="flex" mb={2}>
-                  <MDDatePicker input={{ placeholder: 'Select Date' }} />
+                <MDBox mb={2}>
+                  <DropdownSelect
+                    name="frequency"
+                    label={'Frequency'}
+                    style={{ margin: 0, minWidth: '100%' }}
+                    selectStyle={{ height: '44px', minWidth: '100%' }}
+                    item={frequency ? frequency : null}
+                    itemList={frequencies}
+                    handleChange={handleChange}
+                    empty={true}
+                  />
+                </MDBox>
+                <MDBox mb={2}>
+                  <MDInput
+                    type="date"
+                    name="dueDate"
+                    onChange={handleChange}
+                    value={moment(dueDate).format('YYYY-MM-DD')}
+                    style={{ height: '44px', minWidth: '182.88px' }}
+                    fullWidth
+                  />
+                </MDBox>
+                <MDBox mb={4}>
+                  <MDInput
+                    type="text"
+                    label="Amount"
+                    name="amount"
+                    value={amount}
+                    onChange={handleChange}
+                    fullWidth
+                  />
+                </MDBox>
+                <MDBox
+                  mb={2}
+                  ml={0}
+                  display="flex"
+                  justifyContent="space-between"
+                >
+                  <MDButton
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={handleCancel}
+                  >
+                    Cancel
+                  </MDButton>
+                  <MDButton
+                    variant="outlined"
+                    color="info"
+                    size="small"
+                    onClick={handleAdd}
+                  >
+                    Save
+                  </MDButton>
                 </MDBox>
               </MDBox>
-            </DropdownTransition>
+            )}
+            {/* </DropdownTransition> */}
           </Grid>
         </Grid>
       </MDBox>

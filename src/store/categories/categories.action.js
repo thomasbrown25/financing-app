@@ -9,7 +9,7 @@ import { CATEGORIES_ACTION_TYPES } from './categories.types';
  **/
 export const getCategories = () => async (dispatch) => {
   try {
-    const response = await api.get('/category');
+    const response = await api.get('/api/category');
 
     dispatch({
       type: CATEGORIES_ACTION_TYPES.GET_CATEGORIES_SUCCESS,
@@ -25,12 +25,12 @@ export const getCategories = () => async (dispatch) => {
 };
 
 /**
- ** GET: "/category/refresh"
+ ** GET: "/api/category/refresh"
  * @param reqBody: null
  **/
 export const refreshCategories = () => async (dispatch) => {
   try {
-    const response = await api.post(`/category/refresh`);
+    const response = await api.post(`/api/category/refresh`);
 
     dispatch({
       type: CATEGORIES_ACTION_TYPES.REFRESH_CATEGORIES_SUCCESS,
@@ -46,12 +46,12 @@ export const refreshCategories = () => async (dispatch) => {
 };
 
 /**
- ** POST: "/category"
+ ** POST: "/api/category"
  * @param category: string
  **/
 export const addCategory = (category) => async (dispatch) => {
   try {
-    const response = await api.post(`/category`, { name: category });
+    const response = await api.post(`/api/category`, { name: category });
 
     dispatch({
       type: CATEGORIES_ACTION_TYPES.ADD_CATEGORIES_SUCCESS,
