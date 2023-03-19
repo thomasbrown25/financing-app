@@ -15,7 +15,6 @@ import AddNewBill from 'components/AddNewBill/add-new-bill.component';
 
 // actions
 import { getExpenses } from 'store/transactions/transactions.action';
-import { getFrequencies } from 'store/frequencies/frequencies.action';
 import { addRecurringTransaction } from 'store/transactions/transactions.action';
 
 const UpcomingRoute = ({
@@ -23,16 +22,11 @@ const UpcomingRoute = ({
   getExpenses,
   categories: { categories },
   frequencies: { frequencies },
-  getFrequencies,
   addRecurringTransaction
 }) => {
   useEffect(() => {
     getExpenses();
   }, [getExpenses]);
-
-  useEffect(() => {
-    getFrequencies();
-  }, [getFrequencies]);
 
   return (
     <MainLayout>
@@ -50,6 +44,8 @@ const UpcomingRoute = ({
         <Grid item xs={12} sm={12} md={12} lg={6}>
           <UpcomingBills
             transactions={expenses}
+            frequencies={frequencies}
+            categories={categories}
             viewAll={false}
             viewMore={true}
             amount={20}
@@ -66,7 +62,6 @@ UpcomingRoute.propTypes = {
   categories: PropTypes.object.isRequired,
   getExpenses: PropTypes.func.isRequired,
   frequencies: PropTypes.object.isRequired,
-  getFrequencies: PropTypes.func.isRequired,
   addRecurringTransaction: PropTypes.func.isRequired
 };
 
@@ -78,6 +73,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getExpenses,
-  getFrequencies,
   addRecurringTransaction
 })(UpcomingRoute);

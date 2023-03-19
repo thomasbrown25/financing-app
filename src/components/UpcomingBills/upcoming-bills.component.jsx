@@ -16,20 +16,32 @@ import Bill from '../Bill/bill.component';
 import MDButton from 'components/MDButton';
 import { Link } from 'react-router-dom';
 import { getFrequencies } from 'store/frequencies/frequencies.action';
+import { getCategories } from 'store/categories/categories.action';
 
 const UpcomingBills = ({
   transactions: { expenses },
   user: { currentUser, loading },
   categories: { categories },
   frequencies: { frequencies },
+  getCategories,
+  getFrequencies,
   viewAll = true,
-  viewMore = false
+  viewMore = false,
+  amount = 10
 }) => {
-  const [count, setCount] = useState(12);
+  const [count, setCount] = useState(amount);
 
   const handleViewMore = () => {
     setCount(count + 10);
   };
+
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
+
+  useEffect(() => {
+    getFrequencies();
+  }, [getFrequencies]);
 
   const renderItems = expenses
     ?.slice(0, count)
@@ -105,7 +117,9 @@ UpcomingBills.propTypes = {
   user: PropTypes.object.isRequired,
   transactions: PropTypes.object.isRequired,
   categories: PropTypes.object.isRequired,
-  frequencies: PropTypes.object.isRequired
+  frequencies: PropTypes.object.isRequired,
+  getCategories: PropTypes.func.isRequired,
+  getFrequencies: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -115,4 +129,6 @@ const mapStateToProps = (state) => ({
   frequencies: state.frequencies
 });
 
-export default connect(mapStateToProps, {})(UpcomingBills);
+export default connect(mapStateToProps, { getCategories, getFrequencies })(
+  UpcomingBills
+);
