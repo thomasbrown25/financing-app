@@ -42,6 +42,7 @@ const BillModal = ({
   handleClose,
   transaction,
   categories,
+  frequencies,
   color,
   updateRecurringTransactions,
   disableRecurringTransaction
@@ -54,6 +55,7 @@ const BillModal = ({
 
   const [transactionName, setTransactionName] = useState();
   const [transactionDueDate, setTransactionDueDate] = useState();
+  const [transactionFrequency, setTransactionFrequency] = useState();
   const [transactionCategory, setTransactionCategory] = useState();
 
   const handleEditing = () => {
@@ -67,6 +69,9 @@ const BillModal = ({
   };
   const handleChangeDate = (e) => {
     setTransactionDueDate(e.target.value);
+  };
+  const handleChangeFrequency = (e) => {
+    setTransactionFrequency(e.target.value);
   };
   const handleChangeCategory = (e) => {
     setTransactionCategory(e.target.value);
@@ -92,7 +97,9 @@ const BillModal = ({
       category: transactionCategory
         ? transactionCategory
         : transaction?.category,
-      frequency: transaction?.frequency,
+      frequency: transactionFrequency
+        ? transactionFrequency
+        : transaction?.frequency,
       isActive: transaction?.isActive,
       status: transaction?.status,
       type: transaction?.type
@@ -100,7 +107,7 @@ const BillModal = ({
   };
 
   const inputStyle = {
-    borderColor: color
+    //borderColor: color
   };
 
   const name = transaction?.merchantName
@@ -129,83 +136,99 @@ const BillModal = ({
             {/* NAME */}
             {!isEditing ? (
               <>
-                <MDBox display="flex" justifyContent="space-between">
-                  <MDBox display="flex">
+                <MDBox display="flex" justifyContent="center" mb={2}>
+                  <MDBox flexDirection="column">
+                    <MDTypography variant="h5" fontWeight="medium" gutterBottom>
+                      {name}{' '}
+                    </MDTypography>
                     <MDTypography
-                      variant="h5"
+                      variant="h6"
                       fontWeight="medium"
                       mr={2}
                       gutterBottom
                     >
-                      {name}{' '}
+                      {transaction?.frequency}{' '}
                     </MDTypography>
-                    <Icon
-                      className="cursor"
-                      color="gray"
-                      onClick={handleEditing}
-                    >
-                      edit
-                    </Icon>
-                  </MDBox>
 
-                  <MDBox
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <MDButton
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      onClick={handleDisable}
+                    <MDTypography
+                      variant="h6"
+                      fontWeight="medium"
+                      mr={2}
+                      gutterBottom
                     >
-                      Disable
-                    </MDButton>
+                      {transaction?.category}{' '}
+                    </MDTypography>
+
+                    <MDTypography
+                      variant="h6"
+                      fontWeight="medium"
+                      mr={2}
+                      gutterBottom
+                    >
+                      <Currency value={transaction?.lastAmount} /> due on{' '}
+                      {moment(transaction?.dueDate).format('MMM Do')}{' '}
+                    </MDTypography>
                   </MDBox>
                 </MDBox>
 
-                <MDBox display="flex">
-                  <MDTypography
-                    variant="h6"
-                    fontWeight="medium"
-                    mr={2}
-                    gutterBottom
+                <MDBox
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <MDButton
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={handleDisable}
                   >
-                    {transaction?.category}{' '}
-                  </MDTypography>
-                </MDBox>
-
-                <MDBox display="flex">
-                  <MDTypography
-                    variant="h6"
-                    fontWeight="medium"
-                    mr={2}
-                    gutterBottom
+                    Disable
+                  </MDButton>
+                  <MDButton
+                    variant="outlined"
+                    color="info"
+                    size="small"
+                    onClick={handleEditing}
+                    className="ml-1"
                   >
-                    <Currency value={transaction?.lastAmount} /> due on{' '}
-                    {moment(transaction?.dueDate).format('MMM Do')}{' '}
-                  </MDTypography>
+                    edit
+                  </MDButton>
                 </MDBox>
               </>
             ) : (
               <>
-                <MDBox display="flex" alignItems="center" mb={2}>
-                  <MDTypography variant="h6" mr={1}>
-                    Name:
-                  </MDTypography>
+                <MDBox
+                  display="flex"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  mb={2}
+                  flexDirection="column"
+                >
                   <MDInput
                     type="text"
+                    label="Name"
                     style={inputStyle}
                     value={transactionName ? transactionName : name}
                     onChange={handleChangeName}
                     size="small"
                   />
-                </MDBox>
 
-                <MDBox display="flex" alignItems="center" mb={2}>
-                  <MDTypography variant="h6">Category:</MDTypography>
                   <DropdownSelect
                     style={inputStyle}
+                    label="Frequency"
+                    selectStyle={{ height: '37px', minWidth: '155px' }}
+                    item={
+                      transactionFrequency
+                        ? transactionFrequency
+                        : transaction?.frequency
+                    }
+                    itemList={frequencies}
+                    handleChange={handleChangeFrequency}
+                  />
+
+                  <DropdownSelect
+                    style={inputStyle}
+                    label="Category"
                     selectStyle={{ height: '37px', minWidth: '155px' }}
                     item={
                       transactionCategory
@@ -215,16 +238,12 @@ const BillModal = ({
                     itemList={categories}
                     handleChange={handleChangeCategory}
                   />
-                </MDBox>
 
-                <MDBox display="flex" alignItems="center" mb={2}>
-                  <MDTypography variant="h6" mr={1}>
-                    Date:
-                  </MDTypography>
                   <MDInput
                     type="date"
+                    label="Date"
                     size="small"
-                    style={inputStyle}
+                    style={{ height: '37px', minWidth: '155px' }}
                     onChange={handleChangeDate}
                     value={
                       transactionDueDate
@@ -233,7 +252,7 @@ const BillModal = ({
                     }
                   />
                 </MDBox>
-                <MDBox mb={2} ml={0} display="flex" justifyContent="flex-start">
+                <MDBox mb={2} ml={0} display="flex" justifyContent="center">
                   <MDButton
                     variant="outlined"
                     color="error"
@@ -244,7 +263,7 @@ const BillModal = ({
                   </MDButton>
                   <MDButton
                     variant="outlined"
-                    color="success"
+                    color="info"
                     size="small"
                     onClick={handleUpdate}
                     className="ml-1"

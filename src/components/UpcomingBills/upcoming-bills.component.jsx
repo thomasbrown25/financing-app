@@ -21,6 +21,7 @@ const UpcomingBills = ({
   transactions: { expenses },
   user: { currentUser, loading },
   categories: { categories },
+  frequencies: { frequencies },
   viewAll = true,
   viewMore = false
 }) => {
@@ -39,6 +40,7 @@ const UpcomingBills = ({
         icon="expand_less"
         transaction={transaction}
         categories={categories}
+        frequencies={frequencies}
       />
     ));
 
@@ -102,13 +104,15 @@ const UpcomingBills = ({
 UpcomingBills.propTypes = {
   user: PropTypes.object.isRequired,
   transactions: PropTypes.object.isRequired,
-  categories: PropTypes.object.isRequired
+  categories: PropTypes.object.isRequired,
+  frequencies: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
   transactions: state.transactions,
-  categories: state.categories
+  categories: state.categories,
+  frequencies: state.frequencies
 });
 
 export default connect(mapStateToProps, {})(UpcomingBills);

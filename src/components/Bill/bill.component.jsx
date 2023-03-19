@@ -23,6 +23,7 @@ const Bill = ({
   icon,
   transaction,
   categories,
+  frequencies,
   updateRecurringTransactions
 }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -59,6 +60,15 @@ const Bill = ({
               fontWeight="regular"
               mb={1}
             >
+              {transaction?.frequency}
+            </MDTypography>
+
+            <MDTypography
+              variant="caption"
+              color="text"
+              fontWeight="regular"
+              mb={1}
+            >
               {transaction?.category}
             </MDTypography>
 
@@ -87,6 +97,7 @@ const Bill = ({
         handleClose={handleModalClose}
         transaction={transaction}
         categories={categories}
+        frequencies={frequencies}
         color={color}
       />
       {/* {isDropDown && (
