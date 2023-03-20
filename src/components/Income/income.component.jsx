@@ -19,6 +19,7 @@ import { useMaterialUIController } from 'context';
 import theme from 'assets/theme';
 import BasicTooltip from 'components/Tooltip/tooltip.component';
 import { setIncomeActive } from 'store/transactions/transactions.action';
+import IncomeModal from 'components/IncomeModal/income-modal.component';
 
 const defaultModalStyle = {
   position: 'absolute',
@@ -31,19 +32,7 @@ const defaultModalStyle = {
   p: 4
 };
 
-const defaultFormData = {
-  company: '',
-  newDate: ''
-};
-
-const Income = ({
-  dueDate,
-  title,
-  price,
-  noGutter,
-  setIncomeActive,
-  incomeId
-}) => {
+const Income = ({ income, noGutter, setIncomeActive }) => {
   const { palette } = theme;
   const { primary, background } = palette;
   const [controller, dispatch] = useMaterialUIController();
@@ -59,26 +48,9 @@ const Income = ({
     }
   }, [darkMode]);
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-    console.log('edit click');
-    setOpen(true);
-  };
-  const handleClose = () => {
-    console.log('edit click');
-    setOpen(false);
-  };
-  const handleDeactivate = (incomeId) => {
-    if (window.confirm(`Are you sure you want to delete income ${title}`))
-      setIncomeActive(incomeId, false);
-  };
-
-  const [formData, setFormData] = useState(defaultFormData);
-  const { company, nextpayment } = formData;
-  const onChange = (e) => {
-    console.log('setting data: ' + e.target.name + ' ' + e.target.value);
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [openModal, setOpenModal] = useState(false);
+  const handleModalOpen = () => setOpenModal(true);
+  const handleModalClose = () => setOpenModal(false);
 
   return (
     <>
@@ -90,103 +62,30 @@ const Income = ({
         py={1}
         pr={1}
         mb={noGutter ? 0 : 1}
+        className="cursor"
+        onClick={handleModalOpen}
       >
         <MDBox lineHeight={1.125}>
           <MDTypography display="block" variant="button" fontWeight="medium">
-            {title}
+            {income?.merchantName}
           </MDTypography>
           <MDTypography variant="caption" fontWeight="regular" color="text">
-            Next Payment: <Moment date={dueDate} format={'M/D'} />
+            Next Payment: <Moment date={income?.dueDate} format={'M/D'} />
           </MDTypography>
         </MDBox>
         <MDBox display="flex" alignItems="center">
-          <MDTypography variant="button" fontWeight="regular" color="text">
-            <Currency value={price} />
+          <MDTypography variant="button" fontWeight="bold" color="info">
+            <Currency value={income?.lastAmount} />
           </MDTypography>
-          <MDBox
-            display="flex"
-            alignItems="center"
-            lineHeight={1}
-            ml={3}
-            sx={{ cursor: 'pointer' }}
-            color="text"
-          >
-            <Icon fontSize="small">picture_as_pdf</Icon>
-            <MDTypography variant="button" fontWeight="bold">
-              &nbsp;PDF
-            </MDTypography>{' '}
-            <BasicTooltip text="Edit">
-              <Icon fontSize="small" onClick={handleOpen} color="text">
-                edit
-              </Icon>
-            </BasicTooltip>
-            <BasicTooltip text="Delete">
-              <Icon
-                fontSize="small"
-                dataid={incomeId}
-                onClick={() => handleDeactivate(incomeId)}
-                color="text"
-              >
-                delete
-              </Icon>
-            </BasicTooltip>
-          </MDBox>
         </MDBox>
       </MDBox>
 
       {/* MODAL */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <MDBox sx={modalStyle}>
-          <MDTypography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            mb={2}
-          >
-            <TextField
-              label="Company"
-              name="company"
-              defaultValue={title}
-              onChange={onChange}
-            />
-          </MDTypography>{' '}
-          <MDTypography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            mb={2}
-          >
-            <TextField
-              label="Next Payment (month/day)"
-              name="nextpayment"
-              defaultValue={moment(dueDate).format('MM/DD')}
-              onChange={onChange}
-            />
-          </MDTypography>{' '}
-          {/* <MDTypography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            mb={2}
-          >
-            <MDDatePicker
-              label="Next Payment"
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              name="newDate"
-              onChange={onChange}
-              value={newDate}
-              defaultValue={date}
-            ></MDDatePicker>
-          </MDTypography>{' '} */}
-        </MDBox>
-      </Modal>
+      <IncomeModal
+        open={openModal}
+        handleClose={handleModalClose}
+        income={income}
+      />
     </>
   );
 };
@@ -198,9 +97,6 @@ Income.defaultProps = {
 
 // Typechecking props for the Income
 Income.propTypes = {
-  dueDate: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
   noGutter: PropTypes.bool,
   setIncomeActive: PropTypes.func.isRequired
 };

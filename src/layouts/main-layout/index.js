@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // react-router-dom components
 import { useLocation } from 'react-router-dom';
-
-// prop-types is a library for typechecking of props.
-import PropTypes from 'prop-types';
 
 // Material Dashboard 2 PRO React components
 import MDBox from 'components/MDBox';
@@ -12,7 +11,7 @@ import MDBox from 'components/MDBox';
 // Material Dashboard 2 PRO React context
 import { useMaterialUIController, setLayout } from 'context';
 
-function MainLayout({ children }) {
+const MainLayout = ({ children }) => {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav } = controller;
   const { pathname } = useLocation();
@@ -40,11 +39,10 @@ function MainLayout({ children }) {
       {children}
     </MDBox>
   );
-}
+};
 
-// Typechecking props for the MainLayout
 MainLayout.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default MainLayout;
+export default connect(null, {})(MainLayout);

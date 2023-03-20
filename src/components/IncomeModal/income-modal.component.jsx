@@ -19,14 +19,14 @@ import { Icon } from '@mui/material';
 import moment from 'moment';
 import DropdownSelect from 'components/DropdownSelect/dropdown-select.component';
 import Currency from 'components/Currency/currency.component';
-import {
-  updateRecurringTransactions,
-  disableRecurringTransaction
-} from 'store/transactions/transactions.action';
+import { updateIncome } from 'store/transactions/transactions.action';
+import { setIncomeActive } from 'store/transactions/transactions.action';
 import MDButton from 'components/MDButton';
 
+import { getFrequencies } from 'store/frequencies/frequencies.action';
+
 // models
-import { defaultTransaction } from 'models/models';
+import { defaultIncome } from 'models/models';
 
 const style = {
   position: 'absolute',
@@ -40,50 +40,51 @@ const style = {
   p: 4
 };
 
-const BillModal = ({
+const IncomeModal = ({
   open,
   handleClose,
-  transaction,
-  categories,
-  frequencies,
-  color,
-  updateRecurringTransactions,
-  disableRecurringTransaction
+  income,
+  frequencies: { frequencies },
+  getFrequencies,
+  updateIncome,
+  setIncomeActive
 }) => {
   const [controller, dispatch] = useMaterialUIController();
   const { darkMode } = controller;
 
   const [isEditing, setIsEditing] = useState(false);
-  const [newBill, setNewBill] = useState({
-    ...defaultTransaction,
-    ...transaction
+  const [newIncome, setNewIncome] = useState({
+    ...defaultIncome,
+    ...income
   });
   const { merchantName, description, category, frequency, dueDate, amount } =
-    newBill;
+    newIncome;
 
   const handleEditing = () => {
     setIsEditing(true);
   };
 
   const handleChange = (e) => {
-    setNewBill({ ...newBill, [e.target.name]: e.target.value });
+    setNewIncome({ ...newIncome, [e.target.name]: e.target.value });
   };
 
   const handleDisable = () => {
     if (
       window.confirm(
-        `Are you sure you want to delete the expense ${transaction?.merchantName}`
+        `Are you sure you want to delete income ${income?.merchantName}`
       )
     ) {
       setIsEditing(false);
       handleClose();
-      disableRecurringTransaction(transaction?.id);
+      setIncomeActive(income?.streamId, false);
+      setNewIncome({ ...defaultIncome, ...newIncome });
     }
   };
 
   const handleOnClose = () => {
     setIsEditing(false);
     handleClose();
+    setNewIncome({ ...defaultIncome, ...newIncome });
   };
 
   const handleCancel = () => {
@@ -92,11 +93,17 @@ const BillModal = ({
 
   const handleUpdate = () => {
     setIsEditing(false);
-    updateRecurringTransactions({
-      ...transaction,
-      ...newBill
+    updateIncome({
+      ...income,
+      ...newIncome
     });
+    handleClose();
+    setNewIncome({ ...defaultIncome, ...newIncome });
   };
+
+  useEffect(() => {
+    getFrequencies();
+  }, [getFrequencies]);
 
   useEffect(() => {
     if (darkMode) {
@@ -117,7 +124,6 @@ const BillModal = ({
       >
         <Fade in={open}>
           <Box sx={style}>
-            {/* NAME */}
             {!isEditing ? (
               <>
                 <MDBox display="flex" justifyContent="flex-end">
@@ -130,7 +136,7 @@ const BillModal = ({
                 <MDBox display="flex" justifyContent="center" mb={2}>
                   <MDBox flexDirection="column">
                     <MDTypography variant="h5" fontWeight="medium" gutterBottom>
-                      {transaction?.merchantName}{' '}
+                      {income?.merchantName}{' '}
                     </MDTypography>
                     <MDTypography
                       variant="h6"
@@ -138,16 +144,7 @@ const BillModal = ({
                       mr={2}
                       gutterBottom
                     >
-                      {transaction?.frequency}{' '}
-                    </MDTypography>
-
-                    <MDTypography
-                      variant="h6"
-                      fontWeight="medium"
-                      mr={2}
-                      gutterBottom
-                    >
-                      {transaction?.category}{' '}
+                      {income?.frequency}{' '}
                     </MDTypography>
 
                     <MDTypography
@@ -156,8 +153,15 @@ const BillModal = ({
                       mr={2}
                       gutterBottom
                     >
-                      <Currency value={transaction?.lastAmount} /> due on{' '}
-                      {moment(transaction?.dueDate).format('MMM Do')}{' '}
+                      <Currency value={income?.lastAmount} />
+                    </MDTypography>
+                    <MDTypography
+                      variant="h6"
+                      fontWeight="medium"
+                      mr={2}
+                      gutterBottom
+                    >
+                      Next Payment on {moment(income?.dueDate).format('MMM Do')}{' '}
                     </MDTypography>
                   </MDBox>
                 </MDBox>
@@ -213,18 +217,9 @@ const BillModal = ({
                     handleChange={handleChange}
                   />
 
-                  <DropdownSelect
-                    label="Category"
-                    name="category"
-                    selectStyle={{ height: '37px', minWidth: '155px' }}
-                    item={category}
-                    itemList={categories}
-                    handleChange={handleChange}
-                  />
-
                   <MDInput
                     type="date"
-                    label="Date"
+                    label="Next Payment"
                     size="small"
                     name="dueDate"
                     style={{ height: '37px', minWidth: '155px' }}
@@ -253,10 +248,6 @@ const BillModal = ({
                 </MDBox>
               </>
             )}
-
-            {/* CATEGORY */}
-
-            {/* DATE */}
           </Box>
         </Fade>
       </Modal>
@@ -264,11 +255,18 @@ const BillModal = ({
   );
 };
 
-BillModal.propTypes = {
-  updateRecurringTransactions: PropTypes.func.isRequired,
-  disableRecurringTransaction: PropTypes.func.isRequired
+IncomeModal.propTypes = {
+  getFrequencies: PropTypes.func.isRequired,
+  updateIncome: PropTypes.func.isRequired,
+  setIncomeActive: PropTypes.func.isRequired
 };
-export default connect(null, {
-  updateRecurringTransactions,
-  disableRecurringTransaction
-})(BillModal);
+
+const mapStateToProps = (state) => ({
+  frequencies: state.frequencies
+});
+
+export default connect(mapStateToProps, {
+  getFrequencies,
+  updateIncome,
+  setIncomeActive
+})(IncomeModal);

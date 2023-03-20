@@ -15,20 +15,14 @@ import DatePicker from 'components/DatePicker/date-picker.component';
 import moment from 'moment';
 import MDButton from 'components/MDButton';
 
-// actions
-
-const defaultBill = {
-  name: '',
-  category: '',
-  frequency: '',
-  dueDate: null,
-  amount: ''
-};
+// models
+import { defaultTransaction } from 'models/models';
 
 const AddNewBill = ({ categories, frequencies, addRecurringTransaction }) => {
   const [visible, setVisible] = useState(false);
-  const [newBill, setNewBill] = useState(defaultBill);
-  const { name, category, frequency, dueDate, amount } = newBill;
+  const [newBill, setNewBill] = useState(defaultTransaction);
+  const { merchantName, description, category, frequency, dueDate, amount } =
+    newBill;
 
   const handleDropdown = () => {
     setVisible(!visible);
@@ -40,12 +34,12 @@ const AddNewBill = ({ categories, frequencies, addRecurringTransaction }) => {
 
   const handleAdd = () => {
     addRecurringTransaction(newBill);
-    setNewBill(defaultBill);
+    setNewBill(defaultTransaction);
   };
 
   const handleCancel = () => {
     setVisible(false);
-    setNewBill(defaultBill);
+    setNewBill(defaultTransaction);
   };
 
   return (
@@ -80,8 +74,8 @@ const AddNewBill = ({ categories, frequencies, addRecurringTransaction }) => {
                   <MDInput
                     type="text"
                     label="Name"
-                    name="name"
-                    value={name}
+                    name="merchantName"
+                    value={merchantName}
                     onChange={handleChange}
                     fullWidth
                   />

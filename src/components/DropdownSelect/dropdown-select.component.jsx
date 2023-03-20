@@ -7,11 +7,11 @@ import Select from '@mui/material/Select';
 const DropdownSelect = ({
   color,
   itemList,
-  style,
   handleChange,
   item,
   name,
   disable,
+  style,
   selectStyle,
   label,
   empty
@@ -23,19 +23,7 @@ const DropdownSelect = ({
   ));
 
   return (
-    <FormControl
-      style={
-        style
-          ? style
-          : {
-              marginLeft: 'auto',
-              position: 'absolute',
-              right: '25%',
-              borderColor: { color }
-            }
-      }
-      sx={{ m: 1, minWidth: 80 }}
-    >
+    <FormControl style={style} sx={{ m: 1, minWidth: 80 }}>
       <InputLabel id="dropdown-label">{label}</InputLabel>
       <Select
         labelId="dropdown-label"

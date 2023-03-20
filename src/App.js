@@ -47,12 +47,12 @@ import DashboardRoute from 'routes/dashboard/dashboard.route';
 import navbarRoutes from 'navbar.routes';
 import AccountRoute from 'routes/account/account.route';
 import UpcomingRoute from 'routes/upcoming/upcoming.route';
-import MainLayout from 'layouts/main-layout';
 import TransactionsRoute from 'routes/transactions/transactions.route';
 import RegisterRoute from 'routes/register/register.route';
 import SettingsRoute from 'routes/settings/settings.route';
 import ManageAccountsRoute from 'routes/manage-accounts/manage-accounts.route';
 import ManageCategoriesRoute from 'routes/manage-categories/manage-categories.route';
+import IncomeRoute from 'routes/income/income.route';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -173,9 +173,10 @@ export default function App() {
           <Route index path="/dashboard" element={<DashboardRoute />} />
           <Route path="/accounts/account" element={<AccountRoute />} />
           <Route path="/upcoming" element={<UpcomingRoute />} />
+          <Route path="/income" element={<IncomeRoute />} />
           <Route path="/transactions" element={<TransactionsRoute />} />
-          <Route path="/settings" element={<SettingsRoute />} />
           <Route path="/manage-accounts" element={<ManageAccountsRoute />} />
+          <Route path="/settings" element={<SettingsRoute />} />
           <Route
             path="/manage-categories"
             element={<ManageCategoriesRoute />}

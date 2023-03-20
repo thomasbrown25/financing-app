@@ -14,6 +14,8 @@ Coded by www.creative-tim.com
 */
 
 import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // react-github-btn
 import GitHubButton from 'react-github-btn';
@@ -37,6 +39,8 @@ import MDButton from 'components/MDButton';
 // Custom styles for the Configurator
 import ConfiguratorRoot from 'components/Configurator/ConfiguratorRoot';
 
+import { getSettings } from 'store/settings/settings.action';
+
 // Material Dashboard 2 PRO React context
 import {
   useMaterialUIController,
@@ -49,7 +53,25 @@ import {
   setDarkMode
 } from 'context';
 
-function Configurator() {
+const Configurator = ({
+  user: { user },
+  settings: { settings },
+  getSettings
+}) => {
+  useEffect(() => {
+    getSettings();
+  }, [getSettings]);
+
+  useEffect(() => {
+    if (settings) {
+      setDarkMode(dispatch, settings.darkMode);
+      setFixedNavbar(dispatch, settings.navbarFixed);
+
+      setWhiteSidenav(dispatch, settings.sidenavType === 'white');
+      setTransparentSidenav(dispatch, settings.sidenavType === 'transparent');
+    }
+  }, [settings]);
+
   const [controller, dispatch] = useMaterialUIController();
   const {
     openConfigurator,
@@ -352,6 +374,19 @@ function Configurator() {
       </MDBox>
     </ConfiguratorRoot>
   );
-}
+};
 
-export default Configurator;
+Configurator.propTypes = {
+  user: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
+  getSettings: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+  settings: state.settings
+});
+
+export default connect(mapStateToProps, {
+  getSettings
+})(Configurator);

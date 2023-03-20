@@ -145,6 +145,26 @@ export const updateRecurringTransactions =
     }
   };
 
+export const updateIncome = (income) => async (dispatch) => {
+  try {
+    const response = await api.post(
+      `/api/transactions/recurring/income/${income.id}`,
+      income
+    );
+
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.UPDATE_INCOME_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: TRANSACTIONS_ACTION_TYPES.UPDATE_INCOME_FAILED,
+      payload: error?.response
+    });
+  }
+};
+
 export const addRecurringTransaction = (transaction) => async (dispatch) => {
   try {
     const response = await api.post(`/api/transactions/recurring`, transaction);

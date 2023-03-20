@@ -55,6 +55,14 @@ const navbarRoutes = [
     name: 'Spending',
     key: 'spending',
     route: '/spending',
+    icon: <Icon fontSize="medium">credit_card</Icon>,
+    noCollapse: true
+  },
+  {
+    type: 'collapse',
+    name: 'Income',
+    key: 'income',
+    route: '/income',
     icon: <Icon fontSize="medium">payments</Icon>,
     noCollapse: true
   },
@@ -63,7 +71,7 @@ const navbarRoutes = [
     name: 'Budget',
     key: 'budget',
     route: '/budget',
-    icon: <Icon fontSize="medium">article</Icon>,
+    icon: <Icon fontSize="medium">assignment</Icon>,
     noCollapse: true
   },
   {
@@ -80,7 +88,7 @@ const navbarRoutes = [
     name: 'Manage Accounts',
     key: 'manage-accounts',
     route: '/manage-accounts',
-    icon: <Icon fontSize="medium">playlist_add</Icon>,
+    icon: <Icon fontSize="medium">inventory</Icon>,
     noCollapse: true
   },
 
@@ -89,7 +97,7 @@ const navbarRoutes = [
     name: 'Manage Categories',
     key: 'manage-categories',
     route: '/manage-categories',
-    icon: <Icon fontSize="medium">playlist_add</Icon>,
+    icon: <Icon fontSize="medium">content_paste</Icon>,
     noCollapse: true
   },
   { type: 'divider', key: 'divider-1' },

@@ -10,8 +10,9 @@ import MDButton from 'components/MDButton';
 import Income from 'components/Income/income.component';
 import Moment from 'react-moment';
 import Currency from 'components/Currency/currency.component';
+import { Link } from 'react-router-dom';
 
-const Incomes = ({ transactions, tithes, totalIncome }) => {
+const Incomes = ({ transactions, tithes, totalIncome, viewAll = true }) => {
   return (
     <>
       <MDBox
@@ -28,9 +29,13 @@ const Incomes = ({ transactions, tithes, totalIncome }) => {
         >
           Income
         </MDTypography>
-        <MDButton variant="outlined" color="info" size="small">
-          view all
-        </MDButton>
+        {viewAll && (
+          <Link to="/income">
+            <MDButton variant="outlined" color="info" size="small">
+              view all
+            </MDButton>
+          </Link>
+        )}
       </MDBox>
       <MDBox p={2}>
         <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
@@ -38,6 +43,7 @@ const Incomes = ({ transactions, tithes, totalIncome }) => {
             <Income
               key={i}
               id={i}
+              income={transaction}
               title={
                 transaction.merchantName
                   ? transaction.merchantName
@@ -50,22 +56,42 @@ const Incomes = ({ transactions, tithes, totalIncome }) => {
           ))}
         </MDBox>
 
-        <MDTypography display="block" variant="button" fontWeight="medium">
-          Total Income:
-        </MDTypography>
-        <MDBox display="flex" alignItems="center" pb={2}>
-          <MDTypography variant="button" fontWeight="regular" color="text">
+        <MDBox display="flex" justifyContent="flex-end">
+          <span style={{ borderTop: '1px solid green', width: '100px' }}></span>
+        </MDBox>
+
+        <MDBox
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mt={2}
+          mr={1}
+        >
+          <MDTypography display="block" variant="button" fontWeight="medium">
+            Total Income:
+          </MDTypography>
+          <MDTypography variant="button" fontWeight="bold" color="success">
             <Currency value={totalIncome} />
           </MDTypography>
         </MDBox>
-        <MDTypography display="block" variant="button" fontWeight="medium">
-          Tithes:
-        </MDTypography>
-        <MDBox display="flex" alignItems="center">
-          <MDTypography variant="button" fontWeight="regular" color="text">
-            <Currency value={tithes} />
-          </MDTypography>
-        </MDBox>
+
+        {tithes && (
+          <>
+            <MDTypography
+              display="block"
+              variant="button"
+              fontWeight="medium"
+              mt={2}
+            >
+              Tithes:
+            </MDTypography>
+            <MDBox display="flex" alignItems="center">
+              <MDTypography variant="button" fontWeight="regular" color="text">
+                <Currency value={tithes} />
+              </MDTypography>
+            </MDBox>
+          </>
+        )}
       </MDBox>
     </>
   );

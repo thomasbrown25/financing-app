@@ -98,7 +98,6 @@ const Bill = ({
         transaction={transaction}
         categories={categories}
         frequencies={frequencies}
-        color={color}
       />
       {/* {isDropDown && (
         <AccountDetails

@@ -69,6 +69,12 @@ const transactionsReducer = (state = initialState, action) => {
         expenses: payload.expenses
       };
 
+    case TRANSACTIONS_ACTION_TYPES.UPDATE_INCOME_SUCCESS:
+      return {
+        ...state,
+        incomes: payload.incomes
+      };
+
     case TRANSACTIONS_ACTION_TYPES.GET_EXPENSES_SUCCESS:
       return {
         ...state,
@@ -106,6 +112,7 @@ const transactionsReducer = (state = initialState, action) => {
     case TRANSACTIONS_ACTION_TYPES.SET_INCOME_ACTIVE_FAILED:
     case TRANSACTIONS_ACTION_TYPES.UPDATE_RECURRING_TRANSACTIONS_FAILED:
     case TRANSACTIONS_ACTION_TYPES.DISABLE_RECURRING_TRANSACTIONS_FAILED:
+    case TRANSACTIONS_ACTION_TYPES.UPDATE_INCOME_FAILED:
       return {
         ...state,
         error: payload

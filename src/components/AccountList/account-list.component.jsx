@@ -128,7 +128,7 @@ const AccountList = ({
                   {officialName} -{' '}
                   <MDTypography
                     variant="caption"
-                    color="text"
+                    color="info"
                     fontWeight="medium"
                   >
                     <Currency
