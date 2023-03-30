@@ -39,7 +39,9 @@ import MDButton from 'components/MDButton';
 // Custom styles for the Configurator
 import ConfiguratorRoot from 'components/Configurator/ConfiguratorRoot';
 
-import { getSettings } from 'store/settings/settings.action';
+import { getSettings, saveSettings } from 'store/settings/settings.action';
+
+import { defaultSettings } from 'models/models';
 
 // Material Dashboard 2 PRO React context
 import {
@@ -56,7 +58,8 @@ import {
 const Configurator = ({
   user: { user },
   settings: { settings },
-  getSettings
+  getSettings,
+  saveSettings
 }) => {
   useEffect(() => {
     getSettings();
@@ -66,10 +69,17 @@ const Configurator = ({
     if (settings) {
       setDarkMode(dispatch, settings.darkMode);
       setFixedNavbar(dispatch, settings.navbarFixed);
+      setMiniSidenav(dispatch, settings.sidenavMini);
 
       setWhiteSidenav(dispatch, settings.sidenavType === 'white');
       setTransparentSidenav(dispatch, settings.sidenavType === 'transparent');
     }
+  }, [settings]);
+
+  const [newSettings, setNewSettings] = useState(null);
+
+  useEffect(() => {
+    setNewSettings(settings);
   }, [settings]);
 
   const [controller, dispatch] = useMaterialUIController();
@@ -111,20 +121,21 @@ const Configurator = ({
 
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
   const handleTransparentSidenav = () => {
-    setTransparentSidenav(dispatch, true);
-    setWhiteSidenav(dispatch, false);
+    saveSettings({ ...newSettings, sidenavType: 'transparent' });
   };
   const handleWhiteSidenav = () => {
-    setWhiteSidenav(dispatch, true);
-    setTransparentSidenav(dispatch, false);
+    saveSettings({ ...newSettings, sidenavType: 'white' });
   };
   const handleDarkSidenav = () => {
-    setWhiteSidenav(dispatch, false);
-    setTransparentSidenav(dispatch, false);
+    saveSettings({ ...newSettings, sidenavType: 'dark' });
   };
-  const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
-  const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
+  const handleMiniSidenav = () =>
+    saveSettings({ ...newSettings, sidenavMini: !settings.sidenavMini });
+  const handleFixedNavbar = () =>
+    saveSettings({ ...newSettings, navbarFixed: !settings.navbarFixed });
+  const handleDarkMode = () => {
+    saveSettings({ ...newSettings, darkMode: !settings.darkMode });
+  };
 
   // sidenav type buttons styles
   const sidenavTypeButtonsStyles = ({
@@ -174,7 +185,7 @@ const Configurator = ({
         px={3}
       >
         <MDBox>
-          <MDTypography variant="h5">Material UI Configurator</MDTypography>
+          <MDTypography variant="h5">Appearance</MDTypography>
           <MDTypography variant="body2" color="text">
             See our dashboard options.
           </MDTypography>
@@ -379,7 +390,8 @@ const Configurator = ({
 Configurator.propTypes = {
   user: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
-  getSettings: PropTypes.func.isRequired
+  getSettings: PropTypes.func.isRequired,
+  saveSettings: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -388,5 +400,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  getSettings
+  getSettings,
+  saveSettings
 })(Configurator);

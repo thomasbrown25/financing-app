@@ -15,3 +15,13 @@ export const defaultIncome = {
   frequency: '',
   lastAmount: ''
 };
+
+export const defaultSettings = {
+  fontSize: '',
+  language: '',
+  messages: '',
+  darkMode: false,
+  sidenavMini: false,
+  navbarFixed: true,
+  sidenavType: ''
+};

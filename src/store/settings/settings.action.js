@@ -23,3 +23,20 @@ export const getSettings = () => async (dispatch) => {
     });
   }
 };
+
+export const saveSettings = (newSettings) => async (dispatch) => {
+  try {
+    const response = await api.post('/api/usersetting', newSettings);
+
+    dispatch({
+      type: SETTINGS_ACTION_TYPES.SAVE_SETTINGS_SUCCESS,
+      payload: response.data.data
+    });
+  } catch (error) {
+    console.log(error, error.message);
+    dispatch({
+      type: SETTINGS_ACTION_TYPES.SAVE_SETTINGS_FAILED,
+      payload: error?.response
+    });
+  }
+};

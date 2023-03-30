@@ -11,6 +11,7 @@ const settingsReducer = (state = initialState, action) => {
 
   switch (type) {
     case SETTINGS_ACTION_TYPES.GET_SETTINGS_SUCCESS:
+    case SETTINGS_ACTION_TYPES.SAVE_SETTINGS_SUCCESS:
       return {
         ...state,
         settings: payload,
@@ -18,6 +19,7 @@ const settingsReducer = (state = initialState, action) => {
       };
 
     case SETTINGS_ACTION_TYPES.GET_SETTINGS_FAILED:
+    case SETTINGS_ACTION_TYPES.SAVE_SETTINGS_FAILED:
       return {
         ...state,
         error: payload
