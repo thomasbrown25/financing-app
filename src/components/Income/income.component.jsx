@@ -69,7 +69,22 @@ const Income = ({ income, noGutter, setIncomeActive }) => {
           <MDTypography display="block" variant="button" fontWeight="medium">
             {income?.merchantName}
           </MDTypography>
-          <MDTypography variant="caption" fontWeight="regular" color="text">
+          <MDTypography
+            display="block"
+            variant="caption"
+            fontWeight="regular"
+            color="text"
+            mt={0.5}
+          >
+            {income?.frequency}
+          </MDTypography>
+          <MDTypography
+            display="block"
+            variant="caption"
+            fontWeight="regular"
+            color="text"
+            mt={0.5}
+          >
             Next Payment: <Moment date={income?.dueDate} format={'M/D'} />
           </MDTypography>
         </MDBox>
