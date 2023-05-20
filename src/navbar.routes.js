@@ -66,6 +66,7 @@ const navbarRoutes = [
     icon: <Icon fontSize="medium">payments</Icon>,
     noCollapse: true
   },
+
   {
     type: 'collapse',
     name: 'Budget',
@@ -94,10 +95,19 @@ const navbarRoutes = [
 
   {
     type: 'collapse',
+    name: 'Manage Bills',
+    key: 'manage-bills',
+    route: '/manage-bills',
+    icon: <Icon fontSize="medium">inventory</Icon>,
+    noCollapse: true
+  },
+
+  {
+    type: 'collapse',
     name: 'Manage Categories',
     key: 'manage-categories',
     route: '/manage-categories',
-    icon: <Icon fontSize="medium">content_paste</Icon>,
+    icon: <Icon fontSize="medium">inventory</Icon>,
     noCollapse: true
   },
   { type: 'divider', key: 'divider-1' },

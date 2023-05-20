@@ -123,7 +123,7 @@ const DashboardRoute = ({
           </Grid>
 
           <Grid item xs={12} sm={12} md={12} lg={6}>
-            <UpcomingBills />
+            <UpcomingBills title={'All Subscriptions and Bills'} />
           </Grid>
 
           <Grid item xs={12} sm={12} md={12} lg={12}>

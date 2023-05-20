@@ -27,7 +27,8 @@ const UpcomingBills = ({
   getFrequencies,
   viewAll = true,
   viewMore = false,
-  amount = 10
+  amount = 10,
+  title = 'Upcoming Bills'
 }) => {
   const [count, setCount] = useState(amount);
 
@@ -70,7 +71,7 @@ const UpcomingBills = ({
           fontWeight="medium"
           textTransform="uppercase"
         >
-          Upcoming Bills
+          {title}
         </MDTypography>
         {/* <MDTypography variant="h7" fontWeight="light">
           (click to edit)

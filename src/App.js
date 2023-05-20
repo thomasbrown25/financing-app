@@ -53,6 +53,7 @@ import SettingsRoute from 'routes/settings/settings.route';
 import ManageAccountsRoute from 'routes/manage-accounts/manage-accounts.route';
 import ManageCategoriesRoute from 'routes/manage-categories/manage-categories.route';
 import IncomeRoute from 'routes/income/income.route';
+import ManageBillsRoute from 'routes/manage-bills/manage-bills.route';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -176,11 +177,12 @@ export default function App() {
           <Route path="/income" element={<IncomeRoute />} />
           <Route path="/transactions" element={<TransactionsRoute />} />
           <Route path="/manage-accounts" element={<ManageAccountsRoute />} />
-          <Route path="/settings" element={<SettingsRoute />} />
+          <Route path="/manage-bills" element={<ManageBillsRoute />} />
           <Route
             path="/manage-categories"
             element={<ManageCategoriesRoute />}
           />
+          <Route path="/settings" element={<SettingsRoute />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>
       </Routes>
