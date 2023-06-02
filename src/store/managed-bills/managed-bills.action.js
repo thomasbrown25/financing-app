@@ -8,7 +8,7 @@ import { MANAGEDBILLS_ACTION_TYPES } from './managed-bills.types';
  **/
 export const getBills = () => async (dispatch) => {
   try {
-    const response = await api.get('/api/managed-bills');
+    const response = await api.get('/api/managedbills');
 
     dispatch({
       type: MANAGEDBILLS_ACTION_TYPES.GET_MANAGED_BILLS_SUCCESS,
@@ -25,7 +25,7 @@ export const getBills = () => async (dispatch) => {
 
 export const deleteBill = (billId) => async (dispatch) => {
   try {
-    const response = await api.delete(`/api/managed-bills/${billId}`);
+    const response = await api.delete(`/api/managedbills/${billId}`);
 
     dispatch({
       type: MANAGEDBILLS_ACTION_TYPES.DELETE_MANAGED_BILL_SUCCESS,
@@ -40,21 +40,21 @@ export const deleteBill = (billId) => async (dispatch) => {
   }
 };
 
-export const saveBill = (updatedBill) => async (dispatch) => {
+export const updateBill = (updatedBill) => async (dispatch) => {
   try {
     const response = await api.post(
-      `/api/managed-bills/${updatedBill.id}`,
+      `/api/managedbills/${updatedBill.id}`,
       updatedBill
     );
 
     dispatch({
-      type: MANAGEDBILLS_ACTION_TYPES.SAVE_MANAGED_BILL_SUCCESS,
+      type: MANAGEDBILLS_ACTION_TYPES.UPDATE_MANAGED_BILL_SUCCESS,
       payload: response.data.data
     });
   } catch (error) {
     console.log(error, error.message);
     dispatch({
-      type: MANAGEDBILLS_ACTION_TYPES.SAVE_MANAGED_BILL_FAILED,
+      type: MANAGEDBILLS_ACTION_TYPES.UPDATE_MANAGED_BILL_FAILED,
       payload: error?.response
     });
   }
@@ -62,7 +62,7 @@ export const saveBill = (updatedBill) => async (dispatch) => {
 
 export const addBill = (newBill) => async (dispatch) => {
   try {
-    const response = await api.post(`/api/managed-bills`, newBill);
+    const response = await api.post(`/api/managedbills`, newBill);
 
     dispatch({
       type: MANAGEDBILLS_ACTION_TYPES.ADD_MANAGED_BILL_SUCCESS,

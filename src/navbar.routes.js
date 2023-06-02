@@ -86,18 +86,18 @@ const navbarRoutes = [
 
   {
     type: 'collapse',
-    name: 'Manage Accounts',
-    key: 'manage-accounts',
-    route: '/manage-accounts',
-    icon: <Icon fontSize="medium">inventory</Icon>,
+    name: 'Bill Center',
+    key: 'bill-center',
+    route: '/bill-center',
+    icon: <Icon fontSize="medium">credit_card</Icon>,
     noCollapse: true
   },
 
   {
     type: 'collapse',
-    name: 'Manage Bills',
-    key: 'manage-bills',
-    route: '/manage-bills',
+    name: 'Manage Accounts',
+    key: 'manage-accounts',
+    route: '/manage-accounts',
     icon: <Icon fontSize="medium">inventory</Icon>,
     noCollapse: true
   },

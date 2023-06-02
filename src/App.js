@@ -177,7 +177,7 @@ export default function App() {
           <Route path="/income" element={<IncomeRoute />} />
           <Route path="/transactions" element={<TransactionsRoute />} />
           <Route path="/manage-accounts" element={<ManageAccountsRoute />} />
-          <Route path="/manage-bills" element={<ManageBillsRoute />} />
+          <Route path="/bill-center" element={<ManageBillsRoute />} />
           <Route
             path="/manage-categories"
             element={<ManageCategoriesRoute />}

@@ -1,6 +1,7 @@
 // prop-types is a library for typechecking of props
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 // @mui material components
 import Icon from '@mui/material/Icon';
@@ -13,24 +14,13 @@ import Moment from 'react-moment';
 import moment from 'moment';
 
 import Modal from '@mui/material/Modal';
-import { useEffect, useState } from 'react';
 import { TextField } from '@mui/material';
 import { useMaterialUIController } from 'context';
 import theme from 'assets/theme';
 import BasicTooltip from 'components/Tooltip/tooltip.component';
 import { setIncomeActive } from 'store/transactions/transactions.action';
 import IncomeModal from 'components/IncomeModal/income-modal.component';
-
-const defaultModalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  borderRadius: '5px',
-  boxShadow: 12,
-  p: 4
-};
+import { defaultModalStyle } from 'models/models';
 
 const Income = ({ income, noGutter, setIncomeActive }) => {
   const { palette } = theme;

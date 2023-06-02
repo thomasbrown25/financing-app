@@ -5,47 +5,33 @@ import PropTypes from 'prop-types';
 // layout
 import DashboardNavbar from 'components/Navbar/DashboardNavbar';
 import MainLayout from 'layouts/main-layout';
-import { Grid } from '@mui/material';
+import { Card, Grid } from '@mui/material';
 import Header from 'components/Header/header.component';
 
 // components
-import UpcomingBills from 'components/UpcomingBills/upcoming-bills.component';
-import AddNewBill from 'components/AddNewBill/add-new-bill.component';
-import Bill from 'components/Bill/bill.component';
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 import MDComponent from 'components/MDComponent';
 import Currency from 'components/Currency/currency.component';
-import Icon from '@mui/material/Icon';
-import BasicTooltip from 'components/Tooltip/tooltip.component';
 
 // actions
-import { getExpenses } from 'store/transactions/transactions.action';
-import { addRecurringTransaction } from 'store/transactions/transactions.action';
+import { getBills, deleteBill } from 'store/managed-bills/managed-bills.action';
+
 import ManagedBill from 'components/ManagedBill/managed-bill.component';
-import MDInput from 'components/MDInput';
-import DropdownSelect from 'components/DropdownSelect/dropdown-select.component';
-import MDButton from 'components/MDButton';
+import AddNewManagedBill from 'components/AddNewManagedBill/add-new-managed-bill.component';
 
 const ManageBillsRoute = ({
-  transactions: { expenses },
-  managedBills: { bills },
-  categories: { categories },
-  frequencies: { frequencies },
-  getExpenses,
-  addRecurringTransaction
+  managedBills: { bills, totalAmounts, totalMinMonthly },
+  getBills,
+  deleteBill
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  useEffect(() => {
+    getBills();
+  }, [getBills]);
 
-  const renderItems = bills?.map((bill, i) => <ManagedBill />);
-
-  const handleEditing = () => {
-    setIsEditing(true);
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-  };
+  const renderItems = bills?.map((bill, i) => (
+    <ManagedBill key={i} managedBill={bill} deleteBill={deleteBill} />
+  ));
 
   return (
     <MainLayout>
@@ -61,111 +47,73 @@ const ManageBillsRoute = ({
               p={0}
               m={0}
             >
-              {isEditing ? (
-                <MDBox component="form" role="form" mt={2}>
-                  <MDBox mb={2}>
-                    <MDInput
-                      type="text"
-                      label="Name"
-                      name="merchantName"
-                      // value={merchantName}
-                      // onChange={handleChange}
-                      fullWidth
-                    />
-                  </MDBox>
-                  <MDBox mb={2}>
-                    <MDInput
-                      type="text"
-                      label="Total"
-                      name="total"
-                      //value={amount}
-                      //onChange={handleChange}
-                      fullWidth
-                    />
-                  </MDBox>
-                  <MDBox mb={2}>
-                    <MDInput
-                      type="date"
-                      name="dueDate"
-                      // onChange={handleChange}
-                      /// value={moment(dueDate).format('YYYY-MM-DD')}
-                      style={{ height: '44px', minWidth: '182.88px' }}
-                      fullWidth
-                    />
-                  </MDBox>
-                  <MDBox mb={4}>
-                    <MDInput
-                      type="text"
-                      label="Monthly Min"
-                      name="monthlyMin"
-                      //value={amount}
-                      //onChange={handleChange}
-                      fullWidth
-                    />
-                  </MDBox>
-                  <MDBox
-                    mb={2}
-                    ml={0}
-                    display="flex"
-                    justifyContent="space-between"
-                  >
-                    <MDButton
-                      variant="outlined"
-                      color="error"
-                      size="small"
-                      onClick={handleCancel}
-                    >
-                      Cancel
-                    </MDButton>
-                    <MDButton
-                      variant="outlined"
-                      color="info"
-                      size="small"
-                      //onClick={handleAdd}
-                    >
-                      Save
-                    </MDButton>
-                  </MDBox>
-                </MDBox>
-              ) : (
-                <ManagedBill
-                  key={1}
-                  name={'Ashley Furniture'}
-                  totalAmount={45000}
-                  handleEditing={handleEditing}
-                />
-              )}
+              <>{renderItems}</>
+              <MDBox display="flex" justifyContent="flex-end" mt={5}>
+                <span
+                  style={{ borderTop: '1px solid green', width: '100px' }}
+                ></span>
+              </MDBox>
+
+              <MDBox
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                mt={2}
+                mr={1}
+              >
+                <MDTypography
+                  display="block"
+                  variant="button"
+                  fontWeight="medium"
+                >
+                  Total Owed:
+                </MDTypography>
+                <MDTypography variant="button" fontWeight="bold" color="error">
+                  <Currency value={totalAmounts} />
+                </MDTypography>
+              </MDBox>
+
+              <MDBox
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                mt={2}
+                mr={1}
+              >
+                <MDTypography
+                  display="block"
+                  variant="button"
+                  fontWeight="medium"
+                >
+                  Total Monthly:
+                </MDTypography>
+                <MDTypography variant="button" fontWeight="bold" color="error">
+                  <Currency value={totalMinMonthly} />
+                </MDTypography>
+              </MDBox>
             </MDBox>
           </MDComponent>
-          {/* <AddNewBill
-            categories={categories}
-            frequencies={frequencies}
-            addRecurringTransaction={addRecurringTransaction}
-          /> */}
         </Grid>
 
-        <Grid item xs={12} sm={12} md={12} lg={3}></Grid>
+        <Grid item xs={12} sm={12} md={12} lg={3}>
+          {/* ADD MANAGED BILL COMPONENT */}
+          <AddNewManagedBill />
+        </Grid>
       </Grid>
     </MainLayout>
   );
 };
 ManageBillsRoute.propTypes = {
-  transactions: PropTypes.object.isRequired,
   managedBills: PropTypes.object.isRequired,
-  categories: PropTypes.object.isRequired,
-  getExpenses: PropTypes.func.isRequired,
-  frequencies: PropTypes.object.isRequired,
-  addRecurringTransaction: PropTypes.func.isRequired
+  getBills: PropTypes.func.isRequired,
+  deleteBill: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  transactions: state.transactions,
-  managedBills: state.managedBills,
-  categories: state.categories,
-  frequencies: state.frequencies
+  managedBills: state.managedBills
 });
 
 export default connect(mapStateToProps, {
-  getExpenses,
-  addRecurringTransaction
+  getBills,
+  deleteBill
 })(ManageBillsRoute);
