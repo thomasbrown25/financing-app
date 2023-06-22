@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 // components
@@ -10,10 +12,12 @@ import BasicTooltip from 'components/Tooltip/tooltip.component';
 import MDButton from 'components/MDButton';
 import Menu from '@mui/material/Menu';
 import NotificationItem from 'components/NotificationItem';
-
 import ManagedBillModal from 'components/ManagedBillModal/managed-bill-modal';
 
-const ManagedBill = ({ managedBill, deleteBill }) => {
+// actions
+import { updateBill } from 'store/managed-bills/managed-bills.action';
+
+const ManagedBill = ({ managedBill, deleteBill, updateBill }) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
@@ -34,6 +38,16 @@ const ManagedBill = ({ managedBill, deleteBill }) => {
     deleteBill(managedBill?.id);
     handleCloseMenu();
   };
+
+  const handlePaidBill = () => {
+    updateBill({
+      ...managedBill,
+      dueDate: moment(managedBill.dueDate).add(1, 'months'),
+      totalAmount: managedBill.totalAmount - managedBill.monthlyMin
+    });
+    handleCloseMenu();
+  };
+
   // Render the  menu
   const EditMenu = () => (
     <Menu
@@ -56,6 +70,11 @@ const ManagedBill = ({ managedBill, deleteBill }) => {
         icon={<Icon>delete</Icon>}
         title="Delete"
         onClick={handleDeleteBill}
+      />
+      <NotificationItem
+        icon={<Icon>paid</Icon>}
+        title="Paid"
+        onClick={handlePaidBill}
       />
     </Menu>
   );
@@ -169,4 +188,12 @@ const ManagedBill = ({ managedBill, deleteBill }) => {
   );
 };
 
-export default ManagedBill;
+ManagedBill.propTypes = {
+  updateBill: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, {
+  updateBill
+})(ManagedBill);
