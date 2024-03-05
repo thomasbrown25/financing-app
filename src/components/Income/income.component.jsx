@@ -11,24 +11,19 @@ import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 import Currency from 'components/Currency/currency.component';
 import Moment from 'react-moment';
-import moment from 'moment';
 
 import Modal from '@mui/material/Modal';
-import { TextField } from '@mui/material';
 import { useMaterialUIController } from 'context';
 import theme from 'assets/theme';
-import BasicTooltip from 'components/Tooltip/tooltip.component';
-import { setIncomeActive } from 'store/transactions/transactions.action';
-import IncomeModal from 'components/IncomeModal/income-modal.component';
 import { defaultModalStyle } from 'models/models';
 
 const Income = ({ income, noGutter, setIncomeActive }) => {
   const { palette } = theme;
-  const { primary, background } = palette;
-  const [controller, dispatch] = useMaterialUIController();
+  const { background } = palette;
+  const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
-  const [modalStyle, setModalStyle] = useState(defaultModalStyle);
+  let modalStyle = defaultModalStyle;
 
   useEffect(() => {
     if (darkMode) {
@@ -37,10 +32,6 @@ const Income = ({ income, noGutter, setIncomeActive }) => {
       modalStyle.bgcolor = background.white;
     }
   }, [darkMode]);
-
-  const [openModal, setOpenModal] = useState(false);
-  const handleModalOpen = () => setOpenModal(true);
-  const handleModalClose = () => setOpenModal(false);
 
   return (
     <>
@@ -53,7 +44,6 @@ const Income = ({ income, noGutter, setIncomeActive }) => {
         pr={1}
         mb={noGutter ? 0 : 1}
         className="cursor"
-        onClick={handleModalOpen}
       >
         <MDBox lineHeight={1.125}>
           <MDTypography display="block" variant="button" fontWeight="medium">
@@ -65,9 +55,7 @@ const Income = ({ income, noGutter, setIncomeActive }) => {
             fontWeight="regular"
             color="text"
             mt={0.5}
-          >
-            {income?.frequency}
-          </MDTypography>
+          ></MDTypography>
           <MDTypography
             display="block"
             variant="caption"
@@ -84,13 +72,6 @@ const Income = ({ income, noGutter, setIncomeActive }) => {
           </MDTypography>
         </MDBox>
       </MDBox>
-
-      {/* MODAL */}
-      <IncomeModal
-        open={openModal}
-        handleClose={handleModalClose}
-        income={income}
-      />
     </>
   );
 };
@@ -106,4 +87,4 @@ Income.propTypes = {
   setIncomeActive: PropTypes.func.isRequired
 };
 
-export default connect(null, { setIncomeActive })(Income);
+export default connect(null)(Income);

@@ -25,6 +25,9 @@ const settingsReducer = (state = initialState, action) => {
         error: payload
       };
 
+    case SETTINGS_ACTION_TYPES.RESET_STATE:
+      return initialState;
+
     default:
       return state;
   }

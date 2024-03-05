@@ -10,29 +10,13 @@ import MDTypography from 'components/MDTypography';
 import MDButton from 'components/MDButton';
 import Currency from 'components/Currency/currency.component';
 import moment from 'moment';
-import DropdownSelect from 'components/DropdownSelect/dropdown-select.component';
-import MDInput from 'components/MDInput';
-import { useState } from 'react';
 
-import { updateRecurringTransactions } from 'store/transactions/transactions.action';
-import AccountDetails from 'components/AccountDetails/account-details.component';
-import BillModal from 'components/BillModal/bill-modal.component';
-
-const Bill = ({
-  color,
-  icon,
-  transaction,
-  categories,
-  frequencies,
-  updateRecurringTransactions
-}) => {
-  const [openModal, setOpenModal] = useState(false);
-  const handleModalOpen = () => setOpenModal(true);
-  const handleModalClose = () => setOpenModal(false);
-
+const Bill = ({ color, icon, transaction }) => {
   const name = transaction?.merchantName
     ? transaction?.merchantName
-    : transaction?.description.slice(0, 20);
+    : transaction?.description
+    ? transaction?.description?.slice(0, 35)
+    : transaction?.name;
 
   return (
     <MDBox key={transaction?.id} component="li" py={1} pr={2} mb={1}>
@@ -40,7 +24,6 @@ const Bill = ({
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        onClick={handleModalOpen}
         style={{ cursor: 'pointer' }}
       >
         <MDBox display="flex" alignItems="center">
@@ -60,15 +43,6 @@ const Bill = ({
               fontWeight="regular"
               mb={1}
             >
-              {transaction?.frequency}
-            </MDTypography>
-
-            <MDTypography
-              variant="caption"
-              color="text"
-              fontWeight="regular"
-              mb={1}
-            >
               {transaction?.category}
             </MDTypography>
 
@@ -77,11 +51,6 @@ const Bill = ({
             </MDTypography>
           </MDBox>
         </MDBox>
-        {/* <DropdownSelect
-          color={color}
-          category={transaction?.category}
-          disable={true}
-        /> */}
         <MDTypography
           variant="button"
           color={color}
@@ -89,27 +58,9 @@ const Bill = ({
           textGradient
           className="ml-auto"
         >
-          <Currency value={transaction?.lastAmount} />
+          <Currency value={transaction?.amount} />
         </MDTypography>
       </MDBox>
-      <BillModal
-        open={openModal}
-        handleClose={handleModalClose}
-        transaction={transaction}
-        categories={categories}
-        frequencies={frequencies}
-      />
-      {/* {isDropDown && (
-        <AccountDetails
-          name={'text'}
-          company={'company'}
-          email={'email'}
-          vat={'vat'}
-        />
-      )} */}
-      {/* <Icon className="cursor" color="error" onClick={handleCancelDate}>
-        close
-      </Icon> */}
     </MDBox>
   );
 };
@@ -126,8 +77,7 @@ Bill.propTypes = {
     'light',
     'dark'
   ]).isRequired,
-  icon: PropTypes.node.isRequired,
-  updateRecurringTransactions: PropTypes.func.isRequired
+  icon: PropTypes.node.isRequired
 };
 
-export default connect(null, { updateRecurringTransactions })(Bill);
+export default connect(null, {})(Bill);

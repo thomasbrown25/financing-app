@@ -1,27 +1,12 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // Material Dashboard 2 PRO React Button Styles
-import root from "assets/theme/components/button/root";
-import contained from "assets/theme/components/button/contained";
-import outlined from "assets/theme/components/button/outlined";
-import buttonText from "assets/theme/components/button/text";
+import root from 'assets/theme/components/button/root';
+import contained from 'assets/theme/components/button/contained';
+import outlined from 'assets/theme/components/button/outlined';
+import buttonText from 'assets/theme/components/button/text';
 
 const button = {
   defaultProps: {
-    disableRipple: false,
+    disableRipple: false
   },
   styleOverrides: {
     root: { ...root },
@@ -39,8 +24,8 @@ const button = {
     textSizeSmall: { ...buttonText.small },
     textSizeLarge: { ...buttonText.large },
     textPrimary: { ...buttonText.primary },
-    textSecondary: { ...buttonText.secondary },
-  },
+    textSecondary: { ...buttonText.secondary }
+  }
 };
 
 export default button;

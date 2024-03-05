@@ -6,9 +6,7 @@ import liabilitiesReducer from './liabilities/liabilities.reducer';
 import accountsReducer from './accounts/accounts.reducer';
 import categoriesReducer from './categories/categories.reducer';
 import frequenciesReducer from './frequencies/frequencies.reducer';
-import refreshReducer from './refresh/refresh.reducer';
 import settingsReducer from './settings/settings.reducer';
-import managedBillsReducer from './managed-bills/managed-bills.reducer';
 
 export const rootReducer = combineReducers({
   user: userReducer,
@@ -17,7 +15,5 @@ export const rootReducer = combineReducers({
   accounts: accountsReducer,
   categories: categoriesReducer,
   frequencies: frequenciesReducer,
-  refresh: refreshReducer,
-  settings: settingsReducer,
-  managedBills: managedBillsReducer
+  settings: settingsReducer
 });

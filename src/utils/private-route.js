@@ -11,7 +11,7 @@ const PrivateRoutes = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const isLoading = useSelector(selectIsLoadingAuth);
 
-  return !isLoading && isAuthenticated ? <Outlet /> : <Navigate to="sign-in" />;
+  return !isLoading && isAuthenticated ? <Outlet /> : <Navigate to="login" />;
 };
 
 export default PrivateRoutes;

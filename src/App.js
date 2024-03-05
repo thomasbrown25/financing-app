@@ -42,18 +42,15 @@ import brandWhite from 'assets/images/favicon.png';
 import brandDark from 'assets/images/favicon.png';
 
 // Pages
-import LoginRoute from 'routes/login/login.route';
-import DashboardRoute from 'routes/dashboard/dashboard.route';
+import LoginRoute from 'pages/login/login.page';
+import DashboardRoute from 'pages/dashboard/dashboard.page';
 import navbarRoutes from 'navbar.routes';
-import AccountRoute from 'routes/account/account.route';
-import UpcomingRoute from 'routes/upcoming/upcoming.route';
-import TransactionsRoute from 'routes/transactions/transactions.route';
-import RegisterRoute from 'routes/register/register.route';
-import SettingsRoute from 'routes/settings/settings.route';
-import ManageAccountsRoute from 'routes/manage-accounts/manage-accounts.route';
-import ManageCategoriesRoute from 'routes/manage-categories/manage-categories.route';
-import IncomeRoute from 'routes/income/income.route';
-import ManageBillsRoute from 'routes/manage-bills/manage-bills.route';
+import UpcomingRoute from 'pages/upcoming/upcoming.page';
+import TransactionsRoute from 'pages/transactions/transactions.page';
+import RegisterRoute from 'pages/register/register.page';
+import SettingsRoute from 'pages/settings/settings.page';
+import AccountsRoute from 'pages/accounts/accounts.page';
+import ProfileRoute from 'pages/profile/profile.page';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -73,7 +70,6 @@ export default function App() {
   useEffect(() => {
     // check for token in LS when app first runs
     if (localStorage.token) {
-      console.log('we have a token in local storage');
       // if there is a token set axios headers for all requests
       setAuthToken(localStorage.token);
     } else {
@@ -167,21 +163,16 @@ export default function App() {
         </>
       )}
       {layout === 'vr' && <Configurator />}
+
       <Routes>
-        <Route path="sign-in" element={<LoginRoute />} />
+        <Route path="login" element={<LoginRoute />} />
         <Route path="sign-up" element={<RegisterRoute />} />
         <Route element={<PrivateRoutes />}>
           <Route index path="/dashboard" element={<DashboardRoute />} />
-          <Route path="/accounts/account" element={<AccountRoute />} />
           <Route path="/upcoming" element={<UpcomingRoute />} />
-          <Route path="/income" element={<IncomeRoute />} />
           <Route path="/transactions" element={<TransactionsRoute />} />
-          <Route path="/manage-accounts" element={<ManageAccountsRoute />} />
-          <Route path="/bill-center" element={<ManageBillsRoute />} />
-          <Route
-            path="/manage-categories"
-            element={<ManageCategoriesRoute />}
-          />
+          <Route path="/accounts" element={<AccountsRoute />} />
+          <Route path="/profile" element={<ProfileRoute />} />
           <Route path="/settings" element={<SettingsRoute />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </Route>

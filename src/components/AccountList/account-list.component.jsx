@@ -19,6 +19,7 @@ import { getAccountBalance } from 'store/accounts/accounts.action';
 import BasicTooltip from 'components/Tooltip/tooltip.component';
 import { deleteAccount } from 'store/accounts/accounts.action';
 import { useState } from 'react';
+import Header from 'components/Header/header.component';
 
 const AccountList = ({
   title,
@@ -26,6 +27,8 @@ const AccountList = ({
   getAccountTransactions,
   getAccountBalance,
   deleteAccount,
+  mt,
+  header,
   ...rest
 }) => {
   const navigate = useNavigate();
@@ -41,15 +44,6 @@ const AccountList = ({
       getAccountBalance(accountId);
       navigate('/accounts/account');
     }
-  };
-
-  const handleAccountDelete = (accountId) => {
-    if (window.confirm(`Are you sure you want to delete income ${title}`))
-      deleteAccount(accountId, false);
-  };
-
-  const handleFakeSavings = () => {
-    setFakeSavings(!fakeSavings);
   };
 
   const renderItems = accounts?.map(
@@ -77,7 +71,6 @@ const AccountList = ({
         mb={accounts.length - 1 === key ? 0 : 1}
       >
         <MDTypography
-          onClick={() => handleAccountSelect(accountId, subtype)}
           variant="button"
           color={'dark'}
           sx={{
@@ -125,7 +118,7 @@ const AccountList = ({
               </MDTypography>
               <MDTypography variant="caption" color="text">
                 <>
-                  {officialName} -{' '}
+                  {officialName ? officialName : name} -{' '}
                   <MDTypography
                     variant="caption"
                     color="info"
@@ -133,12 +126,10 @@ const AccountList = ({
                   >
                     <Currency
                       value={
-                        subtype.toLowerCase().includes('savings') && fakeSavings
-                          ? 450725.0
-                          : subtype.toLowerCase().includes('credit') ||
-                            type.toLowerCase().includes('loan')
-                          ? balanceCurrent
-                          : balanceAvailable
+                        subtype.toLowerCase().includes('checking') ||
+                        type.toLowerCase().includes('savings')
+                          ? balanceAvailable
+                          : balanceCurrent
                       }
                     />
                   </MDTypography>
@@ -147,7 +138,7 @@ const AccountList = ({
             </MDBox>
           </MDBox>
         </MDTypography>
-        <MDTypography
+        {/* <MDTypography
           variant="button"
           color={'dark'}
           sx={{
@@ -160,23 +151,15 @@ const AccountList = ({
             }
           }}
         >
-          <BasicTooltip text="Delete">
-            <Icon
-              fontSize="small"
-              dataid={accountId}
-              onClick={() => handleAccountDelete(accountId)}
-              color="text"
-            >
-              delete
-            </Icon>
-          </BasicTooltip>
-        </MDTypography>
+        </MDTypography> */}
       </MDBox>
     )
   );
 
   return (
-    <Card {...rest}>
+    <Card sx={{ mx: 0, px: 2, mt: mt }} {...rest}>
+      {header && <Header title={header} />}
+
       <MDBox pt={2} px={2}>
         <MDTypography component="span" variant="h6" fontWeight="bold">
           {title}{' '}
@@ -196,7 +179,7 @@ const AccountList = ({
 
 // Typechecking props for the AccountList
 AccountList.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   accounts: PropTypes.arrayOf(PropTypes.object),
   getAccountTransactions: PropTypes.func.isRequired,
   getAccountBalance: PropTypes.func.isRequired,

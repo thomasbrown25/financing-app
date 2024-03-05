@@ -1,19 +1,6 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 function collapseItem(theme, ownerState) {
-  const { palette, transitions, breakpoints, boxShadows, borders, functions } = theme;
+  const { palette, transitions, breakpoints, boxShadows, borders, functions } =
+    theme;
   const { active, transparentSidenav, whiteSidenav, darkMode } = ownerState;
 
   const { white, transparent, dark, grey } = palette;
@@ -37,30 +24,34 @@ function collapseItem(theme, ownerState) {
 
       return backgroundValue;
     },
-    color: (transparentSidenav && !darkMode) || whiteSidenav ? dark.main : white.main,
-    display: "flex",
-    alignItems: "center",
-    width: "100%",
+    color:
+      (transparentSidenav && !darkMode) || whiteSidenav
+        ? dark.main
+        : white.main,
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
     padding: `${pxToRem(8)} ${pxToRem(16)}`,
     margin: `${pxToRem(1.5)} ${pxToRem(16)}`,
     borderRadius: borderRadius.md,
-    cursor: "pointer",
-    userSelect: "none",
-    whiteSpace: "nowrap",
-    boxShadow: active && !whiteSidenav && !darkMode && !transparentSidenav ? md : "none",
-    [breakpoints.up("xl")]: {
-      transition: transitions.create(["box-shadow", "background-color"], {
+    cursor: 'pointer',
+    userSelect: 'none',
+    whiteSpace: 'nowrap',
+    boxShadow:
+      active && !whiteSidenav && !darkMode && !transparentSidenav ? md : 'none',
+    [breakpoints.up('xl')]: {
+      transition: transitions.create(['box-shadow', 'background-color'], {
         easing: transitions.easing.easeInOut,
-        duration: transitions.duration.shorter,
-      }),
+        duration: transitions.duration.shorter
+      })
     },
 
-    "&:hover, &:focus": {
+    '&:hover, &:focus': {
       backgroundColor:
         transparentSidenav && !darkMode
           ? grey[300]
-          : rgba(whiteSidenav ? grey[400] : white.main, 0.2),
-    },
+          : rgba(whiteSidenav ? grey[400] : white.main, 0.2)
+    }
   };
 }
 
@@ -75,23 +66,26 @@ function collapseIconBox(theme, ownerState) {
   return {
     minWidth: pxToRem(32),
     minHeight: pxToRem(32),
-    color: (transparentSidenav && !darkMode) || whiteSidenav ? dark.main : white.main,
+    color:
+      (transparentSidenav && !darkMode) || whiteSidenav
+        ? dark.main
+        : white.main,
     borderRadius: borderRadius.md,
-    display: "grid",
-    placeItems: "center",
-    transition: transitions.create("margin", {
+    display: 'grid',
+    placeItems: 'center',
+    transition: transitions.create('margin', {
       easing: transitions.easing.easeInOut,
-      duration: transitions.duration.standard,
+      duration: transitions.duration.standard
     }),
 
-    "& svg, svg g": {
-      color: transparentSidenav || whiteSidenav ? dark.main : white.main,
-    },
+    '& svg, svg g': {
+      color: transparentSidenav || whiteSidenav ? dark.main : white.main
+    }
   };
 }
 
 const collapseIcon = ({ palette: { white, gradients } }, { active }) => ({
-  color: active ? white.main : gradients.dark.state,
+  color: active ? white.main : gradients.dark.state
 });
 
 function collapseText(theme, ownerState) {
@@ -104,28 +98,36 @@ function collapseText(theme, ownerState) {
   return {
     marginLeft: pxToRem(10),
 
-    [breakpoints.up("xl")]: {
+    [breakpoints.up('xl')]: {
       opacity: miniSidenav || (miniSidenav && transparentSidenav) ? 0 : 1,
-      maxWidth: miniSidenav || (miniSidenav && transparentSidenav) ? 0 : "100%",
-      marginLeft: miniSidenav || (miniSidenav && transparentSidenav) ? 0 : pxToRem(10),
-      transition: transitions.create(["opacity", "margin"], {
+      maxWidth: miniSidenav || (miniSidenav && transparentSidenav) ? 0 : '100%',
+      marginLeft:
+        miniSidenav || (miniSidenav && transparentSidenav) ? 0 : pxToRem(10),
+      transition: transitions.create(['opacity', 'margin'], {
         easing: transitions.easing.easeInOut,
-        duration: transitions.duration.standard,
-      }),
+        duration: transitions.duration.standard
+      })
     },
 
-    "& span": {
+    '& span': {
       fontWeight: active ? fontWeightRegular : fontWeightLight,
       fontSize: size.sm,
-      lineHeight: 0,
-    },
+      lineHeight: 0
+    }
   };
 }
 
 function collapseArrow(theme, ownerState) {
   const { palette, typography, transitions, breakpoints, functions } = theme;
-  const { noCollapse, transparentSidenav, whiteSidenav, miniSidenav, open, active, darkMode } =
-    ownerState;
+  const {
+    noCollapse,
+    transparentSidenav,
+    whiteSidenav,
+    miniSidenav,
+    open,
+    active,
+    darkMode
+  } = ownerState;
 
   const { white, dark } = palette;
   const { size } = typography;
@@ -135,7 +137,7 @@ function collapseArrow(theme, ownerState) {
     fontSize: `${size.lg} !important`,
     fontWeight: 700,
     marginBottom: pxToRem(-1),
-    transform: open ? "rotate(0)" : "rotate(-180deg)",
+    transform: open ? 'rotate(0)' : 'rotate(-180deg)',
     color: () => {
       let colorValue;
 
@@ -149,18 +151,24 @@ function collapseArrow(theme, ownerState) {
 
       return colorValue;
     },
-    transition: transitions.create(["color", "transform", "opacity"], {
+    transition: transitions.create(['color', 'transform', 'opacity'], {
       easing: transitions.easing.easeInOut,
-      duration: transitions.duration.shorter,
+      duration: transitions.duration.shorter
     }),
 
-    [breakpoints.up("xl")]: {
+    [breakpoints.up('xl')]: {
       display:
         noCollapse || (transparentSidenav && miniSidenav) || miniSidenav
-          ? "none !important"
-          : "block !important",
-    },
+          ? 'none !important'
+          : 'block !important'
+    }
   };
 }
 
-export { collapseItem, collapseIconBox, collapseIcon, collapseText, collapseArrow };
+export {
+  collapseItem,
+  collapseIconBox,
+  collapseIcon,
+  collapseText,
+  collapseArrow
+};

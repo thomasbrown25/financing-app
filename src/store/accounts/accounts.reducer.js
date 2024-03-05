@@ -50,6 +50,9 @@ const accountsReducer = (state = initialState, action) => {
         error: payload
       };
 
+    case ACCOUNTS_ACTION_TYPES.RESET_STATE:
+      return initialState;
+
     default:
       return state;
   }

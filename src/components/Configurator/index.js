@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -39,7 +24,7 @@ import MDButton from 'components/MDButton';
 // Custom styles for the Configurator
 import ConfiguratorRoot from 'components/Configurator/ConfiguratorRoot';
 
-import { getSettings, saveSettings } from 'store/settings/settings.action';
+import { getSettings, saveSettings } from 'store/user/user.action';
 
 import { defaultSettings } from 'models/models';
 
@@ -50,7 +35,6 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
   setMiniSidenav,
-  setFixedNavbar,
   setSidenavColor,
   setDarkMode
 } from 'context';
@@ -68,7 +52,6 @@ const Configurator = ({
   useEffect(() => {
     if (settings) {
       setDarkMode(dispatch, settings.darkMode);
-      setFixedNavbar(dispatch, settings.navbarFixed);
       setMiniSidenav(dispatch, settings.sidenavMini);
 
       setWhiteSidenav(dispatch, settings.sidenavType === 'white');
@@ -86,7 +69,6 @@ const Configurator = ({
   const {
     openConfigurator,
     miniSidenav,
-    fixedNavbar,
     sidenavColor,
     transparentSidenav,
     whiteSidenav,
@@ -131,8 +113,6 @@ const Configurator = ({
   };
   const handleMiniSidenav = () =>
     saveSettings({ ...newSettings, sidenavMini: !settings.sidenavMini });
-  const handleFixedNavbar = () =>
-    saveSettings({ ...newSettings, navbarFixed: !settings.navbarFixed });
   const handleDarkMode = () => {
     saveSettings({ ...newSettings, darkMode: !settings.darkMode });
   };
@@ -267,17 +247,6 @@ const Configurator = ({
               White
             </MDButton>
           </MDBox>
-        </MDBox>
-        <MDBox
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          mt={3}
-          lineHeight={1}
-        >
-          <MDTypography variant="h6">Navbar Fixed</MDTypography>
-
-          <Switch checked={fixedNavbar} onChange={handleFixedNavbar} />
         </MDBox>
         <Divider />
         <MDBox

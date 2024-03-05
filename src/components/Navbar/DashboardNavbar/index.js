@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
@@ -32,10 +17,8 @@ import Icon from '@mui/material/Icon';
 // Material Dashboard 2 PRO React components
 import MDBox from 'components/MDBox';
 import MDInput from 'components/MDInput';
-import MDBadge from 'components/MDBadge';
 
 // Material Dashboard 2 PRO React examples
-import Breadcrumbs from 'components/Breadcrumbs';
 import NotificationItem from 'components/NotificationItem';
 
 // Custom styles for DashboardNavbar
@@ -51,55 +34,20 @@ import {
 // Material Dashboard 2 PRO React context
 import {
   useMaterialUIController,
-  setTransparentNavbar,
   setMiniSidenav,
   setOpenConfigurator
 } from 'context';
 
 import { logout } from 'store/user/user.action';
+import MDTypography from 'components/MDTypography';
 
 function DashboardNavbar({ absolute, light, isMini, logout }) {
-  const [navbarType, setNavbarType] = useState();
+  const [navbarType, setNavbarType] = useState('static');
   const [controller, dispatch] = useMaterialUIController();
-  const {
-    miniSidenav,
-    transparentNavbar,
-    fixedNavbar,
-    openConfigurator,
-    darkMode
-  } = controller;
-  const [openMenu, setOpenMenu] = useState(false);
+  const { miniSidenav, transparentNavbar, openConfigurator, darkMode } =
+    controller;
   const [openProfileMenu, setOpenProfileMenu] = useState(false);
   const route = useLocation().pathname.split('/').slice(1);
-
-  useEffect(() => {
-    // Setting the navbar type
-    if (fixedNavbar) {
-      setNavbarType('sticky');
-    } else {
-      setNavbarType('static');
-    }
-
-    // A function that sets the transparent state of the navbar.
-    function handleTransparentNavbar() {
-      setTransparentNavbar(
-        dispatch,
-        (fixedNavbar && window.scrollY === 0) || !fixedNavbar
-      );
-    }
-
-    /** 
-     The event listener that's calling the handleTransparentNavbar function when 
-     scrolling the window.
-    */
-    //window.addEventListener('scroll', handleTransparentNavbar);
-
-    // Call the handleTransparentNavbar function to set the state with the initial value.
-    handleTransparentNavbar();
-
-    // Remove event listener on cleanup
-    return () => window.removeEventListener('scroll', handleTransparentNavbar);
-  }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
   const handleConfiguratorOpen = () =>
@@ -165,12 +113,6 @@ function DashboardNavbar({ absolute, light, isMini, logout }) {
           mb={{ xs: 1, md: 0 }}
           sx={(theme) => navbarRow(theme, { isMini })}
         >
-          <Breadcrumbs
-            icon="home"
-            title={route[route.length - 1]}
-            route={route}
-            light={light}
-          />
           <IconButton
             sx={navbarDesktopMenu}
             onClick={handleMiniSidenav}
@@ -181,6 +123,9 @@ function DashboardNavbar({ absolute, light, isMini, logout }) {
               {miniSidenav ? 'menu_open' : 'menu'}
             </Icon>
           </IconButton>
+          <MDTypography variant="h3" textTransform="uppercase" pl={1}>
+            Financing App
+          </MDTypography>
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>

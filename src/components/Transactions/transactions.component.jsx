@@ -29,21 +29,23 @@ import Transaction from '../Transaction/transaction.component';
 import MDButton from 'components/MDButton';
 import Currency from 'components/Currency/currency.component';
 import { Link } from 'react-router-dom';
+import Header from 'components/Header/header.component';
 
 const Transactions = ({
   transactions,
   viewMore = false,
   viewAll = true,
   viewBalance = false,
-  header = `Transactions`,
-  subHeader,
+  title = '',
+  subTitle,
   balance = 0,
-  uppercase = false
+  uppercase = false,
+  header
 }) => {
   const [count, setCount] = useState(15);
 
   const handleViewMore = () => {
-    setCount(count + 15);
+    setCount(count + 20);
   };
 
   const renderItems = transactions
@@ -61,7 +63,9 @@ const Transactions = ({
     ));
 
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card sx={{ height: '100%', mx: 3, px: 2 }}>
+      {header && <Header title={header} />}
+
       <MDBox
         display="flex"
         justifyContent="space-between"
@@ -74,12 +78,12 @@ const Transactions = ({
           fontWeight="medium"
           textTransform={uppercase ? 'uppercase' : 'capitalize'}
         >
-          {header}
+          {title}
         </MDTypography>
 
-        {subHeader && (
+        {subTitle && (
           <MDTypography variant="h6" fontWeight="medium">
-            {subHeader}
+            {subTitle}
           </MDTypography>
         )}
 
@@ -111,16 +115,6 @@ const Transactions = ({
         )}
       </MDBox>
       <MDBox pt={3} pb={2} px={2}>
-        {/* <MDBox mb={2}>
-          <MDTypography
-            variant="caption"
-            color="text"
-            fontWeight="bold"
-            textTransform="uppercase"
-          >
-            newest
-          </MDTypography>
-        </MDBox> */}
         <MDBox
           component="ul"
           display="flex"
@@ -132,7 +126,7 @@ const Transactions = ({
           {renderItems}
         </MDBox>
 
-        {viewMore && (
+        {viewMore && count <= transactions?.length && (
           <MDBox display="flex" justifyContent="center">
             <MDButton
               variant="outlined"

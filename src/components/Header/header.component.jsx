@@ -7,7 +7,7 @@ import PlaidLink from 'components/plaid-link/plaid-link.component';
 
 const Header = ({
   user: { currentUser },
-  refresh: { refreshError },
+  //refresh: { refreshError },
   title,
   subTitle
 }) => {
@@ -23,34 +23,34 @@ const Header = ({
         <MDTypography
           variant="h4"
           fontWeight="medium"
-          textTransform="capitalize"
+          textTransform="uppercase"
         >
           {title
             ? title
-            : currentUser?.firstname
-            ? `Hi, ${currentUser?.firstname}`
+            : currentUser?.firstname && currentUser?.lastname
+            ? `Hi, ${currentUser?.firstname} ${currentUser?.lastname}`
             : 'Welcome to the financing App'}
           {subTitle && (
             <MDTypography variant="h6" fontWeight="medium">
               {subTitle}
             </MDTypography>
           )}
-          {refreshError && (
+          {/* {refreshError && (
             <>
               <PlaidLink
                 refreshError={refreshError}
                 linkToken={currentUser?.linkToken}
               />
             </>
-          )}
+          )} */}
         </MDTypography>
       </MDBox>
     </Grid>
   );
 };
 Header.propTypes = {
-  user: PropTypes.object.isRequired,
-  refresh: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
+  // refresh: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
   user: state.user,

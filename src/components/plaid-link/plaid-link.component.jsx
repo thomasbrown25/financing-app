@@ -13,6 +13,7 @@ import { createLinkToken } from 'store/user/user.action';
 import { updateLinkToken } from 'store/user/user.action';
 
 import { ItemLoginRequired } from 'utils/plaid-errors';
+import MDBox from 'components/MDBox';
 
 const PlaidLink = ({
   user: { currentUser, loading },
@@ -20,8 +21,8 @@ const PlaidLink = ({
   createLinkToken,
   updateLinkToken,
   publicTokenExchange,
-  header = 'To get started, click the Sync account button and add one of your bank accounts.',
-  buttonText = 'Re-sync Account'
+  gettingStarted,
+  buttonText = 'Sync Account'
 }) => {
   useEffect(() => {
     if (!currentUser?.linkToken && !loading && !refreshError) {
@@ -49,10 +50,19 @@ const PlaidLink = ({
     }
   });
 
+  const getStartedText =
+    'To get started, click the Sync account button and add one of your bank accounts. For testing, you can add an account using the sandbox credentials. Username: user_good, Password: pass_good';
+
+  const headerText = 'Click the button below to add more accounts';
+
   return (
-    <div className="plaid-link">
-      <MDTypography variant="h6" fontWeight="medium" pt={2} pb={2}>
-        {refreshError ? ItemLoginRequired.message : header}
+    <MDBox className="plaid-link" textAlign="center" m={3}>
+      <MDTypography variant="h6" fontWeight="regular" pt={2} pb={2}>
+        {refreshError
+          ? ItemLoginRequired.message
+          : gettingStarted
+          ? getStartedText
+          : headerText}
       </MDTypography>
 
       <MDButton
@@ -64,7 +74,7 @@ const PlaidLink = ({
       >
         {buttonText}
       </MDButton>
-    </div>
+    </MDBox>
   );
 };
 

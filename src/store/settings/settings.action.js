@@ -4,12 +4,14 @@ import { api } from '../../utils/api.utils';
 import { SETTINGS_ACTION_TYPES } from './settings.types';
 
 /**
- ** GET: "/api/frequency"
+ ** GET: "/api/usersetting"
  * @param reqBody: null
  **/
 export const getSettings = () => async (dispatch) => {
   try {
     const response = await api.get('/api/usersetting');
+
+    console.log(response.data);
 
     dispatch({
       type: SETTINGS_ACTION_TYPES.GET_SETTINGS_SUCCESS,

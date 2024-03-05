@@ -45,7 +45,6 @@ const BillModal = ({
   handleClose,
   transaction,
   categories,
-  frequencies,
   color,
   updateRecurringTransactions,
   disableRecurringTransaction
@@ -209,7 +208,7 @@ const BillModal = ({
                     name="frequency"
                     selectStyle={{ height: '37px', minWidth: '155px' }}
                     item={frequency}
-                    itemList={frequencies}
+                    //itemList={frequencies}
                     handleChange={handleChange}
                   />
 

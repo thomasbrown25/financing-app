@@ -16,8 +16,8 @@ const navbarRoutes = [
     icon: <MDAvatar src={''} alt="Thomas Brown" size="sm" />,
     collapse: [
       {
-        name: 'My Profile',
-        key: 'my-profile',
+        name: 'Profile',
+        key: 'profile',
         route: '/profile'
       },
       {
@@ -28,7 +28,7 @@ const navbarRoutes = [
       {
         name: 'Logout',
         key: 'logout',
-        route: '/sign-in',
+        route: '/login',
         action: logout()
       }
     ]
@@ -44,35 +44,18 @@ const navbarRoutes = [
   },
   {
     type: 'collapse',
+    name: 'Accounts',
+    key: 'accounts',
+    route: '/accounts',
+    icon: <Icon fontSize="medium">inventory</Icon>,
+    noCollapse: true
+  },
+  {
+    type: 'collapse',
     name: 'Upcoming',
     key: 'upcoming',
     route: '/upcoming',
     icon: <Icon fontSize="medium">today</Icon>,
-    noCollapse: true
-  },
-  {
-    type: 'collapse',
-    name: 'Spending',
-    key: 'spending',
-    route: '/spending',
-    icon: <Icon fontSize="medium">credit_card</Icon>,
-    noCollapse: true
-  },
-  {
-    type: 'collapse',
-    name: 'Income',
-    key: 'income',
-    route: '/income',
-    icon: <Icon fontSize="medium">payments</Icon>,
-    noCollapse: true
-  },
-
-  {
-    type: 'collapse',
-    name: 'Budget',
-    key: 'budget',
-    route: '/budget',
-    icon: <Icon fontSize="medium">assignment</Icon>,
     noCollapse: true
   },
   {
@@ -84,32 +67,6 @@ const navbarRoutes = [
     noCollapse: true
   },
 
-  {
-    type: 'collapse',
-    name: 'Bill Center',
-    key: 'bill-center',
-    route: '/bill-center',
-    icon: <Icon fontSize="medium">credit_card</Icon>,
-    noCollapse: true
-  },
-
-  {
-    type: 'collapse',
-    name: 'Manage Accounts',
-    key: 'manage-accounts',
-    route: '/manage-accounts',
-    icon: <Icon fontSize="medium">inventory</Icon>,
-    noCollapse: true
-  },
-
-  {
-    type: 'collapse',
-    name: 'Manage Categories',
-    key: 'manage-categories',
-    route: '/manage-categories',
-    icon: <Icon fontSize="medium">inventory</Icon>,
-    noCollapse: true
-  },
   { type: 'divider', key: 'divider-1' },
   { type: 'title', title: 'Docs', key: 'title-docs' },
   {

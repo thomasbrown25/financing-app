@@ -2,47 +2,41 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+// Material UI Components
 import Card from '@mui/material/Card';
-// import Divider from "@mui/material/Divider";
 import Icon from '@mui/material/Icon';
 
 // Material Dashboard 2 PRO React components
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
-// import MDButton from "components/MDButton";
 
+import LoadingRing from 'components/LoadingRing/loading-ring.component';
 // Billing page components
 import Bill from '../Bill/bill.component';
 import MDButton from 'components/MDButton';
 import { Link } from 'react-router-dom';
-import { getFrequencies } from 'store/frequencies/frequencies.action';
 import { getCategories } from 'store/categories/categories.action';
+import Header from 'components/Header/header.component';
 
 const UpcomingBills = ({
-  transactions: { expenses },
-  user: { currentUser, loading },
+  transactions: { expenses, loading },
   categories: { categories },
-  frequencies: { frequencies },
   getCategories,
-  getFrequencies,
   viewAll = true,
   viewMore = false,
-  amount = 10,
-  title = 'Upcoming Bills'
+  amount = 6,
+  title = '',
+  header
 }) => {
   const [count, setCount] = useState(amount);
 
   const handleViewMore = () => {
-    setCount(count + 10);
+    setCount(count + 20);
   };
 
   useEffect(() => {
     getCategories();
   }, [getCategories]);
-
-  useEffect(() => {
-    getFrequencies();
-  }, [getFrequencies]);
 
   const renderItems = expenses
     ?.slice(0, count)
@@ -53,12 +47,13 @@ const UpcomingBills = ({
         icon="expand_less"
         transaction={transaction}
         categories={categories}
-        frequencies={frequencies}
       />
     ));
 
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card sx={{ height: '100%', mx: 3, px: 2 }}>
+      {header && <Header title={header} />}
+
       <MDBox
         display="flex"
         justifyContent="space-between"
@@ -73,9 +68,6 @@ const UpcomingBills = ({
         >
           {title}
         </MDTypography>
-        {/* <MDTypography variant="h7" fontWeight="light">
-          (click to edit)
-        </MDTypography> */}
         {viewAll && (
           <MDBox display="flex" alignItems="flex-start">
             <Link to="/upcoming">
@@ -95,9 +87,9 @@ const UpcomingBills = ({
           m={0}
           sx={{ listStyle: 'none' }}
         >
-          {renderItems}
+          {loading ? <LoadingRing /> : renderItems}
         </MDBox>
-        {viewMore && (
+        {viewMore && count <= expenses?.length && (
           <MDBox display="flex" justifyContent="center">
             <MDButton
               variant="outlined"
@@ -115,21 +107,14 @@ const UpcomingBills = ({
 };
 
 UpcomingBills.propTypes = {
-  user: PropTypes.object.isRequired,
   transactions: PropTypes.object.isRequired,
   categories: PropTypes.object.isRequired,
-  frequencies: PropTypes.object.isRequired,
-  getCategories: PropTypes.func.isRequired,
-  getFrequencies: PropTypes.func.isRequired
+  getCategories: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
   transactions: state.transactions,
-  categories: state.categories,
-  frequencies: state.frequencies
+  categories: state.categories
 });
 
-export default connect(mapStateToProps, { getCategories, getFrequencies })(
-  UpcomingBills
-);
+export default connect(mapStateToProps, { getCategories })(UpcomingBills);
