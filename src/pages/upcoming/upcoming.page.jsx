@@ -19,6 +19,7 @@ const UpcomingRoute = ({ categories: { categories } }) => {
             sx={{
               position: 'relative',
               mt: -8,
+              mx: -2,
               px: 2
             }}
           >
