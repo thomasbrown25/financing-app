@@ -68,7 +68,7 @@ export default function App() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // check for token in LS when app first runs
+    // check for token in the local storage when app first runs
     if (localStorage.token) {
       // if there is a token set axios headers for all requests
       setAuthToken(localStorage.token);
