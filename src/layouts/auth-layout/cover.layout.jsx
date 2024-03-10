@@ -4,24 +4,15 @@ import PropTypes from 'prop-types';
 // @mui material components
 import Grid from '@mui/material/Grid';
 
-// Material Dashboard 2 PRO React components
+// components
 import MDBox from 'components/MDBox';
-// import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 PRO React examples
 import DefaultNavbar from 'components/DefaultNavbar';
 import PageLayout from 'layouts/page-layout';
-
-// Authentication layout components
-import Footer from 'layouts/footer';
-
-// Material Dashboard 2 PRO React page layout routes
-import pageRoutes from 'page.routes';
 
 function CoverLayout({ coverHeight, image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar routes={pageRoutes} action={false} transparent light />
+      <DefaultNavbar routes={null} action={false} transparent light />
       <MDBox
         width="calc(100% - 2rem)"
         minHeight={coverHeight}

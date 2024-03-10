@@ -4,15 +4,12 @@ import PropTypes from 'prop-types';
 // @mui material components
 import Grid from '@mui/material/Grid';
 
-// Material Dashboard 2 PRO React components
+// components
 import MDBox from 'components/MDBox';
 
-// Material Dashboard 2 PRO React examples
+// layout
 import DefaultNavbar from 'components/DefaultNavbar';
 import PageLayout from 'layouts/page-layout';
-
-// Material Dashboard 2 PRO React page layout routes
-import pageRoutes from 'page.routes';
 
 // Authentication pages components
 import Footer from 'layouts/footer';
@@ -20,7 +17,7 @@ import Footer from 'layouts/footer';
 function BasicLayout({ image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar routes={pageRoutes} action={false} transparent light />
+      <DefaultNavbar routes={null} action={false} transparent light />
       <MDBox
         position="absolute"
         width="100%"
