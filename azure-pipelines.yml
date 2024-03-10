@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-  - master
+  - PROD
 
 variables:
   uiSource: 'src'
@@ -40,9 +40,4 @@ steps:
       ArtifactName: 'drop'
       publishLocation: 'Container'
       
-  - task: ExtractFiles@1
-    inputs:
-      archiveFilePatterns: '**/*.zip'
-      destinationFolder: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      cleanDestinationFolder: true
-      overwriteExistingFiles: true
+      
