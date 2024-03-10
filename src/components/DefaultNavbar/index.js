@@ -87,7 +87,7 @@ function DefaultNavbar({ routes, brand, transparent, light, action }) {
     return () => window.removeEventListener('resize', displayMobileNavbar);
   }, []);
 
-  const renderNavbarItems = routes.map(
+  const renderNavbarItems = routes?.map(
     ({ name, icon, href, route, collapse }) => (
       <DefaultNavbarDropdown
         key={name}
@@ -110,7 +110,7 @@ function DefaultNavbar({ routes, brand, transparent, light, action }) {
   );
 
   // Render the routes on the dropdown menu
-  const renderRoutes = routes.map(
+  const renderRoutes = routes?.map(
     ({ name, collapse, columns, rowsPerColumn }) => {
       let template;
 
@@ -386,7 +386,7 @@ function DefaultNavbar({ routes, brand, transparent, light, action }) {
   );
 
   // Render routes that are nested inside the dropdown menu routes
-  const renderNestedRoutes = routes.map(({ collapse, columns }) =>
+  const renderNestedRoutes = routes?.map(({ collapse, columns }) =>
     collapse && !columns
       ? collapse.map(({ name: parentName, collapse: nestedCollapse }) => {
           let template;
@@ -634,7 +634,7 @@ DefaultNavbar.defaultProps = {
 // Typechecking props for the DefaultNavbar
 DefaultNavbar.propTypes = {
   brand: PropTypes.string,
-  routes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  routes: PropTypes.arrayOf(PropTypes.object),
   transparent: PropTypes.bool,
   light: PropTypes.bool,
   action: PropTypes.oneOfType([
