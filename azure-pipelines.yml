@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-  - master
+  - PROD
 
 variables:
   uiSource: 'src'
@@ -25,17 +25,19 @@ steps:
       npm run build
       popd
     displayName: 'npm install and build'
-
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(uiBuild)'
-      includeRootFolder: false
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
+  
+  # - task: ArchiveFiles@2
+  #   inputs:
+  #     rootFolderOrFile: '$(uiBuild)'
+  #     includeRootFolder: false
+  #     archiveType: 'zip'
+  #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+  #     replaceExistingArchive: true
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      PathtoPublish: '$(uiBuild)'
       ArtifactName: 'drop'
       publishLocation: 'Container'
+      
+      
