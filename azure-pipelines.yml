@@ -43,6 +43,6 @@ steps:
   - task: ExtractFiles@1
     inputs:
       archiveFilePatterns: '**/*.zip'
-      destinationFolder: '$(System.DefaultWorkingDirectory)/_financing-app/drop'
+      destinationFolder: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       cleanDestinationFolder: true
       overwriteExistingFiles: true
