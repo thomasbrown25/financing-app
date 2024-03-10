@@ -26,13 +26,13 @@ steps:
       popd
     displayName: 'npm install and build'
   
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(uiBuild)'
-      includeRootFolder: true
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
+  # - task: ArchiveFiles@2
+  #   inputs:
+  #     rootFolderOrFile: '$(uiBuild)'
+  #     includeRootFolder: false
+  #     archiveType: 'zip'
+  #     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+  #     replaceExistingArchive: true
 
   - task: PublishBuildArtifacts@1
     inputs:
