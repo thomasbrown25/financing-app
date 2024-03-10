@@ -39,3 +39,10 @@ steps:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'drop'
       publishLocation: 'Container'
+      
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: '**/*.zip'
+      destinationFolder: '$(System.DefaultWorkingDirectory)/_financing-app/drop'
+      cleanDestinationFolder: true
+      overwriteExistingFiles: true
