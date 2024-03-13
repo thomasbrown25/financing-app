@@ -14,11 +14,13 @@ export const register = (reqBody) => async (dispatch) => {
     const response = await api.post('/api/user/register', reqBody);
 
     if (
-      response?.data?.message?.includes('A user with that email already exists')
+      response?.data?.message?.includes(
+        'A user with that email address already exists'
+      )
     ) {
       dispatch({
         type: USER_ACTION_TYPES.REGISTER_FAILED,
-        payload: response.data.message
+        payload: response.data
       });
       return;
     }
@@ -30,9 +32,17 @@ export const register = (reqBody) => async (dispatch) => {
     dispatch(loadUser());
   } catch (error) {
     console.log(error, error.message);
+    let payload;
+
+    if (error.response?.data?.message) {
+      payload = error.response.data.message;
+    } else {
+      payload = error.message;
+    }
+
     dispatch({
-      type: USER_ACTION_TYPES.SIGN_IN_FAILED,
-      payload: error
+      type: USER_ACTION_TYPES.REGISTER_FAILED,
+      payload: payload
     });
   }
 };
@@ -56,7 +66,7 @@ export const login = (reqBody) => async (dispatch) => {
 
     let payload;
 
-    if (error.response?.data) {
+    if (error.response?.data?.message) {
       payload = error.response.data.message;
     } else {
       payload = error.message;

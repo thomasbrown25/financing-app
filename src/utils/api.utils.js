@@ -37,7 +37,7 @@ api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response && err.response.status === 401) {
-      store.dispatch({ type: USER_ACTION_TYPES.SIGN_OUT });
+      store.dispatch({ type: USER_ACTION_TYPES.SIGN_OUT_SUCCESS });
     }
     return Promise.reject(err);
   }

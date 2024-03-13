@@ -45,30 +45,31 @@ const RegisterRoute = ({ register, user: { isAuthenticated, error } }) => {
   const [rememberMe, setRememberMe] = useState(false);
   const [termsChecked, setTermsChecked] = useState(false);
   const [signupError, setSignupError] = useState();
-
-  const handleTermsOnChange = (e) => {
-    setTermsChecked(e.target.checked);
-    console.log(e.target.checked);
-    setSignupError(null);
-  };
-
-  const handleSignupError = () => {
-    setSignupError(error.message);
-  };
+  const [isSignupError, setIsSignupError] = useState(false);
 
   const [formData, setFormData] = useState(defaultFormData);
   const { firstname, lastname, email, password, confirmPassword } = formData;
   const navigate = useNavigate();
+
+  const handleTermsOnChange = (e) => {
+    setTermsChecked(e.target.checked);
+    handleSignupError(null);
+  };
+
+  const handleSignupError = (error) => {
+    setSignupError(error);
+    setIsSignupError(error ? true : false);
+  };
 
   useEffect(() => {
     isAuthenticated && navigate('/dashboard');
   });
 
   useEffect(() => {
-    if (error?.message) {
-      handleSignupError();
+    if (error) {
+      handleSignupError(error);
     }
-  });
+  }, [error, handleSignupError]);
 
   useEffect(() => {
     if (password !== confirmPassword) {
@@ -195,7 +196,7 @@ const RegisterRoute = ({ register, user: { isAuthenticated, error } }) => {
             </MDBox>
 
             {signupError && (
-              <Collapse in={signupError}>
+              <Collapse in={isSignupError}>
                 <MDTypography variant="h7" fontWeight="bold" color="error">
                   {signupError}
                 </MDTypography>
