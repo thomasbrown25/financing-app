@@ -24,7 +24,7 @@ function DefaultNavbarMobile({ routes, open }) {
   const handleSetCollapse = (name) =>
     collapse === name ? setCollapse(false) : setCollapse(name);
 
-  const renderNavbarItems = routes.map(
+  const renderNavbarItems = routes?.map(
     ({
       name,
       icon,
@@ -208,7 +208,7 @@ function DefaultNavbarMobile({ routes, open }) {
 
 // Typechecking props for the DefaultNavbarMobile
 DefaultNavbarMobile.propTypes = {
-  routes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  routes: PropTypes.arrayOf(PropTypes.object),
   open: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired
 };
 
