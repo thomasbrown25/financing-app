@@ -73,9 +73,9 @@ const RegisterRoute = ({ register, user: { isAuthenticated, error } }) => {
 
   useEffect(() => {
     if (password !== confirmPassword) {
-      setSignupError('passwords do not match');
+      handleSignupError('passwords do not match');
     } else {
-      setSignupError(null);
+      handleSignupError(null);
     }
   }, [password, confirmPassword]);
 
@@ -87,15 +87,15 @@ const RegisterRoute = ({ register, user: { isAuthenticated, error } }) => {
     e.preventDefault();
 
     if (!firstname || !lastname || !email || !password || !confirmPassword)
-      return setSignupError('Please enter all the required fields');
+      return handleSignupError('Please enter all the required fields');
 
     if (!termsChecked)
-      return setSignupError(
+      return handleSignupError(
         'Please review and accept the terms and conditions'
       );
 
     if (password !== confirmPassword)
-      return setSignupError('Passwords do not match');
+      return handleSignupError('Passwords do not match');
 
     // Register user
     try {
